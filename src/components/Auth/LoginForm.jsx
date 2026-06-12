@@ -118,7 +118,7 @@ const LoginForm = ({ onSignInSuccess }) => {
     <div className={`login-container ${isDark ? "dark-theme" : "light-theme"}`}>
       {formState === "signIn" && (
         <div className="form-container">
-          <img src={Shield} alt="Threat Designer logo" style={{ width: "80px" }} />
+          <img src={Shield} alt="SBM ThreatForge logo" style={{ width: "80px" }} />
           <Title>Welcome back</Title>
           {error && <div className="error-message">{error}</div>}
           <form onSubmit={handleSignIn}>

@@ -48,7 +48,7 @@ export function SidebarHeader() {
             <div className="relative flex items-center justify-center w-8 h-8 ml-1">
               <img
                 src={Logo}
-                alt="Threat Designer"
+                alt="SBM ThreatForge"
                 className={`w-8 h-8 transition-opacity duration-200 pointer-events-none ${
                   delayedCollapsed ? "group-hover/header:opacity-0" : ""
                 }`}

@@ -8,8 +8,8 @@ const GenAiButton = ({ children, onClick, className = "", loading = false, disab
   const buttonStyle = {
     background:
       loading || disabled
-        ? "linear-gradient(90deg, #700080 0%, #3d1ab3 50%, #002baf 100%)"
-        : "radial-gradient(circle farthest-corner at top right, #b8e7ff 0%, #0099ff 25%, #5c7fff 40% , #8575ff 60%, #962eff 80%)",
+        ? "linear-gradient(90deg, #581c87 0%, #7c3aed 50%, #8b5cf6 100%)"
+        : "linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a855f7 100%)",
     padding: "6px 20px 6px 20px",
     border: "none",
     borderRadius: "10px",

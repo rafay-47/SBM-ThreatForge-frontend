@@ -26,6 +26,7 @@ const LoginPageContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${(props) => (props.isDark ? "#1D1D20" : "#F5F5F4")};
+  font-family: Geist, Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,9 +108,10 @@ const HeroHeader = styled.div`
 
 const HeroTitle = styled.h1`
   margin: 0;
+  font-family: "Geist", Arial, sans-serif;
   font-size: clamp(22px, 3.2vw, 40px);
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
   line-height: 1.1;
@@ -174,9 +176,10 @@ const LabelCell = styled.div`
   flex: 1;
   text-align: center;
   padding-bottom: clamp(6px, 0.8vw, 10px);
+  font-family: "Geist Mono", Arial, sans-serif;
   font-size: clamp(7px, 0.7vw, 10px);
   letter-spacing: 0.2em;
-  font-weight: 700;
+  font-weight: 500;
   opacity: 0.9;
   text-transform: uppercase;
 `;
@@ -210,11 +213,12 @@ const QuestionCell = styled.div`
 
 const QuestionText = styled.div`
   margin-top: clamp(6px, 0.8vw, 10px);
+  font-family: "Avenue Mono", Arial, sans-serif;
 
   span {
     display: block;
     font-size: clamp(11px, 1.2vw, 16px);
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.25;
     text-align: center;
   }
@@ -261,9 +265,10 @@ const TagChip = styled.div`
   padding: clamp(4px, 0.5vw, 6px) clamp(6px, 0.8vw, 10px);
   border-radius: 3px;
   background: rgba(139, 92, 246, 0.95);
-  color: #ffffff;
+  color: #fcfcfc;
+  font-family: "Geist Mono", Arial, sans-serif;
   font-size: clamp(8px, 0.7vw, 11px);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
   white-space: nowrap;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -328,7 +333,7 @@ const LoginPageInternal = ({ setAuthUser }) => {
       <LoginCard isDark={isDark}>
         <LeftSection>
           <HeroHeader>
-            <HeroTitle>Threat Modeling</HeroTitle>
+            <HeroTitle>SBM ThreatForge</HeroTitle>
           </HeroHeader>
           <PurpleContent>
             <QuestionsSection>
