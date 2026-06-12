@@ -1,0 +1,245 @@
+import { useRef, useEffect, useCallback, useContext } from "react";
+import { ChatSessionDataContext, ChatSessionFunctionsContext } from "../../Agent/ChatContext";
+
+/**
+ * Custom hook for handling real-time interrupt events from Sentry agent
+ *
+ * This hook manages interrupt events that modify threat model data in real-time.
+ * It queues events that arrive before data is loaded and processes them once data becomes available.
+ * Supports add_threats, edit_threats, and delete_threats operations.
+ *
+ * @param {string} threatModelId - The ID of the threat model
+ * @param {Object|null} response - Current threat model response data
+ * @param {Function} initializeThreatModelSession - Function to reinitialize session context
+ * @param {Function} setResponse - Function to set the response state
+ * @param {Function} sendMessage - Function to send acknowledgment messages to Sentry
+ * @returns {Object} Hook interface
+ * @returns {Function} returns.handleInterruptEvent - Event handler function for interrupt events
+ *
+ * @example
+ * const { handleInterruptEvent } = useThreatModelInterrupts(
+ *   threatModelId,
+ *   response,
+ *   initializeThreatModelSession,
+ *   setResponse,
+ *   sendMessage
+ * );
+ */
+export const useThreatModelInterrupts = (
+  threatModelId,
+  response,
+  initializeThreatModelSession,
+  setResponse,
+  sendMessage
+) => {
+  // Get session data and functions from context to watch for pending interrupts
+  const sessionData = useContext(ChatSessionDataContext);
+  const sessionFunctions = useContext(ChatSessionFunctionsContext);
+
+  // Queue for storing interrupt events that arrive before data is loaded
+  const pendingInterrupts = useRef([]);
+
+  // Track processed interrupt timestamps to prevent duplicate processing
+  const processedInterrupts = useRef(new Set());
+
+  // Reset pending interrupts when threatModelId changes
+  useEffect(() => {
+    pendingInterrupts.current = [];
+    processedInterrupts.current = new Set();
+  }, [threatModelId]);
+
+  /**
+   * Handle threat updates from interrupt events
+   * Applies add, edit, or delete operations to the threat list
+   *
+   * @param {string} toolName - The operation type (add_threats, edit_threats, delete_threats)
+   * @param {Array} threatsPayload - Array of threat objects to process
+   */
+  const handleThreatUpdates = useCallback(
+    (toolName, threatsPayload) => {
+      if (!Array.isArray(threatsPayload)) {
+        console.error(
+          "Invalid threat payload format - expected array, got:",
+          typeof threatsPayload
+        );
+        return;
+      }
+
+      setResponse((prev) => {
+        if (!prev?.item?.threat_list?.threats) {
+          console.error("Cannot update threats - response data not available");
+          return prev;
+        }
+
+        let updatedThreats = [...prev.item.threat_list.threats];
+
+        switch (toolName) {
+          case "add_threats":
+            updatedThreats = [...updatedThreats, ...threatsPayload];
+            break;
+
+          case "edit_threats":
+            threatsPayload.forEach((newThreat) => {
+              const existingIndex = updatedThreats.findIndex(
+                (existingThreat) => existingThreat.name === newThreat.name
+              );
+              if (existingIndex !== -1) {
+                const existingThreat = updatedThreats[existingIndex];
+                updatedThreats[existingIndex] = {
+                  ...newThreat,
+                  notes: existingThreat.notes,
+                };
+              } else {
+                console.warn("Threat not found for editing:", newThreat.name);
+              }
+            });
+            break;
+
+          case "delete_threats": {
+            const threatNamesToDelete = threatsPayload.map((threat) => threat.name);
+            updatedThreats = updatedThreats.filter(
+              (existingThreat) => !threatNamesToDelete.includes(existingThreat.name)
+            );
+            break;
+          }
+
+          default:
+            console.warn("Unknown threat operation:", toolName);
+            return prev;
+        }
+
+        const newState = {
+          ...prev,
+          item: {
+            ...prev.item,
+            threat_list: {
+              ...prev.item.threat_list,
+              threats: updatedThreats,
+            },
+          },
+        };
+
+        initializeThreatModelSession(newState.item);
+        return newState;
+      });
+    },
+    [initializeThreatModelSession, setResponse]
+  );
+
+  /**
+   * Process a single interrupt event
+   * Extracts payload and tool name, then applies the appropriate update
+   *
+   * @param {Object} event - The interrupt event to process
+   */
+  const processInterruptEvent = useCallback(
+    (event) => {
+      const { interruptMessage, source, timestamp } = event.payload;
+
+      // Use timestamp as the unique key for duplicate detection
+      // The timestamp is set when the interrupt is first received (in setPendingInterrupt)
+      // This allows sequential operations on the same element (different timestamps)
+      // while preventing the same interrupt from being processed twice (same timestamp)
+      if (timestamp && processedInterrupts.current.has(timestamp)) {
+        return;
+      }
+
+      // Mark as processed using timestamp
+      if (timestamp) {
+        processedInterrupts.current.add(timestamp);
+
+        // Clean up old entries to prevent memory leak (keep last 50)
+        if (processedInterrupts.current.size > 50) {
+          const entries = Array.from(processedInterrupts.current);
+          entries
+            .slice(0, entries.length - 50)
+            .forEach((key) => processedInterrupts.current.delete(key));
+        }
+      }
+
+      const payload = interruptMessage.content.payload;
+      const toolName = interruptMessage.content.tool_name;
+
+      // Handle threat updates based on tool name
+      if (["add_threats", "edit_threats", "delete_threats"].includes(toolName)) {
+        handleThreatUpdates(toolName, payload);
+      }
+
+      // Send acknowledgment message to Sentry
+      sendMessage(threatModelId, toolName);
+    },
+    [handleThreatUpdates, sendMessage, threatModelId]
+  );
+
+  /**
+   * Main event handler for interrupt events
+   * Queues events if data is not loaded, otherwise processes immediately
+   *
+   * @param {Object} event - The interrupt event received from event bus
+   */
+  const handleInterruptEvent = useCallback(
+    (event) => {
+      // Check if response data is available by verifying the threats array exists
+      if (!response?.item?.threat_list?.threats) {
+        // Queue the event for later processing
+        pendingInterrupts.current.push(event);
+        return;
+      }
+
+      // Data is available - process the event immediately
+      processInterruptEvent(event);
+    },
+    [response, processInterruptEvent]
+  );
+
+  /**
+   * Process pending interrupts when response data becomes available
+   */
+  useEffect(() => {
+    if (response?.item?.threat_list?.threats && pendingInterrupts.current.length > 0) {
+      const interruptsToProcess = [...pendingInterrupts.current];
+      pendingInterrupts.current = [];
+
+      interruptsToProcess.forEach((event) => {
+        processInterruptEvent(event);
+      });
+    }
+  }, [response, processInterruptEvent]);
+
+  /**
+   * Watch for pending interrupts in session state
+   * When a pendingInterrupt is set on the session, process it and clear it
+   */
+  useEffect(() => {
+    if (!sessionData?.sessions || !threatModelId) {
+      return;
+    }
+
+    const session = sessionData.sessions.get(threatModelId);
+
+    if (!session?.pendingInterrupt) {
+      return;
+    }
+
+    const { interruptMessage, source, timestamp } = session.pendingInterrupt;
+
+    const event = {
+      payload: {
+        interruptMessage,
+        source,
+        timestamp,
+      },
+    };
+
+    // Clear the interrupt from session state first to prevent re-processing
+    if (sessionFunctions?.clearInterrupt) {
+      sessionFunctions.clearInterrupt(threatModelId);
+    }
+
+    handleInterruptEvent(event);
+  }, [sessionData?.sessions, threatModelId, handleInterruptEvent, sessionFunctions]);
+
+  return {
+    handleInterruptEvent,
+  };
+};

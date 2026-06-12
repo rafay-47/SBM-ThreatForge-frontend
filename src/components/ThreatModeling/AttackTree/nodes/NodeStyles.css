@@ -1,0 +1,509 @@
+/* Base node styles */
+.custom-node {
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid;
+  background: #ffffff;
+  color: var(--awsui-color-text-body-default, #000);
+  width: 90px;
+  min-height: 45px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  font-size: 8px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.custom-node.selected {
+  /* Remove selection styling - handled by focused state instead */
+}
+
+.custom-node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Node handles - visible */
+.node-handle {
+  width: 10px;
+  height: 10px;
+  background: #888;
+  border: 3px solid white;
+  border-radius: 50%;
+  opacity: 1;
+  z-index: 100;
+}
+
+/* Node header */
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 3px;
+  font-size: 7px;
+}
+
+/* Node content */
+.node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.node-status {
+  margin-top: 1px;
+  font-size: 6px;
+}
+
+/* Root Goal Node - Gate Style */
+.root-goal-node {
+  border: 3px solid #d5dbdb;
+  background: #ffffff;
+  width: 180px;
+}
+
+.root-goal-node:hover {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 8px 24px rgba(133, 117, 255, 0.4);
+}
+
+.root-goal-node.selected {
+  /* Remove selection styling - handled by focused state instead */
+}
+
+.root-goal-node .gate-node-header {
+  border-bottom-color: #e9ecef;
+  border-bottom-width: 1px;
+}
+
+.root-goal-icon {
+  background: #d13212 !important;
+  border-radius: 50%;
+}
+
+/* Gate Nodes (AND/OR) */
+.gate-node {
+  border: 3px solid #d5dbdb;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0;
+  width: 220px;
+  min-height: auto;
+  overflow: visible;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Enhanced hover effect for gate nodes */
+.gate-node:hover {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 8px 24px rgba(133, 117, 255, 0.4);
+}
+
+.gate-node.focused {
+  border: 3px solid transparent !important;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* Dark mode focused state */
+.awsui-dark-mode .gate-node.focused {
+  background-image:
+    linear-gradient(#18181b, #18181b),
+    linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff) !important;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.gate-node-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #e9ecef;
+  min-height: 38px; /* Fixed height to ensure handle alignment */
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.gate-icon {
+  width: 20px;
+  height: 20px;
+  background: #fce8f3;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #d13212;
+  flex-shrink: 0;
+}
+
+.gate-type {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--awsui-color-text-body-default, #000);
+  flex-shrink: 0;
+}
+
+.gate-badge-wrapper {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.gate-badge-wrapper span {
+  font-size: 8px !important;
+  padding: 3px 6px 1px 6px !important;
+  line-height: 1.3 !important;
+}
+
+.gate-label {
+  font-size: 11px;
+  color: var(--awsui-color-text-body-secondary, #5f6b7a);
+  margin-left: auto;
+}
+
+.gate-node-body {
+  padding: 8px 10px;
+  background: transparent;
+}
+
+.gate-description {
+  font-size: 14px;
+  color: var(--awsui-color-text-body-secondary, #5f6b7a);
+  line-height: 1.4;
+}
+
+/* AND Gate specific */
+.and-gate-node .gate-icon {
+  background: #e8f4f8;
+  color: #0972d3;
+}
+
+/* OR Gate specific */
+.or-gate-node .gate-icon {
+  background: #fce8f3;
+  color: #d13212;
+}
+
+.gate-indicator {
+  text-align: center;
+  padding: 3px;
+  margin-bottom: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 7px;
+}
+
+/* Leaf Attack Node */
+.leaf-attack-node {
+  border: 3px solid #d5dbdb;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0;
+  width: 280px;
+  min-height: auto;
+  overflow: visible;
+  position: relative;
+}
+
+.leaf-node-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #e9ecef;
+  background: transparent;
+}
+
+.leaf-severity-icon {
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.leaf-attack-phase {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--awsui-color-text-body-default, #000);
+  flex-shrink: 0;
+}
+
+.leaf-node-body {
+  padding: 8px 10px;
+  background: transparent;
+}
+
+.leaf-node-description {
+  font-size: 14px;
+  color: var(--awsui-color-text-body-secondary, #5f6b7a);
+  line-height: 1.4;
+}
+
+.leaf-node-footer {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--awsui-color-text-body-secondary, #5f6b7a);
+  padding-top: 6px;
+  border-top: 1px solid #e9ecef;
+}
+
+.metric-item {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.leaf-attack-node:hover {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 10px 28px rgba(133, 117, 255, 0.4);
+}
+
+/* Cursor pointer for interactive leaf nodes */
+.leaf-attack-node {
+  cursor: pointer;
+}
+
+.attack-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 3px;
+  background: #f9f9f9;
+  border-radius: 3px;
+  margin-top: 1px;
+  font-size: 6px;
+}
+
+.mitigation-status {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e9ebed;
+}
+
+/* Countermeasure Node */
+.countermeasure-node {
+  border-color: #037f0c;
+  background: #ffffff;
+}
+
+.countermeasure-node .node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 3px solid #037f0c;
+  padding-bottom: 8px;
+}
+
+.effectiveness-bar {
+  margin-top: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e9ebed;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #037f0c 0%, #1d8102 100%);
+  transition: width 0.3s ease;
+}
+
+.implementation-status {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e9ebed;
+}
+
+/* Dark mode support */
+.awsui-dark-mode {
+  .custom-node:not(.gate-node):not(.leaf-attack-node) {
+    background: #18181b !important;
+    color: #e0e0e0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .gate-node,
+  .leaf-attack-node {
+    color: #e0e0e0;
+  }
+
+  /* Exception: root node circle should stay red */
+  .custom-node.root-goal-node-circle {
+    background: #d13212 !important;
+    box-shadow: 0 3px 8px rgba(209, 50, 18, 0.5);
+  }
+
+  .custom-node.root-goal-node-circle:hover {
+    background: #e63c1c !important;
+    box-shadow: 0 4px 12px rgba(209, 50, 18, 0.7);
+  }
+
+  .custom-node:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .gate-node:hover {
+    box-shadow: none !important;
+  }
+
+  .leaf-attack-node:hover {
+    box-shadow: none !important;
+  }
+
+  .node-handle {
+    background: #888 !important;
+    border: 3px solid #444 !important;
+    opacity: 1 !important;
+  }
+
+  .gate-indicator {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Gate nodes dark mode */
+  .gate-node {
+    background: #18181b;
+    border-color: #444;
+  }
+
+  .gate-node:hover {
+    border: 3px solid transparent;
+    background-image:
+      linear-gradient(#18181b, #18181b),
+      linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff) !important;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .gate-node-header {
+    border-bottom-color: #444;
+    background: transparent !important;
+  }
+
+  .gate-node-body {
+    background: transparent !important;
+  }
+
+  .gate-type {
+    color: #e0e0e0 !important;
+  }
+
+  .gate-description {
+    color: #999 !important;
+  }
+
+  .and-gate-node .gate-icon {
+    background: #1a3a4a !important;
+    color: #5fb3e0 !important;
+  }
+
+  .or-gate-node .gate-icon {
+    background: #4a1a2a !important;
+    color: #ff6b9d !important;
+  }
+
+  /* Leaf nodes dark mode */
+  .leaf-attack-node {
+    background: #18181b;
+    border-color: #444;
+  }
+
+  .leaf-attack-node:hover {
+    border: 3px solid transparent;
+    background-image:
+      linear-gradient(#18181b, #18181b),
+      linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff) !important;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .leaf-node-header {
+    border-bottom-color: #444;
+    background: transparent !important;
+  }
+
+  .leaf-attack-phase {
+    color: #e0e0e0 !important;
+  }
+
+  .leaf-node-body {
+    background: transparent !important;
+  }
+
+  .leaf-node-description {
+    color: #999 !important;
+  }
+
+  .leaf-node-footer {
+    color: #999 !important;
+    border-top-color: #444;
+  }
+
+  /* Root goal node dark mode */
+  .root-goal-node {
+    background: #18181b;
+    border-color: #444;
+  }
+
+  .root-goal-node:hover {
+    border: 3px solid transparent;
+    background-image:
+      linear-gradient(#18181b, #18181b),
+      linear-gradient(120deg, #b8e7ff, #8575ff, #962eff, #8575ff, #b8e7ff) !important;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .attack-metrics {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .mitigation-status,
+  .implementation-status {
+    border-top-color: #444;
+  }
+
+  .progress-bar {
+    background: #1a1a1a;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-node {
+    min-width: 150px;
+    max-width: 250px;
+    padding: 10px;
+  }
+}

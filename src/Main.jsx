@@ -1,0 +1,43 @@
+import { lazy, Suspense } from "react";
+import { Route, Routes, useParams } from "react-router-dom";
+import { Spinner } from "@cloudscape-design/components";
+
+// Lazy load route components - only fetched when user navigates to that route
+const ThreatModeling = lazy(() => import("./pages/ThreatDesigner/ThreatModeling.jsx"));
+const ThreatModelResult = lazy(() => import("./pages/ThreatDesigner/ThreatModelResult.jsx"));
+const ThreatCatalog = lazy(() => import("./pages/ThreatDesigner/ThreatCatalog.jsx"));
+const SpacesCatalog = lazy(() => import("./pages/Spaces/SpacesCatalog.jsx"));
+const GuideViewer = lazy(() =>
+  import("./components/Guides/GuideViewer.jsx").then((m) => ({ default: m.GuideViewer }))
+);
+
+// Loading fallback component
+const RouteLoader = () => (
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh" }}>
+    <Spinner size="large" />
+  </div>
+);
+
+// Wrapper component to provide key prop based on slug
+function GuideViewerWrapper() {
+  const { slug } = useParams();
+  return <GuideViewer key={slug} />;
+}
+
+function Main({ user }) {
+  return (
+    <Suspense fallback={<RouteLoader />}>
+      <Routes>
+        <Route path="/" element={<ThreatModeling />} />
+        <Route path="/threat-catalog" element={<ThreatCatalog user={user} />} />
+        <Route path="/spaces/:spaceId" element={<SpacesCatalog user={user} />} />
+        <Route path="/spaces" element={<SpacesCatalog user={user} />} />
+        <Route path="/guides/:slug" element={<GuideViewerWrapper />} />
+        {/* Match UUID (and other id) last so static paths are not captured as :id */}
+        <Route path="/:id" element={<ThreatModelResult user={user} />} />
+      </Routes>
+    </Suspense>
+  );
+}
+
+export default Main;
