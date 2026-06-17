@@ -102,6 +102,10 @@
     0 2px 2px rgba(0, 0, 0, 0.05);
 }
 
+.chat-input-container:focus-within {
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.15), 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
 .chat-textarea {
   width: 100%;
   background: transparent;
@@ -347,18 +351,18 @@
   }
 }
 
-/* Dark mode send/stop button - active state with light color */
+/* Dark mode send/stop button - purple theme */
 html.dark .send-button:not(:disabled),
 html.dark .stop-button:not(:disabled) {
-  background: #fafaf9;
+  background: var(--token-button-bg);
 }
 
 html.dark .send-button:not(:disabled) svg,
 html.dark .stop-button:not(:disabled) svg {
-  color: #000000;
+  color: var(--token-button-text);
 }
 
 html.dark .send-button:hover:not(:disabled),
 html.dark .stop-button:hover:not(:disabled) {
-  background: #e5e5e4;
+  background: var(--token-button-bg-hover);
 }

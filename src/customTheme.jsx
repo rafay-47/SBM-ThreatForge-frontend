@@ -10,7 +10,7 @@ const customTheme = {
     },
     colorBackgroundPopover: {
       dark: "#1D1D20",
-      light: "#F5F5F4",
+      light: "#FFFFFF",
     },
     colorBackgroundContainerHeader: {
       dark: "#1D1D20",
@@ -41,20 +41,20 @@ const customTheme = {
       dark: "#171D25",
     },
     colorTextLinkDefault: {
-      light: "#101828",
-      dark: "#FFFFFF",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorTextLinkHover: {
-      light: "#101828",
-      dark: "#FFFFFF",
+      light: "#6d28d9",
+      dark: "#c4b5fd",
     },
     colorTextDropdownItemHighlighted: {
-      light: "#101828",
-      dark: "#FFFFFF",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorBackgroundButtonLinkHover: {
-      light: "#EEEEEE",
-      dark: "#2a2a2c",
+      light: "#f5f3ff",
+      dark: "#2e1065",
     },
     colorTextButtonNormalDefault: {
       light: "#18181B",
@@ -65,16 +65,16 @@ const customTheme = {
       dark: "#FAFAF9",
     },
     colorTextInteractiveHover: {
-      light: "#14110f",
-      dark: "#F4F4F5",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorTextInteractiveActive: {
-      light: "#14110f",
-      dark: "#F4F4F5",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorTextAccent: {
-      light: "#14110f",
-      dark: "#F4F4F5",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorTextInteractiveDefault: {
       light: "#79716b",
@@ -85,8 +85,8 @@ const customTheme = {
       dark: "#FAFAF9",
     },
     colorBackgroundButtonLinkActive: {
-      light: "#EEEEEE",
-      dark: "#212124",
+      light: "#ede9fe",
+      dark: "#2e1065",
     },
     borderRadiusButton: "10px",
     borderRadiusInput: "8px",
@@ -124,28 +124,28 @@ const customTheme = {
       dark: "#1D1D20",
     },
     colorTextButtonPrimaryDefault: {
-      light: "#FAFAF9",
-      dark: "#14110f",
+      light: "#FFFFFF",
+      dark: "#FFFFFF",
     },
     colorTextButtonPrimaryHover: {
-      light: "#FAFAF9",
-      dark: "#14110f",
+      light: "#FFFFFF",
+      dark: "#FFFFFF",
     },
     colorTextButtonPrimaryActive: {
-      light: "#FAFAF9",
-      dark: "#14110f",
+      light: "#F5F5F5",
+      dark: "#E0E0E0",
     },
     colorBackgroundButtonPrimaryActive: {
-      light: "#8F8F8F",
-      dark: "#8e8e8e",
+      light: "#6d28d9",
+      dark: "#7c3aed",
     },
     colorBackgroundButtonPrimaryDefault: {
-      light: "#858585",
-      dark: "#949494",
+      light: "#7c3aed",
+      dark: "#8b5cf6",
     },
     colorBackgroundButtonPrimaryHover: {
-      light: "#8F8F8F",
-      dark: "#8e8e8e",
+      light: "#6d28d9",
+      dark: "#7c3aed",
     },
     colorBackgroundInputDisabled: {
       light: "#FAFAF9",
@@ -160,8 +160,8 @@ const customTheme = {
       light: "#F5F5F4",
     },
     colorBackgroundButtonPrimaryDisabled: {
-      light: "#DDDDDD",
-      dark: "#3a3a3c",
+      light: "#DDD6FE",
+      dark: "#3b2d6b",
     },
     colorBorderButtonNormalHover: {
       light: "#79716b",
@@ -176,22 +176,25 @@ const customTheme = {
       dark: "#949495",
     },
     colorBackgroundSegmentActive: {
-      light: "#858585",
-      dark: "#949494",
+      light: "#7c3aed",
+      dark: "#8b5cf6",
     },
     colorBackgroundChatBubbleIncoming: {
-      light: "#E9E9E8",
+      light: "#F5F3FF",
       dark: "#2A2A2C",
     },
-
-    // colorBorderDropdownItemFocused: {
-    //   light: "transparent",
-    //   dark: "#000000",
-    // },
-    // colorBorderItemSelected: {
-    //   light: "transparent",
-    //   dark: "#000000",
-    // },
+    colorBorderFocused: {
+      light: "#7c3aed",
+      dark: "#8b5cf6",
+    },
+    colorBorderItemSelected: {
+      light: "#7c3aed",
+      dark: "#8b5cf6",
+    },
+    colorBackgroundItemSelected: {
+      light: "#F5F3FF",
+      dark: "#2e1065",
+    },
   },
   contexts: {
     "top-navigation": {
@@ -201,8 +204,8 @@ const customTheme = {
           dark: "#1D1D20",
         },
         colorTextDropdownItemHighlighted: {
-          light: "#101828",
-          dark: "#FFFFFF",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorBorderDividerDefault: {
           light: "#F5F5F4",
@@ -213,41 +216,41 @@ const customTheme = {
           dark: "#949495",
         },
         colorBackgroundButtonLinkHover: {
-          light: "#EEEEEE",
-          dark: "#2a2a2c",
+          light: "#F5F3FF",
+          dark: "#2e1065",
         },
         colorTextButtonNormalHover: {
-          light: "#14110f",
-          dark: "#F4F4F5",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorTextInteractiveHover: {
-          light: "#14110f",
-          dark: "#F4F4F5",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorTextInteractiveActive: {
-          light: "#14110f",
-          dark: "#F4F4F5",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorTextAccent: {
-          light: "#14110f",
-          dark: "#F4F4F5",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorTextInteractiveDefault: {
           light: "#79716b",
           dark: "#949495",
         },
         colorTextButtonNormalActive: {
-          light: "#14110f",
-          dark: "#F4F4F5",
+          light: "#7c3aed",
+          dark: "#a78bfa",
         },
         colorBackgroundButtonLinkActive: {
-          light: "#EEEEEE",
-          dark: "#212124",
+          light: "#ede9fe",
+          dark: "#2e1065",
         },
         borderRadiusButton: "8px",
         colorBackgroundDropdownItemHover: {
-          light: "#F5F5F4",
-          dark: "#1D1D20",
+          light: "#F5F3FF",
+          dark: "#2e1065",
         },
         colorBackgroundDropdownItemDefault: {
           dark: "#18181B",
@@ -258,8 +261,8 @@ const customTheme = {
           dark: "#FFFFFF",
         },
         colorBorderDropdownItemFocused: {
-          light: "#FFFFFF",
-          dark: "#000000",
+          light: "#7c3aed",
+          dark: "#8b5cf6",
         },
       },
     },

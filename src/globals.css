@@ -18,18 +18,18 @@
   /* Light theme colors - mapped to Cloudscape theme tokens */
   --color-background: #fafaf9;
   --color-foreground: #18181b;
-  --color-card: #f5f5f4;
+  --color-card: #ffffff;
   --color-card-foreground: #18181b;
-  --color-popover: #f5f5f4;
+  --color-popover: #ffffff;
   --color-popover-foreground: #18181b;
-  --color-primary: #858585;
-  --color-primary-foreground: #fafaf9;
+  --color-primary: #7c3aed;
+  --color-primary-foreground: #ffffff;
   --color-secondary: #f5f5f4;
   --color-secondary-foreground: #18181b;
   --color-muted: #f5f5f4;
   --color-muted-foreground: #79716b;
-  --color-accent: #f5f5f4;
-  --color-accent-foreground: #18181b;
+  --color-accent: #f5f3ff;
+  --color-accent-foreground: #7c3aed;
   --color-destructive: hsl(0 84.2% 60.2%);
   --color-destructive-foreground: hsl(0 0% 98%);
   --color-border: #e5e5e4;
@@ -44,12 +44,12 @@
   /* Sidebar light theme - mapped to Cloudscape container colors */
   --color-sidebar-background: #f5f5f4;
   --color-sidebar-foreground: #79716b;
-  --color-sidebar-primary: #858585;
-  --color-sidebar-primary-foreground: #fafaf9;
-  --color-sidebar-accent: #eeeeee;
-  --color-sidebar-accent-foreground: #14110f;
+  --color-sidebar-primary: #7c3aed;
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: #f5f3ff;
+  --color-sidebar-accent-foreground: #7c3aed;
   --color-sidebar-border: #e5e5e4;
-  --color-sidebar-ring: #858585;
+  --color-sidebar-ring: #7c3aed;
 
   /* Animation keyframes for tailwindcss-animate */
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -64,34 +64,34 @@
   --color-card-foreground: #fafaf9;
   --color-popover: #1d1d20;
   --color-popover-foreground: #ffffff;
-  --color-primary: #949494;
-  --color-primary-foreground: #14110f;
+  --color-primary: #8b5cf6;
+  --color-primary-foreground: #ffffff;
   --color-secondary: #1d1d20;
   --color-secondary-foreground: #fafaf9;
   --color-muted: #1d1d20;
   --color-muted-foreground: #949495;
-  --color-accent: #2a2a2c;
-  --color-accent-foreground: #f4f4f5;
+  --color-accent: #2e1065;
+  --color-accent-foreground: #a78bfa;
   --color-destructive: hsl(0 62.8% 30.6%);
   --color-destructive-foreground: hsl(0 0% 98%);
   --color-border: #2a2a2c;
   --color-input: #222225;
-  --color-ring: #949495;
-  --color-chart-1: hsl(220 70% 50%);
-  --color-chart-2: hsl(160 60% 45%);
-  --color-chart-3: hsl(30 80% 55%);
-  --color-chart-4: hsl(280 65% 60%);
+  --color-ring: #8b5cf6;
+  --color-chart-1: hsl(280 65% 60%);
+  --color-chart-2: hsl(220 70% 50%);
+  --color-chart-3: hsl(160 60% 45%);
+  --color-chart-4: hsl(30 80% 55%);
   --color-chart-5: hsl(340 75% 55%);
 
   /* Sidebar dark theme - mapped to Cloudscape container colors */
   --color-sidebar-background: #1d1d20;
   --color-sidebar-foreground: #949495;
-  --color-sidebar-primary: #949494;
-  --color-sidebar-primary-foreground: #14110f;
-  --color-sidebar-accent: #2a2a2c;
-  --color-sidebar-accent-foreground: #f4f4f5;
+  --color-sidebar-primary: #8b5cf6;
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: #2e1065;
+  --color-sidebar-accent-foreground: #a78bfa;
   --color-sidebar-border: #2a2a2c;
-  --color-sidebar-ring: #949494;
+  --color-sidebar-ring: #8b5cf6;
 }
 
 @layer base {

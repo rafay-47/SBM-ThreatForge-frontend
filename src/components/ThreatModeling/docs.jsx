@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Packer } from "docx";
+import { config } from "../../config";
 
 export const downloadDocument = async (doc, title) => {
   try {
@@ -39,7 +40,7 @@ export const uploadFile = async (base64File, presignedUrl, fileType) => {
   try {
     // Send base64 data directly to backend for server-side upload
     // This avoids CORS issues with Supabase signed URLs
-    const uploadEndpoint = "http://localhost:8000/threat-designer/upload";
+    const uploadEndpoint = `${config.controlPlaneAPI}/threat-designer/upload`;
 
     const response = await fetch(uploadEndpoint, {
       method: "POST",

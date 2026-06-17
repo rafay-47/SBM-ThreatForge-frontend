@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import SpaceBetween from "@cloudscape-design/components/space-between";
 import { SubmissionComponent } from "./SubmissionForm";
 import { Modal } from "@cloudscape-design/components";
 import { uploadFile } from "./docs";
 import { useNavigate } from "react-router-dom";
-import { startThreatModeling, generateUrl } from "../../services/ThreatDesigner/stats";
-import GenAiButton from "../../components/ThreatModeling/GenAiButton";
+import { startThreatModeling } from "../../services/ThreatDesigner/stats";
+import HomeDashboard from "./HomeDashboard";
 import "./ThreatModeling.css";
 
-export default function ThreatModeling() {
+export default function ThreatModeling({ user }) {
   const [iteration, setIteration] = useState({ label: "Auto", value: 0 });
   const [reasoning, setReasoning] = useState("0");
   const [base64Content, setBase64Content] = useState([]);
@@ -30,7 +29,6 @@ export default function ThreatModeling() {
   ) => {
     setLoading(true);
     try {
-      // Upload directly via backend (Supabase-compatible)
       const uploadResult = await uploadFile(base64Content?.value, null, base64Content?.type);
       const s3Key = uploadResult?.name;
       const response = await startThreatModeling(
@@ -40,10 +38,10 @@ export default function ThreatModeling() {
         title,
         description,
         assumptions,
-        false, // replay
-        null, // id
-        null, // instructions
-        base64Content?.type, // imageType
+        false,
+        null,
+        null,
+        base64Content?.type,
         applicationType,
         spaceId
       );
@@ -62,24 +60,8 @@ export default function ThreatModeling() {
   }, [id, navigate]);
 
   return (
-    <SpaceBetween size="s">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ marginTop: "200px" }}>
-          <GenAiButton
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            Submit Threat Model
-          </GenAiButton>
-        </div>
-      </div>
+    <>
+      <HomeDashboard user={user} onCreateNew={() => setVisible(true)} />
       <Modal
         onDismiss={() => setVisible(false)}
         visible={visible}
@@ -98,6 +80,6 @@ export default function ThreatModeling() {
           setReasoning={setReasoning}
         />
       </Modal>
-    </SpaceBetween>
+    </>
   );
 }

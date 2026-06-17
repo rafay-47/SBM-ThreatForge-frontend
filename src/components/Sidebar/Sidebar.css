@@ -78,16 +78,38 @@ html.dark .sidebar-hover-zone {
   background-color: var(--color-sidebar-accent);
   color: var(--color-sidebar-accent-foreground);
   font-weight: 500;
+  transition: all 0.15s ease;
 }
 
-/* Left border indicator for active item - DISABLED to remove bar */
+/* Left border indicator for active item */
 [data-sidebar="menu-button"][data-active="true"]::before {
-  content: none;
-  display: none;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-sidebar-primary);
 }
 
 /* Active icon color */
 [data-sidebar="menu-button"][data-active="true"] svg {
+  color: var(--color-sidebar-primary);
+}
+
+/* Smooth hover transition for all menu buttons */
+[data-sidebar="menu-button"] {
+  transition: all 0.15s ease;
+}
+
+[data-sidebar="menu-button"]:hover:not([data-active="true"]) {
+  background-color: var(--color-sidebar-accent);
+  color: var(--color-sidebar-accent-foreground);
+}
+
+[data-sidebar="menu-button"]:hover:not([data-active="true"]) svg {
   color: var(--color-sidebar-primary);
 }
 
