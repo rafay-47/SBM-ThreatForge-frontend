@@ -122,7 +122,6 @@ export const signInWithPassword = async ({ username, password }) => {
   return auth.signIn({ username, password });
 };
 
-<<<<<<< HEAD
 export const signUpWithEmail = async ({ email, password }) => {
   await ensureInitialized();
 
@@ -156,8 +155,7 @@ export const signUpWithEmail = async ({ email, password }) => {
     }));
 };
 
-=======
->>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
+
 export const completeSignInWithNewPassword = async ({ newPassword }) => {
   await ensureInitialized();
 
@@ -291,7 +289,7 @@ export const signOutCurrentUser = async () => {
   return auth.signOut();
 };
 
-<<<<<<< HEAD
+
 export const verifyEmailConfirmation = async ({ tokenHash, type = "signup" }) => {
   await ensureInitialized();
 
@@ -312,7 +310,4 @@ export const verifyEmailConfirmation = async ({ tokenHash, type = "signup" }) =>
 
   throw new Error("Email confirmation verification is not supported for this auth provider.");
 };
-
-=======
->>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
 export const getAuthProvider = () => AUTH_PROVIDER;

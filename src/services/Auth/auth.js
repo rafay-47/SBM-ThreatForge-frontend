@@ -8,11 +8,9 @@ import {
   getCurrentSession,
   signOutCurrentUser,
   getAuthProvider,
-<<<<<<< HEAD
   signUpWithEmail,
   verifyEmailConfirmation,
-=======
->>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
+
 } from "./provider";
 
 export const signIn = () => {
@@ -23,7 +21,6 @@ export const passwordSignIn = ({ username, password }) => {
   return signInWithPassword({ username, password });
 };
 
-<<<<<<< HEAD
 export const signUp = ({ email, password }) => {
   return signUpWithEmail({ email, password });
 };
@@ -32,8 +29,7 @@ export const confirmEmail = ({ tokenHash, type }) => {
   return verifyEmailConfirmation({ tokenHash, type });
 };
 
-=======
->>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
+
 export const confirmNewPasswordSignIn = ({ newPassword }) => {
   return completeSignInWithNewPassword({ newPassword });
 };
