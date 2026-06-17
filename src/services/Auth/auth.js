@@ -8,6 +8,8 @@ import {
   getCurrentSession,
   signOutCurrentUser,
   getAuthProvider,
+  signUpWithEmail,
+  verifyEmailConfirmation,
 } from "./provider";
 
 export const signIn = () => {
@@ -16,6 +18,14 @@ export const signIn = () => {
 
 export const passwordSignIn = ({ username, password }) => {
   return signInWithPassword({ username, password });
+};
+
+export const signUp = ({ email, password }) => {
+  return signUpWithEmail({ email, password });
+};
+
+export const confirmEmail = ({ tokenHash, type }) => {
+  return verifyEmailConfirmation({ tokenHash, type });
 };
 
 export const confirmNewPasswordSignIn = ({ newPassword }) => {

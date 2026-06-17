@@ -5,6 +5,7 @@ import {
   startPasswordReset,
   completePasswordReset,
   getCurrentAuthProvider,
+  signUp,
 } from "../../services/Auth/auth";
 import GenAiButton from "../ThreatModeling/GenAiButton";
 import Shield from "../ThreatModeling/images/shield.png";
@@ -61,6 +62,12 @@ const LoginForm = ({ onSignInSuccess }) => {
     setPasswordValidation(validatePassword(newPassword));
   };
 
+  const handleSignUpPasswordChange = (e) => {
+    const val = e.target.value;
+    setPassword(val);
+    setPasswordValidation(validatePassword(val));
+  };
+
   const handleSignIn = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -114,6 +121,29 @@ const LoginForm = ({ onSignInSuccess }) => {
     }
   };
 
+  const handleSignUp = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    setError("");
+    try {
+      if (!passwordValidation.isValid) {
+        setError("Password does not meet requirements");
+        setLoading(false);
+        return;
+      }
+      const result = await signUp({ email: username, password });
+      if (result.emailConfirmationRequired) {
+        setFormState("confirmEmail");
+      } else {
+        onSignInSuccess?.();
+      }
+    } catch (error) {
+      setError(error.message || "Error creating account");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={`login-container ${isDark ? "dark-theme" : "light-theme"}`}>
       {formState === "signIn" && (
@@ -149,6 +179,99 @@ const LoginForm = ({ onSignInSuccess }) => {
               <GenAiButton loading={loading}>Sign In</GenAiButton>
             </div>
           </form>
+          <div className="signup-link">
+            Don&apos;t have an account?{" "}
+            <a
+              href="#"
+              onClick={() => {
+                setFormState("signUp");
+                setError("");
+              }}
+            >
+              Sign Up
+            </a>
+          </div>
+        </div>
+      )}
+
+      {formState === "signUp" && (
+        <div className="form-container">
+          <img src={Shield} alt="SBM ThreatForge logo" style={{ width: "80px" }} />
+          <Title>Create Account</Title>
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleSignUp}>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={handleSignUpPasswordChange}
+                required
+              />
+            </div>
+            <div className="password-validation">
+              <div className={passwordValidation.requirements.minLength ? "valid" : ""}>
+                {passwordValidation.requirements.minLength ? "\u2713" : "\u2717"} At least 8
+                characters
+              </div>
+              <div className={passwordValidation.requirements.hasUpperCase ? "valid" : ""}>
+                {passwordValidation.requirements.hasUpperCase ? "\u2713" : "\u2717"} One uppercase
+                letter
+              </div>
+              <div className={passwordValidation.requirements.hasLowerCase ? "valid" : ""}>
+                {passwordValidation.requirements.hasLowerCase ? "\u2713" : "\u2717"} One lowercase
+                letter
+              </div>
+              <div className={passwordValidation.requirements.hasNumber ? "valid" : ""}>
+                {passwordValidation.requirements.hasNumber ? "\u2713" : "\u2717"} One number
+              </div>
+              <div className={passwordValidation.requirements.hasSpecialChar ? "valid" : ""}>
+                {passwordValidation.requirements.hasSpecialChar ? "\u2713" : "\u2717"} One special
+                character
+              </div>
+            </div>
+            <div className="button-group">
+              <GenAiButton loading={loading} disabled={!passwordValidation.isValid}>
+                Create Account
+              </GenAiButton>
+            </div>
+          </form>
+          <div className="signup-link">
+            Already have an account?{" "}
+            <a
+              href="#"
+              onClick={() => {
+                setFormState("signIn");
+                setError("");
+              }}
+            >
+              Sign In
+            </a>
+          </div>
+        </div>
+      )}
+
+      {formState === "confirmEmail" && (
+        <div className="form-container">
+          <img src={Shield} alt="SBM ThreatForge logo" style={{ width: "80px" }} />
+          <Title>Check Your Email</Title>
+          <div className="confirmation-message">
+            We&apos;ve sent a confirmation link to <strong>{username}</strong>.
+            <br />
+            Please check your inbox and click the link to verify your account.
+          </div>
+          <div className="button-group">
+            <GenAiButton onClick={() => setFormState("signIn")}>Back to Sign In</GenAiButton>
+          </div>
         </div>
       )}
 

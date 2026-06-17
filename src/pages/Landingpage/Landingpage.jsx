@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "@emotion/styled";
-import { getUser } from "../../services/Auth/auth";
+import { getUser, confirmEmail } from "../../services/Auth/auth";
 import LoginForm from "../../components/Auth/LoginForm";
 import { useTheme } from "../../components/ThemeContext";
 import rightArrowIcon from "../../../assets/icons/right-arrow.svg";
@@ -308,6 +309,8 @@ const FormScaleWrapper = styled.div`
 
 const LoginPageInternal = ({ setAuthUser }) => {
   const { isDark } = useTheme();
+  const [searchParams] = useSearchParams();
+  const [confirmationStatus, setConfirmationStatus] = React.useState(null);
 
   const checkAuthStatus = useCallback(async () => {
     try {
@@ -321,8 +324,25 @@ const LoginPageInternal = ({ setAuthUser }) => {
   }, [setAuthUser]);
 
   useEffect(() => {
-    checkAuthStatus();
-  }, [checkAuthStatus]);
+    const tokenHash = searchParams.get("token_hash");
+    const type = searchParams.get("type");
+
+    if (tokenHash && type) {
+      confirmEmail({ tokenHash, type })
+        .then((result) => {
+          if (result.isSignedIn) {
+            setAuthUser();
+          } else {
+            setConfirmationStatus("success");
+          }
+        })
+        .catch(() => {
+          setConfirmationStatus("error");
+        });
+    } else {
+      checkAuthStatus();
+    }
+  }, [searchParams, checkAuthStatus, setAuthUser]);
 
   const handleSignInSuccess = () => {
     checkAuthStatus();
@@ -371,7 +391,29 @@ const LoginPageInternal = ({ setAuthUser }) => {
 
         <RightSection isDark={isDark}>
           <FormScaleWrapper>
-            <LoginForm onSignInSuccess={handleSignInSuccess} />
+            {confirmationStatus === "success" ? (
+              <div style={{ textAlign: "center", padding: "20px" }}>
+                <h2 style={{ color: isDark ? "#fff" : "#333", marginBottom: "16px" }}>
+                  Email Confirmed
+                </h2>
+                <p style={{ color: isDark ? "#ccc" : "#555", marginBottom: "24px" }}>
+                  Your account has been verified. You can now sign in.
+                </p>
+                <LoginForm onSignInSuccess={handleSignInSuccess} />
+              </div>
+            ) : confirmationStatus === "error" ? (
+              <div style={{ textAlign: "center", padding: "20px" }}>
+                <h2 style={{ color: isDark ? "#fff" : "#333", marginBottom: "16px" }}>
+                  Confirmation Failed
+                </h2>
+                <p style={{ color: isDark ? "#ccc" : "#555", marginBottom: "24px" }}>
+                  The confirmation link is invalid or has expired. Please try signing up again.
+                </p>
+                <LoginForm onSignInSuccess={handleSignInSuccess} />
+              </div>
+            ) : (
+              <LoginForm onSignInSuccess={handleSignInSuccess} />
+            )}
           </FormScaleWrapper>
         </RightSection>
       </LoginCard>

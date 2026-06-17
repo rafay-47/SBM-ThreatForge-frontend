@@ -122,6 +122,39 @@ export const signInWithPassword = async ({ username, password }) => {
   return auth.signIn({ username, password });
 };
 
+export const signUpWithEmail = async ({ email, password }) => {
+  await ensureInitialized();
+
+  if (AUTH_PROVIDER === "supabase") {
+    return getSupabaseClient()
+      .auth.signUp({ email, password })
+      .then(({ data, error }) => {
+        if (error) {
+          throw error;
+        }
+
+        return {
+          user: data.user,
+          session: data.session,
+          emailConfirmationRequired: !data.session,
+        };
+      });
+  }
+
+  const { auth } = await loadAmplifyModules();
+  return auth
+    .signUp({
+      username: email,
+      password,
+      options: { userAttributes: { email } },
+    })
+    .then((result) => ({
+      user: result.user,
+      session: null,
+      emailConfirmationRequired: result.nextStep?.signUpStep === "CONFIRM_SIGN_UP",
+    }));
+};
+
 export const completeSignInWithNewPassword = async ({ newPassword }) => {
   await ensureInitialized();
 
@@ -253,6 +286,27 @@ export const signOutCurrentUser = async () => {
 
   const { auth } = await loadAmplifyModules();
   return auth.signOut();
+};
+
+export const verifyEmailConfirmation = async ({ tokenHash, type = "signup" }) => {
+  await ensureInitialized();
+
+  if (AUTH_PROVIDER === "supabase") {
+    return getSupabaseClient()
+      .auth.verifyOtp({ token_hash: tokenHash, type })
+      .then(({ data, error }) => {
+        if (error) {
+          throw error;
+        }
+
+        return {
+          isSignedIn: Boolean(data.session),
+          user: data.user,
+        };
+      });
+  }
+
+  throw new Error("Email confirmation verification is not supported for this auth provider.");
 };
 
 export const getAuthProvider = () => AUTH_PROVIDER;

@@ -222,3 +222,82 @@
     font-size: 3vw;
   }
 }
+
+/* Signup link */
+.signup-link {
+  margin-top: 16px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.light-theme .signup-link {
+  color: #555;
+}
+
+.dark-theme .signup-link {
+  color: #aaa;
+}
+
+.signup-link a {
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.light-theme .signup-link a {
+  color: #667eea;
+}
+
+.dark-theme .signup-link a {
+  color: #8a7aff;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Signup password validation list */
+.password-validation {
+  width: 85%;
+  text-align: left;
+  margin-top: 4px;
+  position: static;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.password-validation > div {
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+.light-theme .password-validation > div {
+  color: #888;
+}
+
+.dark-theme .password-validation > div {
+  color: #888;
+}
+
+.password-validation > div.valid {
+  color: #5cb85c;
+}
+
+/* Email confirmation message */
+.confirmation-message {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 85%;
+}
+
+.light-theme .confirmation-message {
+  color: #555;
+}
+
+.dark-theme .confirmation-message {
+  color: #ccc;
+}
