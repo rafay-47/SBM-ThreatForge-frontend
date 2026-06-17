@@ -5,7 +5,10 @@ import {
   startPasswordReset,
   completePasswordReset,
   getCurrentAuthProvider,
+<<<<<<< HEAD
   signUp,
+=======
+>>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
 } from "../../services/Auth/auth";
 import GenAiButton from "../ThreatModeling/GenAiButton";
 import Shield from "../ThreatModeling/images/shield.png";
@@ -62,12 +65,15 @@ const LoginForm = ({ onSignInSuccess }) => {
     setPasswordValidation(validatePassword(newPassword));
   };
 
+<<<<<<< HEAD
   const handleSignUpPasswordChange = (e) => {
     const val = e.target.value;
     setPassword(val);
     setPasswordValidation(validatePassword(val));
   };
 
+=======
+>>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
   const handleSignIn = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -121,6 +127,7 @@ const LoginForm = ({ onSignInSuccess }) => {
     }
   };
 
+<<<<<<< HEAD
   const handleSignUp = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -144,6 +151,8 @@ const LoginForm = ({ onSignInSuccess }) => {
     }
   };
 
+=======
+>>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
   return (
     <div className={`login-container ${isDark ? "dark-theme" : "light-theme"}`}>
       {formState === "signIn" && (
@@ -179,6 +188,7 @@ const LoginForm = ({ onSignInSuccess }) => {
               <GenAiButton loading={loading}>Sign In</GenAiButton>
             </div>
           </form>
+<<<<<<< HEAD
           <div className="signup-link">
             Don&apos;t have an account?{" "}
             <a
@@ -272,6 +282,8 @@ const LoginForm = ({ onSignInSuccess }) => {
           <div className="button-group">
             <GenAiButton onClick={() => setFormState("signIn")}>Back to Sign In</GenAiButton>
           </div>
+=======
+>>>>>>> a4ad6d0627dfd39aa8d0706ed05abae5b1360549
         </div>
       )}
 
