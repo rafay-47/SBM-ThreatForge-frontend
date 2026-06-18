@@ -5,6 +5,7 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  background: var(--token-bg-chat);
 }
 
 .main-div {
@@ -20,6 +21,7 @@
   overflow: hidden;
   justify-content: center;
   align-items: center;
+  background: var(--token-bg-chat);
 }
 
 div[style="overflow: auto"] {
@@ -67,7 +69,7 @@ div[style="overflow: auto"]::-webkit-scrollbar {
   left: 10px;
   right: 0;
   height: 25px;
-  background: linear-gradient(to bottom, transparent, rgba(245, 245, 244, 0.9));
+  background: linear-gradient(to bottom, transparent, var(--token-bg-chat));
   pointer-events: none;
   z-index: 4;
 }
@@ -75,7 +77,7 @@ div[style="overflow: auto"]::-webkit-scrollbar {
 /* Dark mode fade effect */
 html.dark .stick-to-bottom-fade {
   height: 30px;
-  background: linear-gradient(to bottom, transparent, rgba(29, 29, 32, 1));
+  background: linear-gradient(to bottom, transparent, var(--token-bg-chat));
 }
 
 .stick-to-bottom::-webkit-scrollbar {
@@ -85,6 +87,7 @@ html.dark .stick-to-bottom-fade {
 .stick-to-bottom-content {
   padding: 16px;
   font-size: 14px;
+  color: var(--token-text-primary);
 }
 
 .tools_input_textarea_div {
@@ -116,6 +119,10 @@ html.dark .stick-to-bottom-fade {
   align-items: end;
   width: 100%;
   max-width: 100%;
+  border: 1px solid var(--token-border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--token-bg-primary);
+  box-shadow: var(--token-shadow-sm);
 }
 
 /* Scroll to bottom button - positioned over input area */
@@ -138,12 +145,12 @@ html.dark .stick-to-bottom-fade {
 .text-reveal {
   background: linear-gradient(
     to right,
-    white 0%,
-    white 10%,
-    #616167 11%,
-    #616167 45%,
-    #616167 55%,
-    #616167 100%
+    var(--token-accent-primary) 0%,
+    var(--token-accent-primary) 10%,
+    var(--token-text-muted) 11%,
+    var(--token-text-muted) 45%,
+    var(--token-text-muted) 55%,
+    var(--token-text-muted) 100%
   );
   background-size: 300% auto;
   color: transparent;
@@ -158,12 +165,12 @@ html.dark .stick-to-bottom-fade {
 .text-reveal-light {
   background: linear-gradient(
     to right,
-    #333333 0%,
-    #333333 10%,
-    #c2c0c0 11%,
-    #c2c0c0 45%,
-    #c2c0c0 55%,
-    #c2c0c0 100%
+    var(--token-accent-primary) 0%,
+    var(--token-accent-primary) 10%,
+    var(--token-text-muted) 11%,
+    var(--token-text-muted) 45%,
+    var(--token-text-muted) 55%,
+    var(--token-text-muted) 100%
   );
   background-size: 300% auto;
   color: transparent;
@@ -193,18 +200,18 @@ html.dark .stick-to-bottom-fade {
 
 .custom-table th,
 .custom-table td {
-  border: 1px solid #8c8c94;
+  border: 1px solid var(--token-border-secondary);
   padding: 6px 10px;
 }
 
 /* Light theme */
 .custom-table.light th {
-  background-color: #fafaf9;
+  background-color: var(--token-bg-tertiary);
 }
 
 /* Dark theme */
 .custom-table.dark th {
-  background-color: #18181b;
+  background-color: var(--token-bg-tertiary);
 }
 
 /* Remove double borders */
@@ -362,7 +369,7 @@ html.dark .stick-to-bottom-fade {
 }
 
 .suggested-questions-area {
-  border: 0.1px solid #ccc;
+  border: 1px solid var(--token-border-primary);
   padding: 8px;
   min-height: auto;
   border-radius: 8px;
@@ -370,11 +377,13 @@ html.dark .stick-to-bottom-fade {
   width: auto;
   display: inline-block;
   box-sizing: border-box;
-  background: aliceblue;
+  background: var(--token-bg-primary);
+  color: var(--token-text-secondary);
 }
 
 .suggested-questions-area:hover {
-  background: lightsteelblue;
+  background: var(--token-bg-hover);
+  color: var(--token-accent-primary);
 }
 
 .user-icon {
@@ -413,7 +422,10 @@ html.dark .stick-to-bottom-fade {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  background-color: white;
+  background-color: var(--token-bg-primary);
+  border: 1px solid var(--token-border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--token-shadow-md);
   padding: 8px;
   margin-bottom: 1em;
   z-index: 1099;
@@ -432,7 +444,7 @@ html.dark .stick-to-bottom-fade {
 
 .codeBlockHeader {
   display: flex;
-  background: gray;
+  background: var(--token-bg-command);
   border-radius: 3px 3px 0 0;
   height: 30px;
 }
@@ -494,8 +506,8 @@ pre.ace-cloud_editor::-webkit-scrollbar {
   gap: 4px;
   z-index: 1100;
   padding: 16px;
-  background-color: white;
-  border-top: 1px solid #e0e0e0;
+  background-color: var(--token-bg-primary);
+  border-top: 1px solid var(--token-border-primary);
   transition: left 0.3s ease-in-out;
 }
 
@@ -505,7 +517,7 @@ pre.ace-cloud_editor::-webkit-scrollbar {
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 1500 !important; /* Higher z-index to ensure visibility */
-  background-color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent background */
+  background-color: var(--token-bg-primary) !important; /* Semi-transparent background */
   border-radius: 50% !important;
   padding: 10px !important;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important; /* Add shadow for visibility */
@@ -516,16 +528,17 @@ pre.ace-cloud_editor::-webkit-scrollbar {
 }
 
 .code-block-container .ace-cloud_editor {
-  background-color: #eae9e9 !important;
+  background-color: var(--token-bg-tertiary) !important;
 }
 
 .code-block-container .ace-cloud_editor_dark {
-  background-color: #171717 !important;
+  background-color: var(--token-bg-command) !important;
 }
 
 /* Inline code styling */
 .inline-code {
-  background-color: rgba(135, 131, 120, 0.15);
+  background-color: var(--token-accent-bg);
+  color: var(--token-accent-primary);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-family:

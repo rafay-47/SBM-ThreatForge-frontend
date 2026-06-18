@@ -80,7 +80,8 @@ export const SubmissionComponent = ({
   };
 
   return (
-    <Wizard
+    <div className="threat-intake-wizard">
+      <Wizard
       i18nStrings={{
         stepNumberLabel: (stepNumber) => `Step ${stepNumber}`,
         collapsedStepsLabel: (stepNumber, stepsCount) => `Step ${stepNumber} of ${stepsCount}`,
@@ -532,6 +533,7 @@ export const SubmissionComponent = ({
           ),
         },
       ]}
-    />
+      />
+    </div>
   );
 };

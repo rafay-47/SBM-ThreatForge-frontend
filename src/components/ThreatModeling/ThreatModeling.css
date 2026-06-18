@@ -4,12 +4,114 @@
   display: block;
 }
 
+.threat-intake-wizard {
+  padding: 2px;
+}
+
+.threat-intake-wizard [class*="awsui_wizard"] {
+  color: var(--token-text-primary);
+}
+
+.threat-intake-wizard [class*="awsui_navigation"] {
+  border-color: var(--token-border-primary) !important;
+}
+
+.threat-intake-wizard [class*="awsui_circle"] {
+  border-color: var(--token-accent-primary) !important;
+}
+
+.threat-intake-wizard [class*="awsui_active"] [class*="awsui_circle"],
+.threat-intake-wizard [class*="awsui_circle"][class*="awsui_active"] {
+  background: var(--token-accent-primary) !important;
+}
+
+.threat-results-workspace {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding-left: 0;
+}
+
+.architecture-preview-surface {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 18px;
+  border: 1px solid var(--token-border-primary);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.05), transparent 42%),
+    var(--token-bg-primary);
+  box-shadow: var(--token-shadow-sm);
+}
+
+.architecture-preview-surface img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+
+html:not(.dark) .architecture-preview-surface img {
+  mix-blend-mode: multiply;
+}
+
+.threat-catalog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.threat-results-workspace [class*="awsui_table"],
+.threat-results-workspace [class*="awsui_container"],
+.threat-intake-wizard [class*="awsui_container"] {
+  border-color: var(--token-border-primary) !important;
+}
+
+.threat-results-workspace [class*="awsui_header"],
+.threat-intake-wizard [class*="awsui_header"] {
+  color: var(--token-text-primary) !important;
+}
+
+.threat-results-workspace [class*="awsui_table"] thead th {
+  background: var(--token-bg-tertiary) !important;
+  color: var(--token-text-secondary) !important;
+}
+
+.threat-results-workspace [class*="awsui_table"] tbody tr:hover td {
+  background: var(--token-bg-hover) !important;
+}
+
+.threat-results-workspace [class*="awsui_property-filter"],
+.threat-results-workspace [class*="awsui_token"] {
+  border-color: var(--token-border-primary) !important;
+}
+
+.threat-results-workspace [class*="awsui_badge-color-severity-critical"],
+.threat-results-workspace [class*="awsui_badge-color-severity-high"] {
+  background: var(--risk-critical-bg) !important;
+  color: var(--risk-critical) !important;
+}
+
+.threat-results-workspace [class*="awsui_badge-color-severity-medium"] {
+  background: var(--risk-medium-bg) !important;
+  color: var(--risk-medium) !important;
+}
+
+.threat-results-workspace [class*="awsui_badge-color-severity-low"] {
+  background: var(--risk-low-bg) !important;
+  color: var(--risk-low) !important;
+}
+
 .color-changing {
   font-size: 28px;
   font-weight: bold;
-  font-family: "Open Sans", sans-serif;
-  color: #656871;
-  background: linear-gradient(to right, #656871 20%, #ffffff 50%, #656871 80%);
+  font-family: var(--font-family-heading);
+  color: var(--token-text-muted);
+  background: linear-gradient(
+    to right,
+    var(--token-text-muted) 20%,
+    var(--token-accent-primary) 50%,
+    var(--token-text-muted) 80%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -30,28 +132,35 @@
 .data-flow-table {
   border-collapse: collapse;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-family-body);
   font-size: 14px;
 }
 
 .data-flow-table th,
 .data-flow-table td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--token-border-primary);
   padding: 6px;
   text-align: left;
 }
 
 .data-flow-table th {
-  background-color: #f5f5f5;
+  background-color: var(--token-bg-tertiary);
   font-weight: bold;
 }
 
 .data-flow-table tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: var(--token-bg-tertiary);
 }
 
 .data-flow-table tr:hover {
-  background-color: #f0f0f0;
+  background-color: var(--token-bg-hover);
+}
+
+@media (max-width: 760px) {
+  .threat-catalog-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @-moz-document url-prefix() {

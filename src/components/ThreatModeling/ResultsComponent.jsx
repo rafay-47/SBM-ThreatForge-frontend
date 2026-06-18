@@ -239,17 +239,12 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
   }, [id, refreshTrail, refreshAttackTreeMetadata]);
 
   return (
-    <div style={{ maxWidth: "100%", height: "auto", paddingLeft: 0 }}>
+    <div className="threat-results-workspace">
       <SpaceBetween size="xl">
         <LazySection estimatedHeight={600}>
           <section>
             {architectureDiagramBase64 && (
-              <div
-                style={{
-                  display: "inline-block",
-                  background: "#FAFAF9",
-                }}
-              >
+              <div className="architecture-preview-surface">
                 <img
                   src={`data:${architectureDiagramBase64?.type};base64,${architectureDiagramBase64?.value}`}
                   alt="Architecture Diagram"
@@ -258,7 +253,6 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
                     maxHeight: "800px",
                     objectFit: "contain",
                     objectPosition: "center",
-                    mixBlendMode: "multiply",
                   }}
                 />
               </div>
@@ -326,12 +320,12 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
         </LazySection>
         <div style={{ height: "25px" }}></div>
         <SpaceBetween size="m">
-          <SpaceBetween direction="horizontal" size="s" alignItems="center">
+          <div className="threat-catalog-heading">
             <Header counter={`(${filteredThreats.length})`} variant="h2">
               Threat Catalog
             </Header>
             {!isReadOnly && <Button onClick={handleModal}>Add Threat</Button>}
-          </SpaceBetween>
+          </div>
           <PropertyFilter
             query={query}
             onChange={({ detail }) => setQuery(detail)}

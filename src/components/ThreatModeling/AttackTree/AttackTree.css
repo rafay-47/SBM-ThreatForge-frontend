@@ -841,3 +841,71 @@ defs marker {
     display: none;
   }
 }
+
+/* ThreatForge workstation theme overrides */
+.attack-tree-container {
+  background:
+    radial-gradient(circle at 0 0, rgba(124, 58, 237, 0.08), transparent 260px),
+    var(--token-bg-app) !important;
+  border-radius: var(--radius-lg);
+}
+
+.react-flow__edge.edge-default,
+.react-flow__edge-path {
+  stroke: var(--token-text-muted);
+}
+
+.react-flow__edge.edge-attack {
+  stroke: var(--risk-critical);
+}
+
+.react-flow__edge.edge-mitigation,
+.react-flow__edge.edge-countermeasure {
+  stroke: var(--risk-low);
+}
+
+.custom-node,
+.root-goal-node,
+.and-gate-node,
+.or-gate-node,
+.leaf-attack-node,
+.countermeasure-node {
+  background: var(--token-bg-primary);
+  color: var(--token-text-primary);
+}
+
+.custom-node:hover,
+.custom-node.selected {
+  border-color: var(--token-accent-primary);
+  box-shadow: var(--token-focus-ring), var(--token-shadow-md);
+}
+
+.custom-node:focus {
+  outline: 2px solid var(--token-accent-primary);
+  outline-offset: 3px;
+}
+
+.react-flow__controls {
+  overflow: hidden;
+  border: 1px solid var(--token-border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--token-bg-primary) !important;
+  box-shadow: var(--token-shadow-sm) !important;
+}
+
+.react-flow__controls button {
+  border-color: var(--token-border-primary) !important;
+  background: var(--token-bg-primary) !important;
+  color: var(--token-text-primary) !important;
+}
+
+.react-flow__controls button:hover {
+  background: var(--token-bg-hover) !important;
+  color: var(--token-accent-primary) !important;
+}
+
+.react-flow__minimap {
+  border: 1px solid var(--token-border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--token-bg-primary) !important;
+}

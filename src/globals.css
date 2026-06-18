@@ -16,40 +16,40 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   /* Light theme colors - mapped to Cloudscape theme tokens */
-  --color-background: #fafaf9;
-  --color-foreground: #18181b;
-  --color-card: #ffffff;
-  --color-card-foreground: #18181b;
-  --color-popover: #ffffff;
-  --color-popover-foreground: #18181b;
-  --color-primary: #7c3aed;
+  --color-background: var(--token-bg-app);
+  --color-foreground: var(--token-text-primary);
+  --color-card: var(--token-bg-primary);
+  --color-card-foreground: var(--token-text-primary);
+  --color-popover: var(--token-bg-primary);
+  --color-popover-foreground: var(--token-text-primary);
+  --color-primary: var(--token-accent-primary);
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f5f5f4;
-  --color-secondary-foreground: #18181b;
-  --color-muted: #f5f5f4;
-  --color-muted-foreground: #79716b;
-  --color-accent: #f5f3ff;
-  --color-accent-foreground: #7c3aed;
+  --color-secondary: var(--token-bg-secondary);
+  --color-secondary-foreground: var(--token-text-secondary);
+  --color-muted: var(--token-bg-tertiary);
+  --color-muted-foreground: var(--token-text-muted);
+  --color-accent: var(--token-accent-bg);
+  --color-accent-foreground: var(--token-accent-primary);
   --color-destructive: hsl(0 84.2% 60.2%);
   --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: #e5e5e4;
-  --color-input: #e5e5e4;
-  --color-ring: #79716b;
-  --color-chart-1: hsl(12 76% 61%);
-  --color-chart-2: hsl(173 58% 39%);
-  --color-chart-3: hsl(197 37% 24%);
-  --color-chart-4: hsl(43 74% 66%);
-  --color-chart-5: hsl(27 87% 67%);
+  --color-border: var(--token-border-primary);
+  --color-input: var(--token-border-primary);
+  --color-ring: var(--token-accent-primary);
+  --color-chart-1: var(--risk-critical);
+  --color-chart-2: var(--risk-high);
+  --color-chart-3: var(--risk-medium);
+  --color-chart-4: var(--risk-low);
+  --color-chart-5: var(--token-accent-primary);
 
   /* Sidebar light theme - mapped to Cloudscape container colors */
-  --color-sidebar-background: #f5f5f4;
-  --color-sidebar-foreground: #79716b;
-  --color-sidebar-primary: #7c3aed;
+  --color-sidebar-background: var(--token-bg-secondary);
+  --color-sidebar-foreground: var(--token-text-muted);
+  --color-sidebar-primary: var(--token-accent-primary);
   --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: #f5f3ff;
-  --color-sidebar-accent-foreground: #7c3aed;
-  --color-sidebar-border: #e5e5e4;
-  --color-sidebar-ring: #7c3aed;
+  --color-sidebar-accent: var(--token-accent-bg);
+  --color-sidebar-accent-foreground: var(--token-accent-primary);
+  --color-sidebar-border: var(--token-border-primary);
+  --color-sidebar-ring: var(--token-accent-primary);
 
   /* Animation keyframes for tailwindcss-animate */
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -58,40 +58,88 @@
 
 /* Dark theme colors - mapped to Cloudscape theme tokens */
 .dark {
-  --color-background: #101012;
-  --color-foreground: #fafaf9;
-  --color-card: #1d1d20;
-  --color-card-foreground: #fafaf9;
-  --color-popover: #1d1d20;
-  --color-popover-foreground: #ffffff;
-  --color-primary: #8b5cf6;
+  --color-background: var(--token-bg-app);
+  --color-foreground: var(--token-text-primary);
+  --color-card: var(--token-bg-primary);
+  --color-card-foreground: var(--token-text-primary);
+  --color-popover: var(--token-bg-primary);
+  --color-popover-foreground: var(--token-text-primary);
+  --color-primary: var(--token-accent-primary);
   --color-primary-foreground: #ffffff;
-  --color-secondary: #1d1d20;
-  --color-secondary-foreground: #fafaf9;
-  --color-muted: #1d1d20;
-  --color-muted-foreground: #949495;
-  --color-accent: #2e1065;
-  --color-accent-foreground: #a78bfa;
+  --color-secondary: var(--token-bg-secondary);
+  --color-secondary-foreground: var(--token-text-secondary);
+  --color-muted: var(--token-bg-tertiary);
+  --color-muted-foreground: var(--token-text-muted);
+  --color-accent: var(--token-accent-bg);
+  --color-accent-foreground: var(--token-accent-primary);
   --color-destructive: hsl(0 62.8% 30.6%);
   --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: #2a2a2c;
-  --color-input: #222225;
-  --color-ring: #8b5cf6;
-  --color-chart-1: hsl(280 65% 60%);
-  --color-chart-2: hsl(220 70% 50%);
-  --color-chart-3: hsl(160 60% 45%);
-  --color-chart-4: hsl(30 80% 55%);
-  --color-chart-5: hsl(340 75% 55%);
+  --color-border: var(--token-border-primary);
+  --color-input: var(--token-border-primary);
+  --color-ring: var(--token-accent-primary);
+  --color-chart-1: var(--risk-critical);
+  --color-chart-2: var(--risk-high);
+  --color-chart-3: var(--risk-medium);
+  --color-chart-4: var(--risk-low);
+  --color-chart-5: var(--token-accent-primary);
 
   /* Sidebar dark theme - mapped to Cloudscape container colors */
-  --color-sidebar-background: #1d1d20;
-  --color-sidebar-foreground: #949495;
-  --color-sidebar-primary: #8b5cf6;
+  --color-sidebar-background: var(--token-bg-secondary);
+  --color-sidebar-foreground: var(--token-text-muted);
+  --color-sidebar-primary: var(--token-accent-primary);
   --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: #2e1065;
-  --color-sidebar-accent-foreground: #a78bfa;
-  --color-sidebar-border: #2a2a2c;
-  --color-sidebar-ring: #8b5cf6;
+  --color-sidebar-accent: var(--token-accent-bg);
+  --color-sidebar-accent-foreground: var(--token-accent-primary);
+  --color-sidebar-border: var(--token-border-primary);
+  --color-sidebar-ring: var(--token-accent-primary);
+}
+
+.workstation-page {
+  width: min(var(--workstation-max-width), calc(100vw - 32px));
+  margin: 0 auto;
+  padding: var(--workstation-page-padding);
+  color: var(--token-text-primary);
+}
+
+.threat-catalog-page,
+.threat-model-result-page {
+  min-height: 100%;
+}
+
+.workstation-surface {
+  border: 1px solid var(--token-border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--token-bg-primary);
+  box-shadow: var(--token-shadow-sm);
+}
+
+.workstation-kicker {
+  color: var(--token-accent-primary);
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+button,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--token-accent-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .workstation-page {
+    width: 100%;
+    padding: 18px 14px;
+  }
 }
 
 @layer base {
@@ -203,90 +251,126 @@
 
 /* Sidebar CSS variables for Tailwind (without color- prefix) */
 :root {
-  --sidebar-background: 245 245 244;
-  --sidebar-foreground: 121 113 107;
-  --sidebar-primary: 20 17 15;
-  --sidebar-primary-foreground: 250 250 249;
-  --sidebar-accent: 238 238 238;
-  --sidebar-accent-foreground: 20 17 15;
-  --sidebar-border: 229 229 228;
-  --sidebar-ring: 0 108 224;
+  --background: 247 246 251;
+  --foreground: 25 23 36;
+  --card: 255 255 255;
+  --card-foreground: 25 23 36;
+  --popover: 255 255 255;
+  --popover-foreground: 25 23 36;
+  --primary: 124 58 237;
+  --primary-foreground: 255 255 255;
+  --secondary: 239 237 247;
+  --secondary-foreground: 54 52 71;
+  --muted: 251 250 255;
+  --muted-foreground: 108 104 125;
+  --accent: 245 243 255;
+  --accent-foreground: 124 58 237;
+  --destructive: 180 35 24;
+  --destructive-foreground: 255 255 255;
+  --border: 229 225 238;
+  --input: 229 225 238;
+  --ring: 124 58 237;
+  --sidebar-background: 239 237 247;
+  --sidebar-foreground: 108 104 125;
+  --sidebar-primary: 124 58 237;
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 245 243 255;
+  --sidebar-accent-foreground: 124 58 237;
+  --sidebar-border: 229 225 238;
+  --sidebar-ring: 124 58 237;
   --sidebar-transition-duration: 400ms;
   --sidebar-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.dark {
-  --sidebar-background: 29 29 32;
-  --sidebar-foreground: 148 148 149;
-  --sidebar-primary: 148 148 148;
-  --sidebar-primary-foreground: 20 17 15;
-  --sidebar-accent: 42 42 44;
-  --sidebar-accent-foreground: 244 244 245;
-  --sidebar-border: 42 42 44;
-  --sidebar-ring: 148 148 148;
+  --background: 16 16 18;
+  --foreground: 250 250 249;
+  --card: 27 27 34;
+  --card-foreground: 250 250 249;
+  --popover: 27 27 34;
+  --popover-foreground: 250 250 249;
+  --primary: 167 139 250;
+  --primary-foreground: 255 255 255;
+  --secondary: 23 23 28;
+  --secondary-foreground: 231 227 239;
+  --muted: 32 32 42;
+  --muted-foreground: 166 160 183;
+  --accent: 46 16 101;
+  --accent-foreground: 167 139 250;
+  --destructive: 255 138 122;
+  --destructive-foreground: 16 16 18;
+  --border: 48 48 60;
+  --input: 48 48 60;
+  --ring: 167 139 250;
+  --sidebar-background: 23 23 28;
+  --sidebar-foreground: 166 160 183;
+  --sidebar-primary: 167 139 250;
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 46 16 101;
+  --sidebar-accent-foreground: 167 139 250;
+  --sidebar-border: 48 48 60;
+  --sidebar-ring: 167 139 250;
   --sidebar-transition-duration: 400ms;
   --sidebar-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Direct dark mode overrides for sidebar - ensures dark theme is applied */
 html.dark [data-sidebar="sidebar"] {
-  background-color: #1d1d20 !important;
-  color: #ffffff !important;
+  background-color: var(--token-bg-secondary) !important;
+  color: var(--token-text-primary) !important;
   border: none !important;
 }
 
 html.dark [data-sidebar="menu-button"] {
-  color: #ffffff !important;
+  color: var(--token-text-primary) !important;
 }
 
 html.dark [data-sidebar="menu-button"] svg {
-  color: #ffffff !important;
+  color: var(--token-text-primary) !important;
 }
 
 html.dark [data-sidebar="menu-button"]:hover {
-  background-color: #2a2a2c !important;
-  color: #ffffff !important;
+  background-color: var(--token-bg-hover) !important;
+  color: var(--token-text-primary) !important;
 }
 
 html.dark [data-sidebar="menu-button"]:hover svg {
-  color: #ffffff !important;
+  color: var(--token-accent-primary) !important;
 }
 
-/* Light mode button - pure black text and icons */
 [data-sidebar="menu-button"] {
-  color: #000000 !important;
+  color: var(--token-text-secondary) !important;
 }
 
 [data-sidebar="menu-button"] svg {
-  color: #000000 !important;
+  color: var(--token-text-muted) !important;
 }
 
 [data-sidebar="menu-button"]:hover {
-  background-color: #e5e5e4 !important;
-  color: #000000 !important;
+  background-color: var(--token-bg-hover) !important;
+  color: var(--token-accent-primary) !important;
 }
 
 [data-sidebar="menu-button"]:hover svg {
-  color: #000000 !important;
+  color: var(--token-accent-primary) !important;
 }
 
 html.dark [data-sidebar="menu-button"][data-active="true"] {
-  background-color: #2a2a2c !important;
-  color: #ffffff !important;
+  background-color: var(--token-bg-active) !important;
+  color: var(--token-accent-primary) !important;
 }
 
 html.dark [data-sidebar="menu-button"][data-active="true"] svg {
-  color: #ffffff !important;
+  color: var(--token-accent-primary) !important;
 }
 
-/* Light mode active button - pure black text and icons */
 [data-sidebar="menu-button"][data-active="true"] {
-  background-color: #e5e5e4 !important;
-  color: #000000 !important;
+  background-color: var(--token-bg-active) !important;
+  color: var(--token-accent-primary) !important;
 }
 
 [data-sidebar="menu-button"][data-active="true"] svg {
-  color: #000000 !important;
+  color: var(--token-accent-primary) !important;
 }
 
 /* Removed ::before pseudo-element that was creating black/white bar on active buttons */
@@ -416,8 +500,8 @@ body,
 html.dark,
 html.dark body,
 html.dark #root {
-  background-color: #101012 !important;
-  color: #fafaf9 !important;
+  background-color: var(--token-bg-app) !important;
+  color: var(--token-text-primary) !important;
 }
 
 /* Remove sidebar border completely */
@@ -427,12 +511,12 @@ html.dark #root {
 
 /* Fix expand/collapse button (SidebarTrigger) hover to match other buttons */
 html.dark [data-sidebar="trigger"]:hover {
-  background-color: #2a2a2c !important;
-  color: #f4f4f5 !important;
+  background-color: var(--token-bg-hover) !important;
+  color: var(--token-text-primary) !important;
 }
 
 [data-sidebar="trigger"]:hover {
-  background-color: #e5e5e4 !important;
+  background-color: var(--token-bg-hover) !important;
 }
 
 /* Ensure sidebar and all wrapper elements match Cloudscape container background */
@@ -440,7 +524,7 @@ html.dark [data-sidebar="trigger"]:hover {
 .group\/sidebar-wrapper > .group.peer,
 .group\/sidebar-wrapper > .group.peer > div,
 .group\/sidebar-wrapper [data-sidebar="sidebar"] {
-  background-color: #f5f5f4 !important;
+  background-color: var(--token-bg-secondary) !important;
 }
 
 /* Also ensure dark mode background is applied to all wrapper elements */
@@ -448,7 +532,7 @@ html.dark [data-sidebar="sidebar"],
 html.dark .group\/sidebar-wrapper > .group.peer,
 html.dark .group\/sidebar-wrapper > .group.peer > div,
 html.dark .group\/sidebar-wrapper [data-sidebar="sidebar"] {
-  background-color: #1d1d20 !important;
+  background-color: var(--token-bg-secondary) !important;
 }
 
 /* Markdown styles - scoped to chat content and general markdown content */

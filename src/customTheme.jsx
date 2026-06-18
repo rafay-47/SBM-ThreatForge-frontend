@@ -2,19 +2,19 @@ const customTheme = {
   tokens: {
     colorBackgroundLayoutMain: {
       dark: "#101012",
-      light: "#FAFAF9",
+      light: "#F7F6FB",
     },
     colorBackgroundContainerContent: {
-      dark: "#1D1D20",
-      light: "#F5F5F4",
+      dark: "#1B1B22",
+      light: "#FFFFFF",
     },
     colorBackgroundPopover: {
-      dark: "#1D1D20",
+      dark: "#1B1B22",
       light: "#FFFFFF",
     },
     colorBackgroundContainerHeader: {
-      dark: "#1D1D20",
-      light: "#F5F5F4",
+      dark: "#20202A",
+      light: "#FBFAFF",
     },
     colorBackgroundNotificationSeverityHigh: {
       dark: "#ce3311",
@@ -32,13 +32,13 @@ const customTheme = {
       dark: "#f9f9fa",
     },
     colorBackgroundControlDefault: {
-      dark: "#171D25",
+      dark: "#20202A",
     },
     colorBackgroundInputDefault: {
       dark: "#222225",
     },
     colorBackgroundHomeHeader: {
-      dark: "#171D25",
+      dark: "#101012",
     },
     colorTextLinkDefault: {
       light: "#7c3aed",
@@ -77,8 +77,8 @@ const customTheme = {
       dark: "#a78bfa",
     },
     colorTextInteractiveDefault: {
-      light: "#79716b",
-      dark: "#949495",
+      light: "#6c687d",
+      dark: "#a6a0b7",
     },
     colorTextButtonNormalActive: {
       light: "#18181B",
@@ -88,9 +88,9 @@ const customTheme = {
       light: "#ede9fe",
       dark: "#2e1065",
     },
-    borderRadiusButton: "10px",
+    borderRadiusButton: "8px",
     borderRadiusInput: "8px",
-    borderRadiusContainer: "12px",
+    borderRadiusContainer: "8px",
     colorForegroundControlDefault: {
       dark: "#18181B",
       light: "#FAFAF9",
@@ -100,28 +100,28 @@ const customTheme = {
       light: "#FAFAF9",
     },
     colorBackgroundDropdownItemHover: {
-      light: "#F5F5F4",
-      dark: "#1D1D20",
+      light: "#F5F3FF",
+      dark: "#25124d",
     },
     colorBackgroundDropdownItemDefault: {
-      dark: "#18181B",
-      light: "#FAFAF9",
+      dark: "#1B1B22",
+      light: "#FFFFFF",
     },
     colorTextDropdownItemDefault: {
       light: "#101828",
       dark: "#FFFFFF",
     },
     colorBackgroundButtonNormalHover: {
-      light: "#ececec",
-      dark: "#424242",
+      light: "#F5F3FF",
+      dark: "#25124d",
     },
     colorBackgroundButtonNormalActive: {
-      light: "#ececec",
-      dark: "#424242",
+      light: "#EDE9FE",
+      dark: "#2e1065",
     },
     colorBackgroundButtonNormalDefault: {
-      light: "#F5F5F4",
-      dark: "#1D1D20",
+      light: "#FFFFFF",
+      dark: "#1B1B22",
     },
     colorTextButtonPrimaryDefault: {
       light: "#FFFFFF",
@@ -148,32 +148,32 @@ const customTheme = {
       dark: "#7c3aed",
     },
     colorBackgroundInputDisabled: {
-      light: "#FAFAF9",
-      dark: "#18181B",
+      light: "#FBFAFF",
+      dark: "#20202A",
     },
     colorBackgroundButtonNormalDisabled: {
-      dark: "#1D1D20",
-      light: "#F5F5F4",
+      dark: "#20202A",
+      light: "#EFEDF7",
     },
     colorBorderButtonNormalDisabled: {
-      dark: "#1D1D20",
-      light: "#F5F5F4",
+      dark: "#30303C",
+      light: "#E5E1EE",
     },
     colorBackgroundButtonPrimaryDisabled: {
       light: "#DDD6FE",
       dark: "#3b2d6b",
     },
     colorBorderButtonNormalHover: {
-      light: "#79716b",
-      dark: "#949495",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorBorderButtonNormalActive: {
-      light: "#79716b",
-      dark: "#949495",
+      light: "#7c3aed",
+      dark: "#a78bfa",
     },
     colorBorderButtonNormalDefault: {
-      light: "#79716b",
-      dark: "#949495",
+      light: "#cfc8df",
+      dark: "#454056",
     },
     colorBackgroundSegmentActive: {
       light: "#7c3aed",

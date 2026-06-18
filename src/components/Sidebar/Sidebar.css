@@ -79,6 +79,7 @@ html.dark .sidebar-hover-zone {
   color: var(--color-sidebar-accent-foreground);
   font-weight: 500;
   transition: all 0.15s ease;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-accent-primary) 18%, transparent);
 }
 
 /* Left border indicator for active item */
@@ -246,7 +247,10 @@ div[role="menuitem"] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  transition: background-color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
   overflow: hidden;
   box-sizing: border-box;
   padding: 0.125rem var(--spacing-sm);
@@ -728,6 +732,10 @@ html.dark [role="menu"] .h-8.w-8 > * {
 /* Increase font and icon sizes for better visual balance */
 [data-sidebar="sidebar"] {
   font-size: 1rem !important;
+  border-right: 1px solid var(--token-border-primary) !important;
+  background:
+    linear-gradient(180deg, rgba(124, 58, 237, 0.05), transparent 180px),
+    var(--token-bg-secondary) !important;
 }
 
 /* Larger icons in sidebar */
@@ -757,6 +765,7 @@ html.dark [role="menu"] .h-8.w-8 > * {
   object-fit: contain;
   position: relative;
   z-index: 10;
+  filter: drop-shadow(0 6px 14px rgba(46, 16, 101, 0.14));
 }
 
 /* User name text - not bold, smaller */

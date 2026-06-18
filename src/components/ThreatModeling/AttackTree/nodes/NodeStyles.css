@@ -507,3 +507,86 @@
     padding: 10px;
   }
 }
+
+/* ThreatForge workstation theme overrides */
+.custom-node,
+.gate-node,
+.leaf-attack-node,
+.root-goal-node,
+.countermeasure-node {
+  background: var(--token-bg-primary);
+  color: var(--token-text-primary);
+  border-color: var(--token-border-secondary);
+  box-shadow: var(--token-shadow-sm);
+}
+
+.gate-node:hover,
+.gate-node.focused,
+.leaf-attack-node:hover,
+.root-goal-node:hover,
+.root-goal-node.focused {
+  border-color: var(--token-accent-primary) !important;
+  background: var(--token-bg-primary) !important;
+  background-image: none !important;
+  box-shadow: var(--token-focus-ring), var(--token-shadow-md) !important;
+}
+
+.gate-node-header,
+.leaf-node-header,
+.leaf-node-footer,
+.root-goal-node .gate-node-header,
+.mitigation-status,
+.implementation-status {
+  border-color: var(--token-border-primary) !important;
+}
+
+.gate-type,
+.leaf-attack-phase {
+  color: var(--token-text-primary) !important;
+}
+
+.gate-label,
+.gate-description,
+.leaf-node-description,
+.leaf-node-footer {
+  color: var(--token-text-muted) !important;
+}
+
+.and-gate-node .gate-icon {
+  background: var(--risk-info-bg) !important;
+  color: var(--risk-info) !important;
+}
+
+.or-gate-node .gate-icon,
+.root-goal-icon {
+  background: var(--risk-critical-bg) !important;
+  color: var(--risk-critical) !important;
+}
+
+.attack-metrics,
+.progress-bar {
+  background: var(--token-bg-tertiary) !important;
+}
+
+.countermeasure-node {
+  border-color: var(--risk-low) !important;
+}
+
+.progress-fill {
+  background: var(--risk-low) !important;
+  box-shadow: none;
+}
+
+.node-handle {
+  background: var(--token-accent-primary) !important;
+  border-color: var(--token-bg-primary) !important;
+}
+
+.awsui-dark-mode .gate-node:hover,
+.awsui-dark-mode .leaf-attack-node:hover,
+.awsui-dark-mode .root-goal-node:hover,
+.awsui-dark-mode .gate-node.focused {
+  background: var(--token-bg-primary) !important;
+  background-image: none !important;
+  box-shadow: var(--token-focus-ring) !important;
+}

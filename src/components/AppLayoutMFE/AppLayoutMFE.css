@@ -4,6 +4,31 @@
   height: 100vh;
   overflow: auto;
   position: relative;
+  background:
+    linear-gradient(180deg, rgba(124, 58, 237, 0.035), transparent 220px),
+    var(--token-bg-app);
+}
+
+.app-layout-container [class*="awsui_layout"] {
+  background: transparent !important;
+}
+
+.app-layout-container [class*="awsui_content"] {
+  background: transparent !important;
+}
+
+.app-layout-container [class*="awsui_notifications"] {
+  margin-block-start: 0;
+}
+
+.app-layout-container [class*="awsui_split-panel"] {
+  border-color: var(--token-border-primary) !important;
+  background: var(--token-bg-primary) !important;
+}
+
+.app-layout-container [class*="awsui_split-panel-header"] {
+  background: var(--token-bg-tertiary) !important;
+  border-color: var(--token-border-primary) !important;
 }
 
 /* Smooth animations for split panel drawer */
@@ -37,4 +62,15 @@
 /* Smooth resize handle interaction */
 .awsui-app-layout__split-panel-resize-handle {
   transition: background-color 0.2s ease-in-out !important;
+}
+
+.app-layout-container [class*="awsui_container"],
+.app-layout-container [class*="awsui_board-item"] {
+  border-color: var(--token-border-primary) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--token-shadow-sm) !important;
+}
+
+.app-layout-container [class*="awsui_header"] {
+  color: var(--token-text-primary);
 }

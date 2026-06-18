@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import Box from "@cloudscape-design/components/box";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import { Link } from "@cloudscape-design/components";
-import Grid from "@cloudscape-design/components/grid";
 import Container from "@cloudscape-design/components/container";
 import Button from "@cloudscape-design/components/button";
 import Header from "@cloudscape-design/components/header";
@@ -28,6 +27,7 @@ import {
   getCachedPresignedUrl,
   setCachedPresignedUrl,
 } from "../../services/ThreatDesigner/presignedUrlCache";
+import "./ThreatCatalog.css";
 
 export const StatusIndicatorComponent = ({ status }) => {
   switch (status) {
@@ -305,32 +305,15 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
     setResults([]);
   };
 
-  const createGridDefinition = () => {
-    const gridDefinition = [];
-    results.forEach(() => {
-      gridDefinition.push({
-        colspan: { default: 12, xxs: 12, xs: 12, s: 12, m: 6, l: 6, xl: 6 },
-      });
-    });
-    return gridDefinition;
-  };
-
   const renderCardView = () => (
-    <Grid gridDefinition={createGridDefinition()}>
+    <div className="catalog-card-grid">
       {results.map((item) => {
         const presignedData = presignedUrlMap[item?.job_id];
         return (
-          <div key={item.job_id} style={{ height: 250 }}>
+          <div key={item.job_id} className="catalog-card-shell">
             {deletingId === item.job_id ? (
               <Container fitHeight>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100%",
-                  }}
-                >
+                <div className="catalog-card-loading">
                   <Spinner size="large" />
                 </div>
               </Container>
@@ -341,14 +324,7 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
                   content:
                     presignedUrlsLoading || !presignedData ? (
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: 250,
-                          width: "100%",
-                          background: "#EEEEEE",
-                        }}
+                        className="catalog-card-image-loading"
                       >
                         <Spinner size="large" />
                       </div>
@@ -359,7 +335,7 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
                       />
                     ),
                   position: "side",
-                  width: "40%",
+                  width: "38%",
                 }}
                 fitHeight
                 header={
@@ -396,23 +372,8 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
                   </Header>
                 }
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      padding: "0 0 10px 0",
-                    }}
-                  >
+                <div className="catalog-card-content">
+                  <div className="catalog-card-summary">
                     <Box
                       variant="small"
                       color="text-body-secondary"
@@ -429,14 +390,7 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
                   </div>
 
                   <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
+                    <div className="catalog-card-metadata">
                       <div>
                         <Box variant="awsui-key-label">Status</Box>
                         <StatusComponponent id={item?.job_id} />
@@ -461,7 +415,7 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
           </div>
         );
       })}
-    </Grid>
+    </div>
   );
 
   const renderContent = () => {
@@ -475,27 +429,30 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
 
     if (results.length === 0) {
       return (
-        <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
-          <SpaceBetween size="m">
-            <b>No threat models</b>
-          </SpaceBetween>
-        </Box>
+        <div className="catalog-empty workstation-surface">
+          <Box variant="h3">No threat models</Box>
+          <Box color="text-body-secondary">
+            Create a model from an architecture diagram to start building the catalog.
+          </Box>
+        </div>
       );
     }
 
     return (
       <SpaceBetween size="l">
-        <SegmentedControl
-          selectedId={viewMode}
-          onChange={({ detail }) => {
-            setViewMode(detail.selectedId);
-          }}
-          label="View mode"
-          options={[
-            { text: "Card view", id: "card", iconName: "view-full" },
-            { text: "Table view", id: "table", iconName: "menu" },
-          ]}
-        />
+        <div className="catalog-toolbar">
+          <SegmentedControl
+            selectedId={viewMode}
+            onChange={({ detail }) => {
+              setViewMode(detail.selectedId);
+            }}
+            label="View mode"
+            options={[
+              { text: "Card view", id: "card", iconName: "view-full" },
+              { text: "Table view", id: "table", iconName: "menu" },
+            ]}
+          />
+        </div>
 
         {viewMode === "card" ? (
           <SpaceBetween size="m">
@@ -546,7 +503,14 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
   };
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className="catalog-workspace">
+      <div className="catalog-page-header">
+        <div>
+          <p className="workstation-kicker">Threat inventory</p>
+          <h1>Threat Catalog</h1>
+          <p>Review generated models, compare risk density, and reopen active analysis.</p>
+        </div>
+      </div>
       <Tabs
         activeTabId={filterMode}
         onChange={({ detail }) => {

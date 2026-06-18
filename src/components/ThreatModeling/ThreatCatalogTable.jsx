@@ -49,7 +49,7 @@ export const ThreatCatalogTable = ({ results, onItemsChange, pagination, onLoadM
     setDeleteInProgress(true);
     try {
       const deletePromises = selectedItems.map((item) => {
-        (deleteTm(item.job_id), functions.clearSession(item.job_id));
+        return Promise.all([deleteTm(item.job_id), functions.clearSession(item.job_id)]);
       });
       await Promise.all(deletePromises);
 
