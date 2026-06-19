@@ -4,24 +4,80 @@ import styled from "@emotion/styled";
 import { getUser, confirmEmail } from "../../services/Auth/auth";
 import LoginForm from "../../components/Auth/LoginForm";
 import { useTheme } from "../../components/ThemeContext";
-import rightArrowIcon from "../../../assets/icons/right-arrow.svg";
+// Custom SVG Icons matching the reference design
+const DocumentIcon = () => (
+  <svg viewBox="0 0 100 100" fill="currentColor">
+    <defs>
+      <mask id="doc-mask">
+        <rect x="0" y="0" width="100" height="100" fill="white" />
+        <rect x="25" y="32" width="50" height="8" rx="4" fill="black" />
+        <rect x="25" y="47" width="50" height="8" rx="4" fill="black" />
+        <rect x="25" y="62" width="35" height="8" rx="4" fill="black" />
+      </mask>
+    </defs>
+    <rect x="10" y="10" width="80" height="80" rx="22" mask="url(#doc-mask)" />
+  </svg>
+);
 
-const threatModelQuestions = [
-  { label: "QUESTION 1", text: ["What are we", "working on?"] },
-  { label: "QUESTION 2", text: ["What could", "go wrong?"] },
-  { label: "QUESTION 3", text: ["What are we", "going to do", "about it?"] },
-  { label: "QUESTION 4", text: ["Did we do", "a good job?"] },
-];
+const DoubleArrowIcon = () => (
+  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round">
+    {/* Upper Arrow */}
+    <path d="M 22 35 L 70 35" />
+    <path d="M 54 19 L 70 35 L 54 51" />
+    {/* Lower Arrow */}
+    <path d="M 22 65 L 70 65" />
+    <path d="M 54 49 L 70 65 L 54 81" />
+  </svg>
+);
 
-const analysisTags = [
-  "Mission Decomposition",
-  "System Decomposition",
-  "Vulnerability Identification",
-  "Cyber Threat Intelligence",
-  "Defense & Risk Analysis",
-  "Mitigation & Remediation",
-  "Monitoring Analysis & Evaluation",
-];
+const BiohazardIcon = () => (
+  <svg viewBox="0 0 512 512" fill="currentColor">
+    <path d="M287.9 112c18.6 0 36.2 3.8 52.8 9.6 15.6 5.5 30.5 13.9 44 24.8-15.5 28.5-24.7 61-24.7 95.6 0 38.6 11.5 74.5 31.1 104.9-38.3 12-83 17.1-131.2 17.1s-92.9-5.1-131.2-17.1c19.6-30.4 31.1-66.3 31.1-104.9 0-34.6-9.2-67.1-24.7-95.6 13.5-10.9 28.4-19.3 44-24.8 16.6-5.8 34.2-9.6 52.8-9.6zM464 240c0-62.9-35.3-117.5-87.3-145.4 12-16 26.6-29.6 43.1-40.4 20-13.1 38.8-21.2 56.2-24.2 3.5-.6 6-3.7 6-7.3v-4.5c0-4.6-4.5-8-8.9-6.6-36.9 12-74.8 41.7-106.8 81.3-33.8-14.8-71.1-23-110.3-23s-76.5 8.2-110.3 23c-32-39.6-69.9-69.3-106.8-81.3-4.4-1.4-8.9 2-8.9 6.6v4.5c0 3.6 2.5 6.7 6 7.3 17.4 3 36.2 11.1 56.2 24.2 16.5 10.8 31.1 24.4 43.1 40.4C55.3 122.5 20 177.1 20 240c0 45 18 85.8 47.2 115.6-22.1 15-46.7 34-60.8 54-1.9 2.7-2.4 6.2-1.3 9.4 1.1 3.2 3.9 5.5 7.3 6 40.3 6.6 86 3.6 130-10.4 27.2 24 61.5 38.9 99.6 43-4.3-18.7-6-37.4-4.8-55.6 1.8-27.1 9.9-52.7 23.3-75.1-41.2-26.3-68.5-72.3-68.5-124.9 0-38.2 14.4-73 38.1-99.3 23.7 26.3 38.1 61.1 38.1 99.3 0 52.6-27.3 98.6-68.5 124.9 13.4 22.4 21.5 48 23.3 75.1 1.2 18.2-.5 36.9-4.8 55.6 38.1-4.1 72.4-19 99.6-43 44 14 89.7 17 130 10.4 3.4-.5 6.2-2.8 7.3-6 1.1-3.2.6-6.7-1.3-9.4-14.1-20-38.7-39-60.8-54 29.2-29.8 47.2-70.6 47.2-115.6z" />
+  </svg>
+);
+
+const BrainCircuitIcon = () => (
+  <svg viewBox="0 0 100 100" fill="currentColor">
+    {/* Left hemisphere lobes */}
+    <path d="M45 16 C33 16, 22 25, 22 38 C22 43, 25 47, 24 51 C22 55, 23 68, 33 72 C36 73, 40 71, 42 67 L42 61 C40 63, 37 64, 35 63 C30 61, 29 52, 32 49 L34 47 L34 41 L30 38 C28 35, 30 30, 35 30 L40 30 L40 21 L45 21 Z" />
+    {/* Right hemisphere lobes */}
+    <path d="M55 16 C67 16, 78 25, 78 38 C78 43, 75 47, 76 51 C78 55, 77 68, 67 72 C64 73, 60 71, 58 67 L58 61 C60 63, 63 64, 65 63 C70 61, 71 52, 68 49 L66 47 L66 41 L70 38 C72 35, 70 30, 65 30 L60 30 L60 21 L55 21 Z" />
+    {/* Center divider bar representing stem */}
+    <rect x="47" y="24" width="6" height="52" rx="3" />
+    
+    {/* Left circuits */}
+    <path d="M 28 34 H 14" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="12" cy="34" r="4" />
+    
+    <path d="M 24 54 H 10" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="8" cy="54" r="4" />
+    
+    {/* Right circuits */}
+    <path d="M 72 34 H 86" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="88" cy="34" r="4" />
+    
+    <path d="M 76 54 H 90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="92" cy="54" r="4" />
+  </svg>
+);
+
+const KnightHelmetIcon = () => (
+  <svg viewBox="0 0 100 100" fill="currentColor">
+    <defs>
+      <mask id="helmet-mask">
+        <rect x="0" y="0" width="100" height="100" fill="white" />
+        {/* Vertical eye-slit */}
+        <rect x="47" y="10" width="6" height="80" rx="3" fill="black" />
+        {/* Horizontal eye-slit */}
+        <rect x="18" y="44" width="64" height="6" rx="3" fill="black" />
+      </mask>
+    </defs>
+    <path 
+      d="M 20 18 L 80 18 L 80 52 C 80 72, 65 84, 50 90 C 35 84, 20 72, 20 52 Z" 
+      mask="url(#helmet-mask)" 
+    />
+  </svg>
+);
 
 const LoginPageContainer = styled.div`
   width: 100vw;
@@ -60,8 +116,12 @@ const LoginCard = styled.div`
 
 const LeftSection = styled.div`
   flex: 1.2;
+  background: linear-gradient(135deg, #9C3FE4 0%, #2294F7 100%);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
   color: white;
   position: relative;
   overflow: hidden;
@@ -71,208 +131,71 @@ const LeftSection = styled.div`
     height: auto;
     min-height: 320px;
     max-height: 400px;
+    padding: 32px 24px;
   }
 `;
 
-const HeroHeader = styled.div`
-  background: linear-gradient(180deg, #0a0c1f 0%, #141836 100%);
-  padding: clamp(16px, 3vw, 28px) clamp(20px, 3vw, 32px);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 4px,
-      rgba(255, 255, 255, 0.02) 4px,
-      rgba(255, 255, 255, 0.02) 5px
-    );
-    pointer-events: none;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #7c3aed, #a855f7, #7c3aed);
-  }
-`;
-
-const HeroTitle = styled.h1`
-  margin: 0;
-  font-family: "Geist", Arial, sans-serif;
-  font-size: clamp(22px, 3.2vw, 40px);
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
-  line-height: 1.1;
-  position: relative;
-  z-index: 1;
-`;
-
-const PurpleContent = styled.div`
-  flex: 1;
-  background:
-    radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.12), transparent 20%),
-    radial-gradient(circle at 72% 44%, rgba(255, 255, 255, 0.08), transparent 18%),
-    linear-gradient(
-      180deg,
-      rgba(88, 28, 175, 0.95) 0%,
-      rgba(107, 33, 168, 0.9) 50%,
-      rgba(88, 28, 175, 0.95) 100%
-    );
+const InfoContent = styled.div`
+  max-width: 480px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  padding: clamp(14px, 2vw, 22px) clamp(16px, 2vw, 24px);
-  gap: clamp(20px, 3vw, 32px);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.04) 25%, transparent 25%) 0 0 / 20px 20px,
-      linear-gradient(135deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%) 0 0 / 20px 20px;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-`;
-
-const QuestionsSection = styled.div`
-  position: relative;
-  z-index: 1;
-`;
-
-const LabelsRow = styled.div`
-  display: flex;
-  align-items: flex-end;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.3);
-  }
-`;
-
-const LabelCell = styled.div`
-  flex: 1;
-  text-align: center;
-  padding-bottom: clamp(6px, 0.8vw, 10px);
-  font-family: "Geist Mono", Arial, sans-serif;
-  font-size: clamp(7px, 0.7vw, 10px);
-  letter-spacing: 0.2em;
-  font-weight: 500;
-  opacity: 0.9;
-  text-transform: uppercase;
-`;
-
-const QuestionsRow = styled.div`
-  display: flex;
   align-items: flex-start;
-  gap: clamp(6px, 0.8vw, 10px);
-  margin-top: clamp(8px, 1vw, 14px);
+`;
 
-  @media (max-width: 900px) {
-    flex-wrap: wrap;
-    justify-content: center;
+const IconRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+  gap: 16px;
+
+  @media (max-width: 480px) {
     gap: 8px;
-    margin-top: 12px;
   }
 `;
 
-const QuestionCell = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-
-  @media (max-width: 900px) {
-    flex: 0 0 calc(50% - 4px);
-    min-width: 120px;
-  }
-`;
-
-const QuestionText = styled.div`
-  margin-top: clamp(6px, 0.8vw, 10px);
-  font-family: "Avenue Mono", Arial, sans-serif;
-
-  span {
-    display: block;
-    font-size: clamp(11px, 1.2vw, 16px);
-    font-weight: 400;
-    line-height: 1.25;
-    text-align: center;
-  }
-`;
-
-const ArrowBubble = styled.div`
+const IconWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  color: rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(28px, 2.8vw, 40px);
-  height: clamp(28px, 2.8vw, 40px);
-  margin-top: clamp(8px, 1vw, 14px);
-  border-radius: 999px;
-  background: rgba(15, 20, 50, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 4px 12px rgba(4, 6, 22, 0.4);
-  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
 
-  img {
-    width: 50%;
-    height: 50%;
-    filter: brightness(0) invert(1);
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px) scale(1.05);
+    filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.15));
   }
 
   @media (max-width: 900px) {
-    display: none;
+    width: 48px;
+    height: 48px;
   }
 `;
 
-const TagStrip = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(4px, 0.5vw, 6px);
-  justify-content: center;
-  position: relative;
-  z-index: 1;
+const InfoText = styled.p`
+  font-family: "Geist", Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: -0.01em;
 
-  @media (max-width: 900px) {
-    gap: 5px;
+  strong {
+    font-weight: 600;
+    color: #ffffff;
   }
-`;
-
-const TagChip = styled.div`
-  padding: clamp(4px, 0.5vw, 6px) clamp(6px, 0.8vw, 10px);
-  border-radius: 3px;
-  background: rgba(139, 92, 246, 0.95);
-  color: #fcfcfc;
-  font-family: "Geist Mono", Arial, sans-serif;
-  font-size: clamp(8px, 0.7vw, 11px);
-  font-weight: 500;
-  line-height: 1.3;
-  white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 `;
 
 const RightSection = styled.div`
@@ -352,41 +275,28 @@ const LoginPageInternal = ({ setAuthUser }) => {
     <LoginPageContainer isDark={isDark}>
       <LoginCard isDark={isDark}>
         <LeftSection>
-          <HeroHeader>
-            <HeroTitle>SBM ThreatForge</HeroTitle>
-          </HeroHeader>
-          <PurpleContent>
-            <QuestionsSection>
-              <LabelsRow>
-                {threatModelQuestions.map((item) => (
-                  <LabelCell key={item.label}>{item.label}</LabelCell>
-                ))}
-              </LabelsRow>
-              <QuestionsRow>
-                {threatModelQuestions.map((item, index) => (
-                  <React.Fragment key={item.label}>
-                    <QuestionCell>
-                      <QuestionText>
-                        {item.text.map((line) => (
-                          <span key={line}>{line}</span>
-                        ))}
-                      </QuestionText>
-                    </QuestionCell>
-                    {index < threatModelQuestions.length - 1 && (
-                      <ArrowBubble>
-                        <img src={rightArrowIcon} alt="arrow" />
-                      </ArrowBubble>
-                    )}
-                  </React.Fragment>
-                ))}
-              </QuestionsRow>
-            </QuestionsSection>
-            <TagStrip>
-              {analysisTags.map((tag) => (
-                <TagChip key={tag}>{tag}</TagChip>
-              ))}
-            </TagStrip>
-          </PurpleContent>
+          <InfoContent>
+            <IconRow>
+              <IconWrapper title="Threat Input">
+                <DocumentIcon />
+              </IconWrapper>
+              <IconWrapper title="Data Flow">
+                <DoubleArrowIcon />
+              </IconWrapper>
+              <IconWrapper title="Threat Identification">
+                <BiohazardIcon />
+              </IconWrapper>
+              <IconWrapper title="AI Brain Circuit">
+                <BrainCircuitIcon />
+              </IconWrapper>
+              <IconWrapper title="Security & Defense">
+                <KnightHelmetIcon />
+              </IconWrapper>
+            </IconRow>
+            <InfoText>
+              <strong>Threat Designer:</strong> Streamline threat modeling and identify vulnerabilities using agentic AI-powered security analysis.
+            </InfoText>
+          </InfoContent>
         </LeftSection>
 
         <RightSection isDark={isDark}>
