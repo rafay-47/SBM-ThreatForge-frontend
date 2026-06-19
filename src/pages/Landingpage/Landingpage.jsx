@@ -4,85 +4,42 @@ import styled from "@emotion/styled";
 import { getUser, confirmEmail } from "../../services/Auth/auth";
 import LoginForm from "../../components/Auth/LoginForm";
 import { useTheme } from "../../components/ThemeContext";
-// Custom SVG Icons matching the reference design
-const DocumentIcon = () => (
-  <svg viewBox="0 0 100 100" fill="currentColor">
+import logoShield from "../../components/ThreatModeling/images/shield.png";
+import { Network, Boxes, Search, Globe, ShieldCheck, Sparkles, Activity, Lock, Users, AlertTriangle, CheckCircle2 } from "lucide-react";
+
+const FlowArrowIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+const IsometricCubeIcon = () => (
+  <svg viewBox="0 0 100 100" style={{ width: 38, height: 38, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.4))" }}>
+    <path d="M 50 18 L 78 32 L 50 46 L 22 32 Z" fill="url(#cube-top)" />
+    <path d="M 22 32 L 50 46 L 50 74 L 22 60 Z" fill="url(#cube-left)" />
+    <path d="M 50 46 L 78 32 L 78 60 L 50 74 Z" fill="url(#cube-right)" />
     <defs>
-      <mask id="doc-mask">
-        <rect x="0" y="0" width="100" height="100" fill="white" />
-        <rect x="25" y="32" width="50" height="8" rx="4" fill="black" />
-        <rect x="25" y="47" width="50" height="8" rx="4" fill="black" />
-        <rect x="25" y="62" width="35" height="8" rx="4" fill="black" />
-      </mask>
+      <linearGradient id="cube-top" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#818cf8" />
+        <stop offset="100%" stopColor="#6366f1" />
+      </linearGradient>
+      <linearGradient id="cube-left" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#4f46e5" />
+        <stop offset="100%" stopColor="#312e81" />
+      </linearGradient>
+      <linearGradient id="cube-right" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#4338ca" />
+        <stop offset="100%" stopColor="#1e1b4b" />
+      </linearGradient>
     </defs>
-    <rect x="10" y="10" width="80" height="80" rx="22" mask="url(#doc-mask)" />
-  </svg>
-);
-
-const DoubleArrowIcon = () => (
-  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round">
-    {/* Upper Arrow */}
-    <path d="M 22 35 L 70 35" />
-    <path d="M 54 19 L 70 35 L 54 51" />
-    {/* Lower Arrow */}
-    <path d="M 22 65 L 70 65" />
-    <path d="M 54 49 L 70 65 L 54 81" />
-  </svg>
-);
-
-const BiohazardIcon = () => (
-  <svg viewBox="0 0 512 512" fill="currentColor">
-    <path d="M287.9 112c18.6 0 36.2 3.8 52.8 9.6 15.6 5.5 30.5 13.9 44 24.8-15.5 28.5-24.7 61-24.7 95.6 0 38.6 11.5 74.5 31.1 104.9-38.3 12-83 17.1-131.2 17.1s-92.9-5.1-131.2-17.1c19.6-30.4 31.1-66.3 31.1-104.9 0-34.6-9.2-67.1-24.7-95.6 13.5-10.9 28.4-19.3 44-24.8 16.6-5.8 34.2-9.6 52.8-9.6zM464 240c0-62.9-35.3-117.5-87.3-145.4 12-16 26.6-29.6 43.1-40.4 20-13.1 38.8-21.2 56.2-24.2 3.5-.6 6-3.7 6-7.3v-4.5c0-4.6-4.5-8-8.9-6.6-36.9 12-74.8 41.7-106.8 81.3-33.8-14.8-71.1-23-110.3-23s-76.5 8.2-110.3 23c-32-39.6-69.9-69.3-106.8-81.3-4.4-1.4-8.9 2-8.9 6.6v4.5c0 3.6 2.5 6.7 6 7.3 17.4 3 36.2 11.1 56.2 24.2 16.5 10.8 31.1 24.4 43.1 40.4C55.3 122.5 20 177.1 20 240c0 45 18 85.8 47.2 115.6-22.1 15-46.7 34-60.8 54-1.9 2.7-2.4 6.2-1.3 9.4 1.1 3.2 3.9 5.5 7.3 6 40.3 6.6 86 3.6 130-10.4 27.2 24 61.5 38.9 99.6 43-4.3-18.7-6-37.4-4.8-55.6 1.8-27.1 9.9-52.7 23.3-75.1-41.2-26.3-68.5-72.3-68.5-124.9 0-38.2 14.4-73 38.1-99.3 23.7 26.3 38.1 61.1 38.1 99.3 0 52.6-27.3 98.6-68.5 124.9 13.4 22.4 21.5 48 23.3 75.1 1.2 18.2-.5 36.9-4.8 55.6 38.1-4.1 72.4-19 99.6-43 44 14 89.7 17 130 10.4 3.4-.5 6.2-2.8 7.3-6 1.1-3.2.6-6.7-1.3-9.4-14.1-20-38.7-39-60.8-54 29.2-29.8 47.2-70.6 47.2-115.6z" />
-  </svg>
-);
-
-const BrainCircuitIcon = () => (
-  <svg viewBox="0 0 100 100" fill="currentColor">
-    {/* Left hemisphere lobes */}
-    <path d="M45 16 C33 16, 22 25, 22 38 C22 43, 25 47, 24 51 C22 55, 23 68, 33 72 C36 73, 40 71, 42 67 L42 61 C40 63, 37 64, 35 63 C30 61, 29 52, 32 49 L34 47 L34 41 L30 38 C28 35, 30 30, 35 30 L40 30 L40 21 L45 21 Z" />
-    {/* Right hemisphere lobes */}
-    <path d="M55 16 C67 16, 78 25, 78 38 C78 43, 75 47, 76 51 C78 55, 77 68, 67 72 C64 73, 60 71, 58 67 L58 61 C60 63, 63 64, 65 63 C70 61, 71 52, 68 49 L66 47 L66 41 L70 38 C72 35, 70 30, 65 30 L60 30 L60 21 L55 21 Z" />
-    {/* Center divider bar representing stem */}
-    <rect x="47" y="24" width="6" height="52" rx="3" />
-    
-    {/* Left circuits */}
-    <path d="M 28 34 H 14" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <circle cx="12" cy="34" r="4" />
-    
-    <path d="M 24 54 H 10" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <circle cx="8" cy="54" r="4" />
-    
-    {/* Right circuits */}
-    <path d="M 72 34 H 86" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <circle cx="88" cy="34" r="4" />
-    
-    <path d="M 76 54 H 90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <circle cx="92" cy="54" r="4" />
-  </svg>
-);
-
-const KnightHelmetIcon = () => (
-  <svg viewBox="0 0 100 100" fill="currentColor">
-    <defs>
-      <mask id="helmet-mask">
-        <rect x="0" y="0" width="100" height="100" fill="white" />
-        {/* Vertical eye-slit */}
-        <rect x="47" y="10" width="6" height="80" rx="3" fill="black" />
-        {/* Horizontal eye-slit */}
-        <rect x="18" y="44" width="64" height="6" rx="3" fill="black" />
-      </mask>
-    </defs>
-    <path 
-      d="M 20 18 L 80 18 L 80 52 C 80 72, 65 84, 50 90 C 35 84, 20 72, 20 52 Z" 
-      mask="url(#helmet-mask)" 
-    />
   </svg>
 );
 
 const LoginPageContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${(props) => (props.isDark ? "#1D1D20" : "#F5F5F4")};
+  background-color: ${(props) => (props.isDark ? "#12131a" : "#F5F5F4")};
   font-family: Geist, Arial, sans-serif;
   display: flex;
   align-items: center;
@@ -94,107 +51,371 @@ const LoginPageContainer = styled.div`
 
 const LoginCard = styled.div`
   display: flex;
-  width: min(90vw, 1200px);
-  height: min(85vh, 700px);
-  min-height: 480px;
+  width: min(95vw, 1280px);
+  height: min(90vh, 760px);
+  min-height: 520px;
   border-radius: 16px;
   box-shadow: ${(props) =>
     props.isDark
-      ? `0 4px 12px rgba(0, 0, 0, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3), 0 16px 64px rgba(0, 0, 0, 0.2)`
-      : `0 4px 12px rgba(0, 0, 0, 0.12), 0 8px 32px rgba(0, 0, 0, 0.08), 0 16px 64px rgba(0, 0, 0, 0.04)`};
+      ? `0 4px 24px rgba(0, 0, 0, 0.5), 0 8px 48px rgba(0, 0, 0, 0.4)`
+      : `0 4px 12px rgba(0, 0, 0, 0.12), 0 8px 32px rgba(0, 0, 0, 0.08)`};
   overflow: hidden;
   position: relative;
+  background: ${(props) => (props.isDark ? "#08090f" : "#ffffff")};
 
   @media (max-width: 900px) {
     flex-direction: column;
-    width: min(92vw, 400px);
+    width: min(92vw, 450px);
     height: auto;
     min-height: unset;
-    max-height: 90vh;
+    max-height: 95vh;
+    overflow-y: auto;
   }
 `;
 
 const LeftSection = styled.div`
-  flex: 1.2;
-  background: linear-gradient(135deg, #9C3FE4 0%, #2294F7 100%);
+  flex: 1.35;
+  background: ${(props) => (props.isDark ? "#040612" : "linear-gradient(135deg, #f5f3ff 0%, #e0f2fe 100%)")};
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  color: white;
+  padding: clamp(24px, 4vw, 48px);
+  color: ${(props) => (props.isDark ? "white" : "#0f172a")};
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
 
   @media (max-width: 900px) {
     flex: none;
     height: auto;
-    min-height: 320px;
-    max-height: 400px;
+    min-height: 520px;
+    max-height: unset;
     padding: 32px 24px;
   }
 `;
 
-const InfoContent = styled.div`
-  max-width: 480px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+const HexGrid = styled.div`
+  position: absolute;
+  inset: 0;
+  opacity: ${(props) => (props.isDark ? 0.1 : 0.05)};
+  pointer-events: none;
+  background-image: radial-gradient(circle at 10% 50%, rgba(2, 4, 16, 0) 10%, ${(props) => (props.isDark ? "#040612" : "#f5f3ff")} 80%), 
+    url(${(props) => (props.isDark 
+      ? `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='41.56' viewBox='0 0 24 41.56'%3E%3Cpath d='M12 0 L24 6.93 L24 20.78 L12 27.71 L0 20.78 L0 6.93 Z M0 27.71 L12 34.64 L12 48.5 M24 27.71 L12 34.64' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E"`
+      : `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='41.56' viewBox='0 0 24 41.56'%3E%3Cpath d='M12 0 L24 6.93 L24 20.78 L12 27.71 L0 20.78 L0 6.93 Z M0 27.71 L12 34.64 L12 48.5 M24 27.71 L12 34.64' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E"`
+    )});
 `;
 
-const IconRow = styled.div`
+const DottedWave = ({ isDark }) => (
+  <svg width="100%" height="100%" style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 800 600" preserveAspectRatio="none">
+    <path 
+      d="M -50 480 C 180 430, 280 210, 480 160 C 680 110, 780 210, 880 110" 
+      fill="none" 
+      stroke="url(#wave-grad)" 
+      strokeWidth="2" 
+      strokeDasharray="4 8"
+      opacity={isDark ? 0.2 : 0.12}
+    />
+    <path 
+      d="M -50 500 C 160 450, 260 230, 460 180 C 660 130, 760 230, 860 130" 
+      fill="none" 
+      stroke="url(#wave-grad)" 
+      strokeWidth="1.5" 
+      strokeDasharray="2 6"
+      opacity={isDark ? 0.12 : 0.07}
+    />
+    <defs>
+      <linearGradient id="wave-grad" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stopColor="#3b82f6" />
+        <stop offset="50%" stopColor="#8b5cf6" />
+        <stop offset="100%" stopColor="#ec4899" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const GlowPurple = styled.div`
+  position: absolute;
+  top: -100px;
+  left: -50px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(139, 92, 246, ${(props) => (props.isDark ? 0.12 : 0.06)}) 0%, rgba(139, 92, 246, 0) 70%);
+  filter: blur(55px);
+  pointer-events: none;
+  z-index: 2;
+`;
+
+const GlowBlue = styled.div`
+  position: absolute;
+  bottom: -150px;
+  right: -50px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(37, 99, 235, ${(props) => (props.isDark ? 0.12 : 0.06)}) 0%, rgba(37, 99, 235, 0) 70%);
+  filter: blur(65px);
+  pointer-events: none;
+  z-index: 2;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: clamp(24px, 4vh, 48px);
+`;
+
+const LogoImg = styled.img`
+  height: clamp(26px, 2.5vw, 34px);
+  width: auto;
+  margin-right: 12px;
+`;
+
+const LogoText = styled.span`
+  font-family: "Geist", Arial, sans-serif;
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: ${(props) => (props.isDark ? "#ffffff" : "#0f172a")};
+  
+  span {
+    color: #a855f7;
+    font-weight: 500;
+  }
+`;
+
+const Heading = styled.h1`
+  font-family: "Geist", Arial, sans-serif;
+  font-size: clamp(32px, 3.8vw, 46px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  color: ${(props) => (props.isDark ? "#ffffff" : "#0f172a")};
+  letter-spacing: -0.02em;
+
+  span.gradient {
+    background: linear-gradient(90deg, #3b82f6 0%, #a855f7 55%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+`;
+
+const DescriptionText = styled.p`
+  font-family: "Geist", Arial, sans-serif;
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.5;
+  color: ${(props) => (props.isDark ? "#94a3b8" : "#475569")};
+  margin: 0 0 clamp(24px, 4vh, 40px) 0;
+  max-width: 580px;
+  font-weight: 400;
+`;
+
+const FlowSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 40px;
-  gap: 16px;
+  margin-bottom: clamp(24px, 4vh, 36px);
+  gap: 8px;
 
-  @media (max-width: 480px) {
-    gap: 8px;
+  @media (max-width: 1100px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
 `;
 
-const IconWrapper = styled.div`
-  width: 60px;
-  height: 60px;
-  color: rgba(255, 255, 255, 0.35);
+const StepCard = styled.div`
+  flex: 1;
+  min-width: 105px;
+  min-height: 124px; /* Fix dimensions to prevent layout shifts */
+  background: ${(props) => (props.isDark ? "rgba(8, 12, 28, 0.65)" : "rgba(255, 255, 255, 0.8)")};
+  border: 1px solid ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(15, 23, 42, 0.08)")};
+  border-radius: 12px;
+  padding: 24px 8px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: ${(props) => (props.isDark ? "0 8px 32px rgba(0, 0, 0, 0.4)" : "0 8px 32px rgba(15, 23, 42, 0.05)")};
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    border-color: ${(props) => (props.isDark ? "rgba(99, 102, 241, 0.35)" : "rgba(99, 102, 241, 0.5)")};
+    transform: translateY(-4px);
+    box-shadow: ${(props) => (props.isDark ? "0 12px 36px rgba(99, 102, 241, 0.18)" : "0 12px 36px rgba(99, 102, 241, 0.12)")};
+  }
+
+  @media (max-width: 1100px) {
+    flex: unset;
+    width: calc(50% - 10px);
+    min-width: 140px;
+    min-height: 130px;
+    padding: 28px 12px 20px 12px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`;
+
+const StepBadge = styled.div`
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: default;
+  color: #ffffff;
+  font-family: "Geist Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  border: 1.5px solid ${(props) => (props.isDark ? "#040612" : "#f5f3ff")};
+`;
+
+const StepIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  margin-bottom: 12px;
+`;
+
+const StepText = styled.span`
+  font-family: "Geist", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: ${(props) => (props.isDark ? "#cbd5e1" : "#334155")};
+  text-align: center;
+  display: block;
+`;
+
+const FlowArrow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b5cf6;
+  opacity: 0.75;
+  flex-shrink: 0;
 
   svg {
-    width: 100%;
-    height: 100%;
+    width: 20px;
+    height: 20px;
   }
 
-  &:hover {
-    color: rgba(255, 255, 255, 0.9);
-    transform: translateY(-4px) scale(1.05);
-    filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.15));
-  }
-
-  @media (max-width: 900px) {
-    width: 48px;
-    height: 48px;
+  @media (max-width: 1100px) {
+    display: none;
   }
 `;
 
-const InfoText = styled.p`
-  font-family: "Geist", Arial, sans-serif;
-  font-size: clamp(14px, 1.3vw, 16px);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  font-weight: 300;
-  letter-spacing: -0.01em;
+const TagsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  align-items: center; /* Center the tag container rows */
+  margin-bottom: clamp(24px, 4vh, 40px);
+`;
 
-  strong {
-    font-weight: 600;
-    color: #ffffff;
+const TagsRow = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center; /* Centering the tags rows */
+  flex-wrap: wrap;
+`;
+
+const TagPill = styled.div`
+  background: ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(15, 23, 42, 0.03)")};
+  border: 1px solid ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(15, 23, 42, 0.06)")};
+  border-radius: 20px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  color: ${(props) => (props.isDark ? "#e2e8f0" : "#334155")};
+  font-family: "Geist", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: ${(props) => (props.isDark ? "0 4px 12px rgba(0, 0, 0, 0.15)" : "0 4px 12px rgba(15, 23, 42, 0.03)")};
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(4px);
+
+  svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    color: ${props => props.iconColor || "#818cf8"};
+  }
+
+  &:hover {
+    background: ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(15, 23, 42, 0.06)")};
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: ${(props) => (props.isDark ? "0 4px 16px rgba(99, 102, 241, 0.12)" : "0 4px 16px rgba(99, 102, 241, 0.08)")};
+  }
+`;
+
+const TrustSection = styled.div`
+  display: flex;
+  justify-content: center; /* Centered items with small compact gap */
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: clamp(16px, 3vh, 24px);
+  border-top: 1px solid ${(props) => (props.isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(15, 23, 42, 0.08)")};
+  gap: clamp(16px, 3vw, 40px); /* Compact space between items */
+  z-index: 10;
+
+  @media (max-width: 900px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+`;
+
+const TrustItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Geist", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: ${(props) => (props.isDark ? "#64748b" : "#475569")};
+  line-height: 1.35;
+  white-space: nowrap;
+
+  svg {
+    width: 15px;
+    height: 15px;
+    color: #6366f1;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    width: calc(50% - 8px);
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;
 
@@ -274,29 +495,117 @@ const LoginPageInternal = ({ setAuthUser }) => {
   return (
     <LoginPageContainer isDark={isDark}>
       <LoginCard isDark={isDark}>
-        <LeftSection>
-          <InfoContent>
-            <IconRow>
-              <IconWrapper title="Threat Input">
-                <DocumentIcon />
-              </IconWrapper>
-              <IconWrapper title="Data Flow">
-                <DoubleArrowIcon />
-              </IconWrapper>
-              <IconWrapper title="Threat Identification">
-                <BiohazardIcon />
-              </IconWrapper>
-              <IconWrapper title="AI Brain Circuit">
-                <BrainCircuitIcon />
-              </IconWrapper>
-              <IconWrapper title="Security & Defense">
-                <KnightHelmetIcon />
-              </IconWrapper>
-            </IconRow>
-            <InfoText>
-              <strong>Threat Designer:</strong> Streamline threat modeling and identify vulnerabilities using agentic AI-powered security analysis.
-            </InfoText>
-          </InfoContent>
+        <LeftSection isDark={isDark}>
+          <HexGrid isDark={isDark} />
+          <DottedWave isDark={isDark} />
+          <GlowPurple isDark={isDark} />
+          <GlowBlue isDark={isDark} />
+          <ContentWrapper>
+            <LogoContainer>
+              <LogoImg src={logoShield} alt="SBM ThreatForge Logo" />
+              <LogoText isDark={isDark}>SBM <span>THREATFORGE</span></LogoText>
+            </LogoContainer>
+            
+            <Heading isDark={isDark}>
+              Threat Modeling,<br />
+              <span className="gradient">Reimagined.</span>
+            </Heading>
+            
+            <DescriptionText isDark={isDark}>
+              SBM ThreatForge helps security and engineering teams identify, assess, and mitigate threats with confidence.
+            </DescriptionText>
+
+            <FlowSection>
+              <StepCard isDark={isDark}>
+                <StepBadge isDark={isDark}>1</StepBadge>
+                <StepIconWrapper>
+                  <IsometricCubeIcon />
+                </StepIconWrapper>
+                <StepText isDark={isDark}>What are we building?</StepText>
+              </StepCard>
+              
+              <FlowArrow>
+                <FlowArrowIcon />
+              </FlowArrow>
+
+              <StepCard isDark={isDark}>
+                <StepBadge isDark={isDark}>2</StepBadge>
+                <StepIconWrapper>
+                  <AlertTriangle size={36} color="#c084fc" style={{ filter: "drop-shadow(0 0 8px rgba(168, 85, 247, 0.4))" }} />
+                </StepIconWrapper>
+                <StepText isDark={isDark}>What can go wrong?</StepText>
+              </StepCard>
+
+              <FlowArrow>
+                <FlowArrowIcon />
+              </FlowArrow>
+
+              <StepCard isDark={isDark}>
+                <StepBadge isDark={isDark}>3</StepBadge>
+                <StepIconWrapper>
+                  <ShieldCheck size={36} color="#60a5fa" style={{ filter: "drop-shadow(0 0 8px rgba(96, 165, 250, 0.4))" }} />
+                </StepIconWrapper>
+                <StepText isDark={isDark}>What should we do about it?</StepText>
+              </StepCard>
+
+              <FlowArrow>
+                <FlowArrowIcon />
+              </FlowArrow>
+
+              <StepCard isDark={isDark}>
+                <StepBadge isDark={isDark}>4</StepBadge>
+                <StepIconWrapper>
+                  <CheckCircle2 size={36} color="#22d3ee" style={{ filter: "drop-shadow(0 0 8px rgba(34, 211, 238, 0.4))" }} />
+                </StepIconWrapper>
+                <StepText isDark={isDark}>Did we do a good job?</StepText>
+              </StepCard>
+            </FlowSection>
+
+            <TagsContainer>
+              <TagsRow>
+                <TagPill isDark={isDark} iconColor="#ec4899">
+                  <Network /> Mission Decomposition
+                </TagPill>
+                <TagPill isDark={isDark} iconColor="#60a5fa">
+                  <Boxes /> System Decomposition
+                </TagPill>
+                <TagPill isDark={isDark} iconColor="#38bdf8">
+                  <Search /> Vulnerability Identification
+                </TagPill>
+              </TagsRow>
+              <TagsRow>
+                <TagPill isDark={isDark} iconColor="#3b82f6">
+                  <Globe /> Cyber Threat Intelligence
+                </TagPill>
+                <TagPill isDark={isDark} iconColor="#38bdf8">
+                  <ShieldCheck /> Defense & Risk Analysis
+                </TagPill>
+                <TagPill isDark={isDark} iconColor="#c084fc">
+                  <Sparkles /> Mitigation & Remediation
+                </TagPill>
+              </TagsRow>
+              <TagsRow>
+                <TagPill isDark={isDark} iconColor="#60a5fa">
+                  <Activity /> Monitoring Analysis & Evaluation
+                </TagPill>
+              </TagsRow>
+            </TagsContainer>
+
+            <TrustSection isDark={isDark}>
+              <TrustItem isDark={isDark}>
+                <ShieldCheck />
+                <span>Trusted by security professionals</span>
+              </TrustItem>
+              <TrustItem isDark={isDark}>
+                <Lock />
+                <span>Enterprise-grade security</span>
+              </TrustItem>
+              <TrustItem isDark={isDark}>
+                <Users />
+                <span>Built for cross-functional collaboration</span>
+              </TrustItem>
+            </TrustSection>
+          </ContentWrapper>
         </LeftSection>
 
         <RightSection isDark={isDark}>
