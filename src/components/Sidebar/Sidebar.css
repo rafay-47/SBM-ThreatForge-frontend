@@ -72,32 +72,25 @@ html.dark .sidebar-hover-zone {
 
 /* ===== Active Navigation Item Indicator ===== */
 
-/* Active state styling with left border indicator */
+/* Active state styling as a capsule matching client mockup */
 [data-sidebar="menu-button"][data-active="true"] {
   position: relative;
-  background-color: var(--color-sidebar-accent);
-  color: var(--color-sidebar-accent-foreground);
-  font-weight: 500;
+  background-color: var(--surface-selected);
+  color: #ffffff;
+  font-weight: 550;
   transition: all 0.15s ease;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-accent-primary) 18%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.2);
 }
 
-/* Left border indicator for active item */
+/* Hide left border indicator for active item to match mockup capsule style */
 [data-sidebar="menu-button"][data-active="true"]::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  border-radius: 0 3px 3px 0;
-  background: var(--color-sidebar-primary);
+  display: none;
 }
 
 /* Active icon color */
 [data-sidebar="menu-button"][data-active="true"] svg {
-  color: var(--color-sidebar-primary);
+  color: #a5b4fc;
 }
 
 /* Smooth hover transition for all menu buttons */

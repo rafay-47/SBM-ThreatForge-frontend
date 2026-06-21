@@ -199,6 +199,10 @@ async function createVersion(
   return instance.post("", postData);
 }
 
+async function getDashboardStats() {
+  return instance.get("/dashboard/stats");
+}
+
 export {
   getThreatModelingStatus,
   getThreatModelingResults,
@@ -215,4 +219,5 @@ export {
   restoreTm,
   stopTm,
   getCollaborators,
+  getDashboardStats,
 };

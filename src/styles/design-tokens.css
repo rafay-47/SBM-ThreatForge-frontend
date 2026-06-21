@@ -13,6 +13,7 @@
   --font-size-md: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 20px;
+  --primary-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
 
   /* ===== Font Families ===== */
   --font-family-body: Geist, Arial, sans-serif;
@@ -146,22 +147,22 @@
 
 /* ===== Colors - Dark Mode ===== */
 html.dark {
-  --surface-canvas: #101012;
-  --surface-rail: #17171c;
-  --surface-panel: #1b1b22;
-  --surface-panel-alt: #20202a;
-  --surface-raised: #242431;
-  --surface-command: #101012;
-  --surface-command-muted: #171720;
-  --surface-selected: #2e1065;
-  --surface-hover: #25124d;
+  --surface-canvas: #080b11;
+  --surface-rail: #080b11;
+  --surface-panel: #0d111d;
+  --surface-panel-alt: #131926;
+  --surface-raised: #1b2234;
+  --surface-command: #080b11;
+  --surface-command-muted: #0d111d;
+  --surface-selected: #1b223c;
+  --surface-hover: #13192c;
 
   --ink-strong: #fafaf9;
   --ink-body: #e7e3ef;
   --ink-muted: #a6a0b7;
   --ink-subtle: #827b93;
-  --line-soft: #30303c;
-  --line-strong: #454056;
+  --line-soft: #1a2035;
+  --line-strong: #252e48;
 
   --risk-critical: #ff8a7a;
   --risk-critical-bg: #3b1312;

@@ -66,6 +66,12 @@ export function SidebarHeader() {
               </div>
             </div>
 
+            {!isCollapsed && (
+              <span className="ml-3 font-semibold text-white tracking-wide text-[14px] whitespace-nowrap transition-opacity duration-200">
+                SBM ThreatForge
+              </span>
+            )}
+
             {/* Collapse button when expanded - on the right */}
             <div
               className={`absolute right-2 top-1/2 -translate-y-1/2 transition-opacity duration-200 ${

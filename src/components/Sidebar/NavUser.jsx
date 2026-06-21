@@ -1,4 +1,4 @@
-import { ChevronsUpDown, LogOut, MonitorCog, Moon, Sun, Check } from "lucide-react";
+import { ChevronsUpDown, LogOut, MonitorCog, Moon, Sun, Check, Shield } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -19,20 +19,6 @@ import {
 /**
  * NavUser component displays user profile information and provides
  * dropdown menu with theme options and sign out functionality.
- *
- * Requirements:
- * - 3.1: Display theme options (System, Light, Dark)
- * - 3.2: Apply selected theme immediately
- * - 3.3: Visually indicate currently active theme
- * - 4.1: Display user's given_name and family_name
- * - 4.2: Display dropdown menu with account options
- * - 4.3: Sign out option that logs user out
- *
- * @param {Object} props
- * @param {Object} props.user - User object with given_name and family_name
- * @param {string} props.colorMode - Current color mode ('system', 'light', 'dark')
- * @param {Function} props.setThemeMode - Function to set theme mode
- * @param {Function} props.onLogout - Function to call when signing out
  */
 export function NavUser({ user, colorMode, setThemeMode, onLogout }) {
   const { isMobile, state } = useSidebar();
@@ -71,23 +57,18 @@ export function NavUser({ user, colorMode, setThemeMode, onLogout }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border border-line-soft rounded-lg p-2 flex items-center gap-3 bg-transparent hover:bg-surface-hover transition-colors"
             >
-              <Avatar
-                className="h-8 w-8 rounded-lg !border-0"
-                style={{ border: "none", borderWidth: 0, outline: "none" }}
-              >
-                <AvatarFallback
-                  className="rounded-lg !border-0 !bg-sidebar-primary"
-                  style={{ border: "none", borderWidth: 0, outline: "none" }}
-                >
-                  {getInitials()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{displayName}</span>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface-selected text-primary border border-line-soft">
+                <Shield className="size-4 text-violet-400" />
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              {state !== "collapsed" && (
+                <div className="grid flex-1 text-left text-[13px] leading-tight">
+                  <span className="truncate font-semibold text-white">Security Team</span>
+                  <span className="truncate text-xs text-muted-foreground">Enterprise Plan</span>
+                </div>
+              )}
+              {state !== "collapsed" && <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
