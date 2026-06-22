@@ -576,7 +576,7 @@ export const createThreatModelingPDF = async (
       const numColumns = columns.length;
       const columnStyles = {};
 
-      // Special handling for threat catalog (7 columns)
+      // Special handling for threat catalog (7 or 9 columns)
       if (numColumns === 7) {
         columnStyles[0] = { cellWidth: 45 }; // name
         columnStyles[1] = { cellWidth: 30 }; // stride_category
@@ -585,6 +585,16 @@ export const createThreatModelingPDF = async (
         columnStyles[4] = { cellWidth: 25 }; // impact
         columnStyles[5] = { cellWidth: 25 }; // likelihood
         columnStyles[6] = { cellWidth: 50 }; // mitigations
+      } else if (numColumns === 9) {
+        columnStyles[0] = { cellWidth: 35 }; // name
+        columnStyles[1] = { cellWidth: 25 }; // stride_category
+        columnStyles[2] = { cellWidth: 25 }; // pasta_stage
+        columnStyles[3] = { cellWidth: 25 }; // mitre_attack
+        columnStyles[4] = { cellWidth: 50 }; // description
+        columnStyles[5] = { cellWidth: 30 }; // target
+        columnStyles[6] = { cellWidth: 20 }; // impact
+        columnStyles[7] = { cellWidth: 20 }; // likelihood
+        columnStyles[8] = { cellWidth: 45 }; // mitigations
       } else {
         // Default auto for other landscape tables
         for (let i = 0; i < numColumns; i++) {

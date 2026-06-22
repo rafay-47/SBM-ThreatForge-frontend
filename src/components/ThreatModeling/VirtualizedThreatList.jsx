@@ -55,6 +55,8 @@ const VirtualizedThreatList = memo(function VirtualizedThreatList({
           "description",
           "likelihood",
           "stride_category",
+          "pasta_stage",
+          "mitre_attack",
           "impact",
           "target",
           "source",

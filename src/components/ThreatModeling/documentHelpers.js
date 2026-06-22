@@ -22,6 +22,8 @@ export const TABLE_COLUMNS = {
   THREAT_CATALOG: [
     "name",
     "stride_category",
+    "pasta_stage",
+    "mitre_attack",
     "description",
     "target",
     "impact",

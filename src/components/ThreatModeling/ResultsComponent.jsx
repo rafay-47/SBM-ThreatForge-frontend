@@ -135,6 +135,18 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
         operators: ["=", "!="],
       },
       {
+        key: "pasta_stage",
+        propertyLabel: "PASTA Stage",
+        groupValuesLabel: "PASTA stages",
+        operators: ["=", "!="],
+      },
+      {
+        key: "mitre_attack",
+        propertyLabel: "MITRE ATT&CK",
+        groupValuesLabel: "MITRE ATT&CK tactics",
+        operators: ["=", "!="],
+      },
+      {
         key: "starred",
         propertyLabel: "Starred",
         groupValuesLabel: "Starred status",
@@ -380,6 +392,8 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
           "description",
           "likelihood",
           "stride_category",
+          "pasta_stage",
+          "mitre_attack",
           "impact",
           "target",
           "source",
@@ -397,7 +411,7 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
         type={"threats"}
         hasColumn={true}
         columnConfig={{
-          left: ["name", "description", "likelihood", "stride_category", "impact", "target"],
+          left: ["name", "description", "likelihood", "stride_category", "pasta_stage", "mitre_attack", "impact", "target"],
           right: ["source", "vector", "prerequisites", "mitigations", "notes"],
         }}
       />

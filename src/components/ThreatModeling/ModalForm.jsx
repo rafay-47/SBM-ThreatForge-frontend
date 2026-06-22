@@ -61,6 +61,39 @@ export const ModalComponent = ({
       { label: "Medium", value: "Medium" },
       { label: "High", value: "High" },
     ],
+    stride_category: [
+      { label: "Spoofing", value: "Spoofing" },
+      { label: "Tampering", value: "Tampering" },
+      { label: "Repudiation", value: "Repudiation" },
+      { label: "Information Disclosure", value: "Information Disclosure" },
+      { label: "Denial of Service", value: "Denial of Service" },
+      { label: "Elevation of Privilege", value: "Elevation of Privilege" },
+    ],
+    pasta_stage: [
+      { label: "Stage 1: Define Objectives", value: "Stage 1: Define Objectives" },
+      { label: "Stage 2: Define Technical Scope", value: "Stage 2: Define Technical Scope" },
+      { label: "Stage 3: Application Decomposition", value: "Stage 3: Application Decomposition" },
+      { label: "Stage 4: Threat Analysis", value: "Stage 4: Threat Analysis" },
+      { label: "Stage 5: Vulnerability & Weakness Analysis", value: "Stage 5: Vulnerability & Weakness Analysis" },
+      { label: "Stage 6: Attack Modeling", value: "Stage 6: Attack Modeling" },
+      { label: "Stage 7: Risk & Impact Analysis", value: "Stage 7: Risk & Impact Analysis" },
+    ],
+    mitre_attack: [
+      { label: "Reconnaissance", value: "Reconnaissance" },
+      { label: "Resource Development", value: "Resource Development" },
+      { label: "Initial Access", value: "Initial Access" },
+      { label: "Execution", value: "Execution" },
+      { label: "Persistence", value: "Persistence" },
+      { label: "Privilege Escalation", value: "Privilege Escalation" },
+      { label: "Defense Evasion", value: "Defense Evasion" },
+      { label: "Credential Access", value: "Credential Access" },
+      { label: "Discovery", value: "Discovery" },
+      { label: "Lateral Movement", value: "Lateral Movement" },
+      { label: "Collection", value: "Collection" },
+      { label: "Command and Control", value: "Command and Control" },
+      { label: "Exfiltration", value: "Exfiltration" },
+      { label: "Impact", value: "Impact" },
+    ],
   };
 
   const handleInputChange = (key, value) => {
@@ -73,8 +106,8 @@ export const ModalComponent = ({
   const validateForm = (formData) => {
     return headers.every((header) => {
       const key = header.toLowerCase();
-      // Notes field is optional - skip validation
-      if (key === "notes") {
+      // Notes, PASTA stage, and MITRE ATT&CK are optional - skip validation
+      if (key === "notes" || key === "pasta_stage" || key === "mitre_attack") {
         return true;
       }
       if (key === "mitigations") {

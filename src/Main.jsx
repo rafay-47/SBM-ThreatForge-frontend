@@ -28,7 +28,7 @@ function Main({ user }) {
   return (
     <Suspense fallback={<RouteLoader />}>
       <Routes>
-        <Route path="/" element={<ThreatModeling />} />
+        <Route path="/" element={<ThreatModeling user={user} />} />
         <Route path="/threat-catalog" element={<ThreatCatalog user={user} />} />
         <Route path="/spaces/:spaceId" element={<SpacesCatalog user={user} />} />
         <Route path="/spaces" element={<SpacesCatalog user={user} />} />

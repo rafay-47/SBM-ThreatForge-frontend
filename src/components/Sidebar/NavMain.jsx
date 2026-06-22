@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -7,6 +7,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import Modal from "@cloudscape-design/components/modal";
+import Box from "@cloudscape-design/components/box";
+import Button from "@cloudscape-design/components/button";
+import SpaceBetween from "@cloudscape-design/components/space-between";
 
 /**
  * NavMain component renders the main navigation items in the sidebar.
@@ -23,9 +27,16 @@ import {
 export function NavMain({ items }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [featureName, setFeatureName] = useState("");
 
-  const handleNavigation = (url) => {
-    navigate(url);
+  const handleNavigation = (title, url) => {
+    if (url === "#" || url.startsWith("#")) {
+      setFeatureName(title);
+      setModalVisible(true);
+    } else {
+      navigate(url);
+    }
   };
 
   /**
@@ -57,7 +68,7 @@ export function NavMain({ items }) {
                 <SidebarMenuButton
                   tooltip={item.title}
                   isActive={isActive}
-                  onClick={() => handleNavigation(item.url)}
+                  onClick={() => handleNavigation(item.title, item.url)}
                 >
                   {Icon && <Icon className="size-5" />}
                   <span>{item.title}</span>
@@ -67,6 +78,29 @@ export function NavMain({ items }) {
           })}
         </SidebarMenu>
       </SidebarGroupContent>
+
+      <Modal
+        onDismiss={() => setModalVisible(false)}
+        visible={modalVisible}
+        closeAriaLabel="Close modal"
+        footer={
+          <Box float="right">
+            <Button onClick={() => setModalVisible(false)} variant="primary">
+              Got it
+            </Button>
+          </Box>
+        }
+        header="Feature Coming Soon"
+      >
+        <SpaceBetween size="m">
+          <Box variant="p">
+            The <strong>{featureName}</strong> dashboard and analytics module is currently under active development.
+          </Box>
+          <Box variant="p" color="text-muted">
+            We are building STRIDE-aligned mitigations, automated reporting tools, and direct cloud integration controls for this workspace. Check back soon for updates!
+          </Box>
+        </SpaceBetween>
+      </Modal>
     </SidebarGroup>
   );
 }

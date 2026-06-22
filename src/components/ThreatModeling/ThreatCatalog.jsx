@@ -160,8 +160,18 @@ export const ThreatComponent = React.memo((props) => {
                     <strong>Likelihood:</strong> {props?.data?.likelihood}
                   </div>
                   <div>
-                    <strong>Category:</strong> {props?.data?.stride_category}
+                    <strong>Category (STRIDE):</strong> {props?.data?.stride_category}
                   </div>
+                  {props?.data?.pasta_stage && (
+                    <div>
+                      <strong>PASTA Stage:</strong> {props?.data?.pasta_stage}
+                    </div>
+                  )}
+                  {props?.data?.mitre_attack && (
+                    <div>
+                      <strong>MITRE ATT&CK:</strong> {props?.data?.mitre_attack}
+                    </div>
+                  )}
                   <div>
                     <strong>Impact:</strong> {props?.data?.impact}
                   </div>
@@ -205,7 +215,7 @@ export const ThreatComponent = React.memo((props) => {
         type={props?.type}
         hasColumn={true}
         columnConfig={{
-          left: ["name", "description", "likelihood", "stride_category", "impact", "target"],
+          left: ["name", "description", "likelihood", "stride_category", "pasta_stage", "mitre_attack", "impact", "target"],
           right: ["source", "vector", "prerequisites", "mitigations", "notes"],
         }}
       />
