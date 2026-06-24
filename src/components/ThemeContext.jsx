@@ -1,19 +1,23 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 
-const ThemeContext = createContext();
+const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children, colorMode, effectiveTheme, setThemeMode }) => {
-  const value = {
-    colorMode, // "system", "light", or "dark"
-    effectiveTheme, // The actual theme being used ("light" or "dark")
-    setThemeMode, // Function to change the theme
-    isDark: effectiveTheme === "dark", // Convenience boolean
-  };
+  const value = useMemo(
+    () => ({
+      colorMode,
+      effectiveTheme,
+      setThemeMode,
+      isDark: effectiveTheme === "dark",
+      isLight: effectiveTheme === "light",
+      isSystem: colorMode === "system",
+    }),
+    [colorMode, effectiveTheme, setThemeMode]
+  );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
 
-// Custom hook for using the theme
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

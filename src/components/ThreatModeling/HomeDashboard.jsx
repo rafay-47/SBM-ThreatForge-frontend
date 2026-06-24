@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Clock
 } from "lucide-react";
+import CountUp from "../ui/CountUp";
 import "./HomeDashboard.css";
 
 export default function HomeDashboard({ user, onCreateNew }) {
@@ -27,7 +28,10 @@ export default function HomeDashboard({ user, onCreateNew }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [strideFilter, setStrideFilter] = useState(null);
+  // Active threat-framework profile tab: "stride" | "pasta" | "mitre"
+  const [framework, setFramework] = useState("stride");
+  // Active category filter within the selected framework (e.g. a STRIDE category name)
+  const [frameworkFilter, setFrameworkFilter] = useState(null);
 
   const fetchStats = async () => {
     setLoading(true);
@@ -72,6 +76,31 @@ export default function HomeDashboard({ user, onCreateNew }) {
     "Denial of Service": 0,
     "Elevation of Privilege": 0
   };
+  const pastaCounts = stats?.pasta_counts ?? {
+    "Stage 1: Define Objectives": 0,
+    "Stage 2: Define Technical Scope": 0,
+    "Stage 3: Application Decomposition": 0,
+    "Stage 4: Threat Analysis": 0,
+    "Stage 5: Vulnerability & Weakness Analysis": 0,
+    "Stage 6: Attack Modeling": 0,
+    "Stage 7: Risk & Impact Analysis": 0
+  };
+  const mitreCounts = stats?.mitre_counts ?? {
+    "Reconnaissance": 0,
+    "Resource Development": 0,
+    "Initial Access": 0,
+    "Execution": 0,
+    "Persistence": 0,
+    "Privilege Escalation": 0,
+    "Defense Evasion": 0,
+    "Credential Access": 0,
+    "Discovery": 0,
+    "Lateral Movement": 0,
+    "Collection": 0,
+    "Command and Control": 0,
+    "Exfiltration": 0,
+    "Impact": 0
+  };
 
   const spaces = stats?.spaces ?? [];
   const recentDocuments = stats?.recent_documents ?? [];
@@ -83,13 +112,22 @@ export default function HomeDashboard({ user, onCreateNew }) {
   const mediumPct = Math.round((mediumRisk / riskSum) * 100);
   const lowPct = Math.round((lowRisk / riskSum) * 100);
 
-  // Calculate percentages for STRIDE counts
-  const totalStrideThreats = Object.values(strideCounts).reduce((a, b) => a + b, 0) || 1;
-  const strideData = Object.entries(strideCounts).map(([category, count]) => ({
-    category,
-    count,
-    percentage: Math.round((count / totalStrideThreats) * 100)
-  })).sort((a, b) => b.count - a.count);
+  // Threat-framework profile data for the active tab.
+  // Maps the selected framework to its counts dict and the threat field used for filtering.
+  const FRAMEWORK_CONFIG = {
+    stride: { counts: strideCounts, field: "stride_category" },
+    pasta: { counts: pastaCounts, field: "pasta_stage" },
+    mitre: { counts: mitreCounts, field: "mitre_attack" },
+  };
+  const frameworkCounts = FRAMEWORK_CONFIG[framework].counts;
+  const totalFrameworkThreats = Object.values(frameworkCounts).reduce((a, b) => a + b, 0) || 1;
+  const frameworkData = Object.entries(frameworkCounts)
+    .map(([category, count]) => ({
+      category,
+      count,
+      percentage: Math.round((count / totalFrameworkThreats) * 100)
+    }))
+    .sort((a, b) => b.count - a.count);
 
   // Time format helper
   const formatTimeAgo = (timestamp) => {
@@ -114,20 +152,28 @@ export default function HomeDashboard({ user, onCreateNew }) {
     }
   };
 
-  // Filter top threats based on active STRIDE category
-  const filteredTopThreats = strideFilter
+  // Filter top threats based on the active framework category.
+  // Falls back to showing all when the threat object lacks the field for the
+  // active framework (e.g. backend top_threats currently only carries stride_category).
+  const activeFrameworkField = FRAMEWORK_CONFIG[framework].field;
+  const filteredTopThreats = frameworkFilter
     ? topThreats.filter(threat => {
-        const sc = threat.stride_category || "";
-        return sc.toLowerCase().trim() === strideFilter.toLowerCase().trim();
+        const value = threat[activeFrameworkField] || "";
+        return value.toLowerCase().trim() === frameworkFilter.toLowerCase().trim();
       })
     : topThreats;
 
-  const handleStrideClick = (category) => {
-    if (strideFilter === category) {
-      setStrideFilter(null); // toggle off
+  const handleFrameworkClick = (category) => {
+    if (frameworkFilter === category) {
+      setFrameworkFilter(null); // toggle off
     } else {
-      setStrideFilter(category);
+      setFrameworkFilter(category);
     }
+  };
+
+  const handleFrameworkTabChange = (nextFramework) => {
+    setFramework(nextFramework);
+    setFrameworkFilter(null); // reset category filter when switching tabs
   };
 
   if (loading) {
@@ -202,7 +248,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
             <Shield size={16} className="text-indigo-400" />
           </div>
           <div className="metric-body">
-            <span className="summary-value">{totalThreats}</span>
+            <span className="summary-value">
+              <CountUp to={totalThreats} duration={1400} />
+            </span>
             <span className="summary-subtext">Identified across active models</span>
           </div>
         </div>
@@ -260,15 +308,15 @@ export default function HomeDashboard({ user, onCreateNew }) {
           <div className="distribution-legend">
             <div className="legend-item">
               <span className="legend-dot high"></span>
-              <span className="legend-text"><strong>{highRisk}</strong> High</span>
+              <span className="legend-text"><strong><CountUp to={highRisk} duration={1200} /></strong> High</span>
             </div>
             <div className="legend-item">
               <span className="legend-dot medium"></span>
-              <span className="legend-text"><strong>{mediumRisk}</strong> Medium</span>
+              <span className="legend-text"><strong><CountUp to={mediumRisk} duration={1200} /></strong> Medium</span>
             </div>
             <div className="legend-item">
               <span className="legend-dot low"></span>
-              <span className="legend-text"><strong>{lowRisk}</strong> Low</span>
+              <span className="legend-text"><strong><CountUp to={lowRisk} duration={1200} /></strong> Low</span>
             </div>
           </div>
         </div>
@@ -361,9 +409,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
                 <p className="widget-description">Actionable, highest likelihood risks prioritized across your models.</p>
               </div>
               <div className="flex items-center gap-2">
-                {strideFilter && (
-                  <button className="btn-filter-clear flex items-center gap-1" onClick={() => setStrideFilter(null)}>
-                    <span>Category: {strideFilter}</span>
+                {frameworkFilter && (
+                  <button className="btn-filter-clear flex items-center gap-1" onClick={() => setFrameworkFilter(null)}>
+                    <span>Category: {frameworkFilter}</span>
                     <X size={12} />
                   </button>
                 )}
@@ -378,13 +426,13 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
                 <Shield size={36} className="text-indigo-400/60 mb-3" />
                 <strong className="text-sm font-semibold text-white">
-                  {strideFilter ? `No ${strideFilter} threats found` : "No threat vulnerabilities found"}
+                  {frameworkFilter ? `No ${frameworkFilter} threats found` : "No threat vulnerabilities found"}
                 </strong>
                 <span className="text-xs text-muted-foreground mt-1">
-                  {strideFilter ? "Try selecting a different STRIDE category profile bar." : "Generate a threat model to identify risks."}
+                  {frameworkFilter ? "Try selecting a different category profile bar." : "Generate a threat model to identify risks."}
                 </span>
-                {strideFilter && (
-                  <button className="btn-improve-coverage text-xs mt-3 py-1.5 px-3" onClick={() => setStrideFilter(null)}>
+                {frameworkFilter && (
+                  <button className="btn-improve-coverage text-xs mt-3 py-1.5 px-3" onClick={() => setFrameworkFilter(null)}>
                     Clear Filter
                   </button>
                 )}
@@ -410,7 +458,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
                           <strong className="threat-item-name">{threat.name}</strong>
                           <span className="threat-item-model">
                             {threat.target} | <span className="model-link-text">{threat.model_title}</span>
-                            {threat.stride_category && <span className="stride-tag-subtle">{threat.stride_category}</span>}
+                            {threat[activeFrameworkField] && <span className="stride-tag-subtle">{threat[activeFrameworkField]}</span>}
                           </span>
                         </div>
                       </div>
@@ -477,27 +525,57 @@ export default function HomeDashboard({ user, onCreateNew }) {
         {/* RIGHT COLUMN: Metrics, AI Advisory, Documents */}
         <section className="grid-column-right">
           
-          {/* STRIDE Threat Profile Widget */}
+          {/* Threat Framework Profile Widget (STRIDE / PASTA / MITRE ATT&CK) */}
           <div className="dashboard-widget stride-profile-widget">
-            <h3 className="widget-title">STRIDE Threat Profile</h3>
-            <p className="text-xs text-muted-foreground -mt-2">Click categories below to filter vulnerabilities list.</p>
+            <div className="framework-profile-header">
+              <div>
+                <h3 className="widget-title">Threat Framework Profile</h3>
+                <p className="text-xs text-muted-foreground -mt-2">Click categories below to filter vulnerabilities list.</p>
+              </div>
+              <div className="framework-tabs" role="tablist" aria-label="Threat framework">
+                <button
+                  role="tab"
+                  aria-selected={framework === "stride"}
+                  className={`framework-tab ${framework === "stride" ? "active" : ""}`}
+                  onClick={() => handleFrameworkTabChange("stride")}
+                >
+                  STRIDE
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={framework === "pasta"}
+                  className={`framework-tab ${framework === "pasta" ? "active" : ""}`}
+                  onClick={() => handleFrameworkTabChange("pasta")}
+                >
+                  PASTA
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={framework === "mitre"}
+                  className={`framework-tab ${framework === "mitre" ? "active" : ""}`}
+                  onClick={() => handleFrameworkTabChange("mitre")}
+                >
+                  MITRE
+                </button>
+              </div>
+            </div>
             <div className="stride-bars-container">
-              {strideData.map((item, index) => {
-                const isFiltered = strideFilter === item.category;
+              {frameworkData.map((item, index) => {
+                const isFiltered = frameworkFilter === item.category;
                 return (
-                  <div 
-                    className={`stride-bar-row interactive-bar-row ${isFiltered ? "active-filter" : ""}`} 
+                  <div
+                    className={`stride-bar-row interactive-bar-row ${isFiltered ? "active-filter" : ""}`}
                     key={item.category}
-                    onClick={() => handleStrideClick(item.category)}
+                    onClick={() => handleFrameworkClick(item.category)}
                   >
                     <div className="stride-bar-info text-sm">
                       <span className="font-semibold text-white">{item.category}</span>
                       <span className="text-muted-foreground">{item.count} ({item.percentage}%)</span>
                     </div>
                     <div className="stride-bar-track bg-slate-950/50 rounded-full h-1.5 w-full overflow-hidden border border-line-soft">
-                      <div 
+                      <div
                         className="stride-bar-fill rounded-full h-full"
-                        style={{ 
+                        style={{
                           width: `${item.percentage}%`,
                           background: isFiltered
                             ? "linear-gradient(to right, #818cf8, #a78bfa)"

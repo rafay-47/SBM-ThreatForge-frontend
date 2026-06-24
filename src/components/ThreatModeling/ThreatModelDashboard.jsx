@@ -11,11 +11,15 @@ import {
   aggregateByLikelihood,
   aggregateByTargetWithLikelihood,
   aggregateBySource,
+  aggregateByPastaWithLikelihood,
+  aggregateByMitreWithLikelihood,
 } from "./chartUtils";
 import StrideChart from "./charts/StrideChart";
 import LikelihoodChart from "./charts/LikelihoodChart";
 import TargetAssetChart from "./charts/TargetAssetChart";
 import ThreatSourceChart from "./charts/ThreatSourceChart";
+import PastaChart from "./charts/PastaChart";
+import MitreChart from "./charts/MitreChart";
 import ChartErrorBoundary from "./charts/ChartErrorBoundary";
 
 /**
@@ -71,6 +75,18 @@ const getDefaultBoardItems = () => [
     rowSpan: 5,
     columnSpan: 2,
     data: { type: "source" },
+  },
+  {
+    id: "pasta-chart",
+    rowSpan: 5,
+    columnSpan: 2,
+    data: { type: "pasta" },
+  },
+  {
+    id: "mitre-chart",
+    rowSpan: 5,
+    columnSpan: 2,
+    data: { type: "mitre" },
   },
 ];
 
@@ -141,6 +157,16 @@ const ThreatModelDashboard = ({ threatCatalogData = [], tokenUsage = null }) => 
   // Aggregate data for threat source distribution
   const sourceDistribution = useMemo(() => {
     return aggregateBySource(validThreats);
+  }, [validThreats]);
+
+  // Aggregate data for PASTA stage distribution with likelihood breakdown
+  const pastaDistribution = useMemo(() => {
+    return aggregateByPastaWithLikelihood(validThreats);
+  }, [validThreats]);
+
+  // Aggregate data for MITRE ATT&CK tactic distribution with likelihood breakdown
+  const mitreDistribution = useMemo(() => {
+    return aggregateByMitreWithLikelihood(validThreats);
   }, [validThreats]);
 
   // Calculate total threats
@@ -275,6 +301,34 @@ const ThreatModelDashboard = ({ threatCatalogData = [], tokenUsage = null }) => 
                 >
                   <ChartErrorBoundary chartName="Threat Sources">
                     <ThreatSourceChart data={sourceDistribution} />
+                  </ChartErrorBoundary>
+                </BoardItem>
+              );
+            case "pasta":
+              return (
+                <BoardItem
+                  header={<Header>Threats by PASTA Stage</Header>}
+                  i18nStrings={{
+                    dragHandleAriaLabel: "Drag handle",
+                    resizeHandleAriaLabel: "Resize handle",
+                  }}
+                >
+                  <ChartErrorBoundary chartName="Threats by PASTA Stage">
+                    <PastaChart data={pastaDistribution} />
+                  </ChartErrorBoundary>
+                </BoardItem>
+              );
+            case "mitre":
+              return (
+                <BoardItem
+                  header={<Header>Threats by MITRE ATT&CK Tactic</Header>}
+                  i18nStrings={{
+                    dragHandleAriaLabel: "Drag handle",
+                    resizeHandleAriaLabel: "Resize handle",
+                  }}
+                >
+                  <ChartErrorBoundary chartName="Threats by MITRE ATT&CK Tactic">
+                    <MitreChart data={mitreDistribution} />
                   </ChartErrorBoundary>
                 </BoardItem>
               );

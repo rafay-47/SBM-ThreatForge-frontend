@@ -6,6 +6,9 @@ import LoginForm from "../../components/Auth/LoginForm";
 import { useTheme } from "../../components/ThemeContext";
 import logoShield from "../../components/ThreatModeling/images/shield.png";
 import { Network, Boxes, Search, Globe, ShieldCheck, Sparkles, Activity, Lock, Users, AlertTriangle, CheckCircle2 } from "lucide-react";
+import DecryptedText from "../../components/ui/DecryptedText";
+import GradientText from "../../components/ui/GradientText";
+import DotGrid from "../../components/ui/DotGrid";
 
 const FlowArrowIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -497,6 +500,7 @@ const LoginPageInternal = ({ setAuthUser }) => {
       <LoginCard isDark={isDark}>
         <LeftSection isDark={isDark}>
           <HexGrid isDark={isDark} />
+          <DotGrid opacity={isDark ? 0.18 : 0.1} />
           <DottedWave isDark={isDark} />
           <GlowPurple isDark={isDark} />
           <GlowBlue isDark={isDark} />
@@ -507,8 +511,21 @@ const LoginPageInternal = ({ setAuthUser }) => {
             </LogoContainer>
             
             <Heading isDark={isDark}>
-              Threat Modeling,<br />
-              <span className="gradient">Reimagined.</span>
+              <DecryptedText
+                text="Threat Modeling,"
+                as="span"
+                duration={45}
+                maxIterations={12}
+                animateOn="hover"
+              />
+              <br />
+              <GradientText
+                as="span"
+                colors={["#7c3aed", "#a855f7", "#ec4899", "#8b5cf6", "#7c3aed"]}
+                animationSpeed={5}
+              >
+                Reimagined.
+              </GradientText>
             </Heading>
             
             <DescriptionText isDark={isDark}>

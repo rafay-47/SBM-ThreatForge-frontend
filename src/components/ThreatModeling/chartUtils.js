@@ -190,6 +190,99 @@ export const aggregateByStrideWithLikelihood = (threats) => {
 };
 
 /**
+ * Transform threat data for PASTA stage chart with likelihood breakdown
+ * Returns data structured for stacked bar chart
+ * @param {Array} threats - Array of threat objects
+ * @returns {Object} Object with stages array and series data by likelihood
+ */
+export const aggregateByPastaWithLikelihood = (threats) => {
+  if (!Array.isArray(threats)) {
+    return { stages: [], series: [] };
+  }
+
+  const stages = [
+    "Stage 1: Define Objectives",
+    "Stage 2: Define Technical Scope",
+    "Stage 3: Application Decomposition",
+    "Stage 4: Threat Analysis",
+    "Stage 5: Vulnerability & Weakness Analysis",
+    "Stage 6: Attack Modeling",
+    "Stage 7: Risk & Impact Analysis",
+  ];
+
+  const likelihoodLevels = ["High", "Medium", "Low"];
+
+  // Create series for each likelihood level
+  const series = likelihoodLevels.map((level) => {
+    const data = stages.map((stage) => {
+      const count = threats.filter(
+        (t) => t?.pasta_stage === stage && t?.likelihood === level
+      ).length;
+      return { x: stage, y: count };
+    });
+
+    return {
+      title: level,
+      type: "bar",
+      data,
+      color: getLikelihoodColor(level),
+    };
+  });
+
+  return { stages, series };
+};
+
+/**
+ * Transform threat data for MITRE ATT&CK tactic chart with likelihood breakdown
+ * Returns data structured for stacked bar chart
+ * @param {Array} threats - Array of threat objects
+ * @returns {Object} Object with tactics array and series data by likelihood
+ */
+export const aggregateByMitreWithLikelihood = (threats) => {
+  if (!Array.isArray(threats)) {
+    return { tactics: [], series: [] };
+  }
+
+  const tactics = [
+    "Reconnaissance",
+    "Resource Development",
+    "Initial Access",
+    "Execution",
+    "Persistence",
+    "Privilege Escalation",
+    "Defense Evasion",
+    "Credential Access",
+    "Discovery",
+    "Lateral Movement",
+    "Collection",
+    "Command and Control",
+    "Exfiltration",
+    "Impact",
+  ];
+
+  const likelihoodLevels = ["High", "Medium", "Low"];
+
+  // Create series for each likelihood level
+  const series = likelihoodLevels.map((level) => {
+    const data = tactics.map((tactic) => {
+      const count = threats.filter(
+        (t) => t?.mitre_attack === tactic && t?.likelihood === level
+      ).length;
+      return { x: tactic, y: count };
+    });
+
+    return {
+      title: level,
+      type: "bar",
+      data,
+      color: getLikelihoodColor(level),
+    };
+  });
+
+  return { tactics, series };
+};
+
+/**
  * Transform threat data for target asset chart with likelihood breakdown
  * Returns data structured for stacked bar chart (top 10 targets)
  * @param {Array} threats - Array of threat objects
