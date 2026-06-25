@@ -10,7 +10,6 @@ import {
   getAuthProvider,
   signUpWithEmail,
   verifyEmailConfirmation,
-
 } from "./provider";
 
 export const signIn = () => {
@@ -28,7 +27,6 @@ export const signUp = ({ email, password }) => {
 export const confirmEmail = ({ tokenHash, type }) => {
   return verifyEmailConfirmation({ tokenHash, type });
 };
-
 
 export const confirmNewPasswordSignIn = ({ newPassword }) => {
   return completeSignInWithNewPassword({ newPassword });

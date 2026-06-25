@@ -68,7 +68,6 @@ const LoginForm = ({ onSignInSuccess }) => {
     setPasswordValidation(validatePassword(val));
   };
 
-
   const handleSignIn = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -122,7 +121,6 @@ const LoginForm = ({ onSignInSuccess }) => {
     }
   };
 
-
   const handleSignUp = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -145,7 +143,6 @@ const LoginForm = ({ onSignInSuccess }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <div className={`login-container ${isDark ? "dark-theme" : "light-theme"}`}>

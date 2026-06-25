@@ -84,6 +84,7 @@ export const spacing = {
 };
 
 export const typography = {
-  fontFamily: "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  fontFamily:
+    "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   fontFamilyMono: "Avenue Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
 };

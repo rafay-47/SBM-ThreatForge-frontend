@@ -30,8 +30,8 @@ const MitreChart = ({ data = { tactics: [], series: [] } }) => {
     <BarChart
       series={series}
       xDomain={tactics}
-      yTitle="Number of Threats"
-      xTitle="MITRE ATT&CK Tactic"
+      yTitle="MITRE ATT&CK Tactic"
+      xTitle="Number of Threats"
       horizontalBars={true}
       stackedBars={true}
       empty={
@@ -41,7 +41,7 @@ const MitreChart = ({ data = { tactics: [], series: [] } }) => {
       }
       ariaLabel="Stacked bar chart showing the distribution of threats across MITRE ATT&CK tactics by likelihood"
       ariaDescription="Horizontal stacked bar chart displaying threat counts for each MITRE ATT&CK tactic, broken down by likelihood level: High (red), Medium (orange), and Low (yellow)"
-      height={300}
+      height={450}
       hideFilter
     />
   );
@@ -78,10 +78,7 @@ const arePropsEqual = (prevProps, nextProps) => {
       return false;
     }
     for (let j = 0; j < prevData.length; j++) {
-      if (
-        prevData[j].x !== nextData[j].x ||
-        prevData[j].y !== nextData[j].y
-      ) {
+      if (prevData[j].x !== nextData[j].x || prevData[j].y !== nextData[j].y) {
         return false;
       }
     }

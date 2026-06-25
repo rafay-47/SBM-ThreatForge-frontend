@@ -62,9 +62,7 @@ export default function DecryptedText({
           .split("")
           .map((char, idx) => {
             if (char === " ") return " ";
-            const lockThreshold = sequential
-              ? idx * (duration / (text.length || 1))
-              : 0;
+            const lockThreshold = sequential ? idx * (duration / (text.length || 1)) : 0;
             if (iter * speed > lockThreshold + duration * 0.6) return text[idx];
             return chars[Math.floor(Math.random() * chars.length)];
           })

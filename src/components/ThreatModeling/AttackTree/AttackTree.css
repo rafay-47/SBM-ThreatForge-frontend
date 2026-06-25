@@ -845,8 +845,7 @@ defs marker {
 /* ThreatForge workstation theme overrides */
 .attack-tree-container {
   background:
-    radial-gradient(circle at 0 0, rgba(124, 58, 237, 0.08), transparent 260px),
-    var(--token-bg-app) !important;
+    radial-gradient(circle at 0 0, rgba(124, 58, 237, 0.08), transparent 260px), var(--token-bg-app) !important;
   border-radius: var(--radius-lg);
 }
 

@@ -215,9 +215,17 @@ export const aggregateByPastaWithLikelihood = (threats) => {
   // Create series for each likelihood level
   const series = likelihoodLevels.map((level) => {
     const data = stages.map((stage) => {
-      const count = threats.filter(
-        (t) => t?.pasta_stage === stage && t?.likelihood === level
-      ).length;
+      const count = threats.filter((t) => {
+        if (!t?.pasta_stage) return false;
+        if (t.likelihood !== level) return false;
+        if (t.pasta_stage === stage) return true;
+        const stagePrefix = stage.split(":")[0]; // "Stage X"
+        return (
+          t.pasta_stage === stagePrefix ||
+          t.pasta_stage.startsWith(stagePrefix + ":") ||
+          t.pasta_stage.startsWith(stagePrefix + " ")
+        );
+      }).length;
       return { x: stage, y: count };
     });
 

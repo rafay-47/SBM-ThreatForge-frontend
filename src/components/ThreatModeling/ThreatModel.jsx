@@ -372,6 +372,14 @@ const ThreatModelInner = () => {
     [handleSave, dispatch]
   );
 
+  // Refresh threat modeling trail in split panel
+  const handleRefresh = useCallback(
+    async (idValue) => {
+      await handleRefreshTrail(idValue, setTrail);
+    },
+    [handleRefreshTrail, setTrail]
+  );
+
   // Action click handler - dispatches button dropdown actions to appropriate handlers
   const onActionClick = useCallback(
     async (actionId) => {
@@ -382,14 +390,27 @@ const ThreatModelInner = () => {
         st: () => handleStop(),
         re: () => dispatch({ type: THREAT_MODEL_ACTIONS.OPEN_MODAL, modal: "replay" }),
         ev: () => dispatch({ type: THREAT_MODEL_ACTIONS.OPEN_MODAL, modal: "version" }),
-        tr: () => handleHelpButtonClick(<InfoContent context={"All"} />),
+        tr: async () => {
+          if (id) {
+            await handleRefresh(id);
+          }
+          handleHelpButtonClick(<InfoContent context={"All"} />);
+        },
         "cp-doc": () => handleDownload("docx"),
         "cp-pdf": () => handleDownload("pdf"),
         "cp-json": () => handleDownload("json"),
       };
       await actions[actionId]?.();
     },
-    [handleSaveWithConflictDetection, handleStop, handleDownload, handleHelpButtonClick, dispatch]
+    [
+      id,
+      handleRefresh,
+      handleSaveWithConflictDetection,
+      handleStop,
+      handleDownload,
+      handleHelpButtonClick,
+      dispatch,
+    ]
   );
 
   // Update processing state based on tmStatus changes
@@ -398,14 +419,6 @@ const ThreatModelInner = () => {
       dispatch({ type: THREAT_MODEL_ACTIONS.SET_PROCESSING, payload: true });
     }
   }, [tmStatus, dispatch]);
-
-  // Refresh threat modeling trail in split panel
-  const handleRefresh = useCallback(
-    async (idValue) => {
-      await handleRefreshTrail(idValue, setTrail);
-    },
-    [handleRefreshTrail, setTrail]
-  );
 
   // Check for changes whenever response data updates
   // Displays an alert if local changes differ from the last saved version

@@ -30,9 +30,9 @@ const StrideChart = ({ data = { categories: [], series: [] } }) => {
     <BarChart
       series={series}
       xDomain={categories}
-      yTitle="Number of Threats"
-      xTitle="STRIDE Category"
-      horizontalBars={false}
+      yTitle="STRIDE Category"
+      xTitle="Number of Threats"
+      horizontalBars={true}
       stackedBars={true}
       empty={
         <Box textAlign="center" color="text-status-inactive" role="status" aria-live="polite">
@@ -40,8 +40,8 @@ const StrideChart = ({ data = { categories: [], series: [] } }) => {
         </Box>
       }
       ariaLabel="Stacked bar chart showing the distribution of threats across STRIDE categories by likelihood"
-      ariaDescription="Vertical stacked bar chart displaying threat counts for each of the six STRIDE categories, broken down by likelihood level: High (red), Medium (orange), and Low (blue)"
-      height={300}
+      ariaDescription="Horizontal stacked bar chart displaying threat counts for each of the six STRIDE categories, broken down by likelihood level: High (red), Medium (orange), and Low (blue)"
+      height={350}
       hideFilter
     />
   );
@@ -52,18 +52,35 @@ const StrideChart = ({ data = { categories: [], series: [] } }) => {
  * Only re-render if the data prop has actually changed
  */
 const arePropsEqual = (prevProps, nextProps) => {
-  // Shallow comparison of data array length
-  if (prevProps.data.length !== nextProps.data.length) {
+  const prevCategories = prevProps.data?.categories || [];
+  const nextCategories = nextProps.data?.categories || [];
+
+  if (prevCategories.length !== nextCategories.length) {
     return false;
   }
 
-  // Shallow comparison of data array contents
-  for (let i = 0; i < prevProps.data.length; i++) {
-    if (
-      prevProps.data[i].category !== nextProps.data[i].category ||
-      prevProps.data[i].count !== nextProps.data[i].count
-    ) {
+  for (let i = 0; i < prevCategories.length; i++) {
+    if (prevCategories[i] !== nextCategories[i]) {
       return false;
+    }
+  }
+
+  // Shallow comparison of series data values
+  const prevSeries = prevProps.data?.series || [];
+  const nextSeries = nextProps.data?.series || [];
+  if (prevSeries.length !== nextSeries.length) {
+    return false;
+  }
+  for (let i = 0; i < prevSeries.length; i++) {
+    const prevData = prevSeries[i]?.data || [];
+    const nextData = nextSeries[i]?.data || [];
+    if (prevData.length !== nextData.length) {
+      return false;
+    }
+    for (let j = 0; j < prevData.length; j++) {
+      if (prevData[j].x !== nextData[j].x || prevData[j].y !== nextData[j].y) {
+        return false;
+      }
     }
   }
 

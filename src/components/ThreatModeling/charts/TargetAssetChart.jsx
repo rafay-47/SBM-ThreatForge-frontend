@@ -32,8 +32,8 @@ const TargetAssetChart = ({ data = { targets: [], series: [] } }) => {
     <BarChart
       series={series}
       xDomain={targets}
-      yTitle="Number of Threats"
-      xTitle="Target Asset"
+      yTitle="Target Asset"
+      xTitle="Number of Threats"
       horizontalBars={true}
       stackedBars={true}
       empty={

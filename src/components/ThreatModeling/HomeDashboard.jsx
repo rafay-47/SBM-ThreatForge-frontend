@@ -18,7 +18,7 @@ import {
   X,
   Calendar,
   CheckCircle2,
-  Clock
+  Clock,
 } from "lucide-react";
 import CountUp from "../ui/CountUp";
 import "./HomeDashboard.css";
@@ -69,12 +69,12 @@ export default function HomeDashboard({ user, onCreateNew }) {
   const topThreats = stats?.top_threats ?? [];
   const recentModels = stats?.recent_models ?? [];
   const strideCounts = stats?.stride_counts ?? {
-    "Spoofing": 0,
-    "Tampering": 0,
-    "Repudiation": 0,
+    Spoofing: 0,
+    Tampering: 0,
+    Repudiation: 0,
     "Information Disclosure": 0,
     "Denial of Service": 0,
-    "Elevation of Privilege": 0
+    "Elevation of Privilege": 0,
   };
   const pastaCounts = stats?.pasta_counts ?? {
     "Stage 1: Define Objectives": 0,
@@ -83,23 +83,23 @@ export default function HomeDashboard({ user, onCreateNew }) {
     "Stage 4: Threat Analysis": 0,
     "Stage 5: Vulnerability & Weakness Analysis": 0,
     "Stage 6: Attack Modeling": 0,
-    "Stage 7: Risk & Impact Analysis": 0
+    "Stage 7: Risk & Impact Analysis": 0,
   };
   const mitreCounts = stats?.mitre_counts ?? {
-    "Reconnaissance": 0,
+    Reconnaissance: 0,
     "Resource Development": 0,
     "Initial Access": 0,
-    "Execution": 0,
-    "Persistence": 0,
+    Execution: 0,
+    Persistence: 0,
     "Privilege Escalation": 0,
     "Defense Evasion": 0,
     "Credential Access": 0,
-    "Discovery": 0,
+    Discovery: 0,
     "Lateral Movement": 0,
-    "Collection": 0,
+    Collection: 0,
     "Command and Control": 0,
-    "Exfiltration": 0,
-    "Impact": 0
+    Exfiltration: 0,
+    Impact: 0,
   };
 
   const spaces = stats?.spaces ?? [];
@@ -125,7 +125,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
     .map(([category, count]) => ({
       category,
       count,
-      percentage: Math.round((count / totalFrameworkThreats) * 100)
+      percentage: Math.round((count / totalFrameworkThreats) * 100),
     }))
     .sort((a, b) => b.count - a.count);
 
@@ -146,7 +146,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
       if (diffHours < 24) return `${diffHours}h ago`;
       if (diffDays === 1) return "Yesterday";
       if (diffDays < 7) return `${diffDays}d ago`;
-      return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
     } catch (e) {
       return "Recent";
     }
@@ -157,7 +157,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
   // active framework (e.g. backend top_threats currently only carries stride_category).
   const activeFrameworkField = FRAMEWORK_CONFIG[framework].field;
   const filteredTopThreats = frameworkFilter
-    ? topThreats.filter(threat => {
+    ? topThreats.filter((threat) => {
         const value = threat[activeFrameworkField] || "";
         return value.toLowerCase().trim() === frameworkFilter.toLowerCase().trim();
       })
@@ -192,7 +192,10 @@ export default function HomeDashboard({ user, onCreateNew }) {
           <ShieldAlert size={48} className="text-red-400 mx-auto" />
           <h2 className="text-lg font-bold text-white">Dashboard Error</h2>
           <p className="text-sm text-muted-foreground">{error}</p>
-          <button className="btn-primary-gradient mt-2 py-2 w-full justify-center" onClick={fetchStats}>
+          <button
+            className="btn-primary-gradient mt-2 py-2 w-full justify-center"
+            onClick={fetchStats}
+          >
             <RefreshCw size={16} className="mr-2" />
             <span>Retry Loading</span>
           </button>
@@ -207,8 +210,12 @@ export default function HomeDashboard({ user, onCreateNew }) {
       <div className="catalog-page-header">
         <div>
           <p className="workstation-kicker">Workspace Dashboard</p>
-          <h1>{greeting()}, {userName}</h1>
-          <p>Review generated threat models, track risk concentration, and manage knowledge spaces.</p>
+          <h1>
+            {greeting()}, {userName}
+          </h1>
+          <p>
+            Review generated threat models, track risk concentration, and manage knowledge spaces.
+          </p>
         </div>
         <div className="flex items-center gap-4 shrink-0">
           <div className="header-actions">
@@ -219,7 +226,11 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <Bell size={16} />
               {totalThreats > 0 && <span className="badge-dot"></span>}
             </button>
-            <button className="icon-action-btn" title="Help & Guides" onClick={() => navigate("/guides/quick-start")}>
+            <button
+              className="icon-action-btn"
+              title="Help & Guides"
+              onClick={() => navigate("/guides/quick-start")}
+            >
               <HelpCircle size={16} />
             </button>
             <div className="avatar-initials" title={userName}>
@@ -227,7 +238,10 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button className="btn-secondary flex items-center gap-2" onClick={() => navigate("/threat-catalog")}>
+            <button
+              className="btn-secondary flex items-center gap-2"
+              onClick={() => navigate("/threat-catalog")}
+            >
               <Folder size={16} />
               <span>Catalog</span>
             </button>
@@ -272,35 +286,39 @@ export default function HomeDashboard({ user, onCreateNew }) {
               </span>
             )}
           </div>
-          
+
           {/* Stacked Segmented Distribution Bar */}
           <div className="risk-distribution-bar">
             {totalThreats > 0 ? (
               <>
                 {highRisk > 0 && (
-                  <div 
-                    className="bar-segment high" 
+                  <div
+                    className="bar-segment high"
                     style={{ width: `${highPct}%` }}
                     title={`High Risk: ${highRisk} threats (${highPct}%)`}
                   ></div>
                 )}
                 {mediumRisk > 0 && (
-                  <div 
-                    className="bar-segment medium" 
+                  <div
+                    className="bar-segment medium"
                     style={{ width: `${mediumPct}%` }}
                     title={`Medium Risk: ${mediumRisk} threats (${mediumPct}%)`}
                   ></div>
                 )}
                 {lowRisk > 0 && (
-                  <div 
-                    className="bar-segment low" 
+                  <div
+                    className="bar-segment low"
                     style={{ width: `${lowPct}%` }}
                     title={`Low Risk: ${lowRisk} threats (${lowPct}%)`}
                   ></div>
                 )}
               </>
             ) : (
-              <div className="bar-segment empty" style={{ width: "100%" }} title="No threats identified"></div>
+              <div
+                className="bar-segment empty"
+                style={{ width: "100%" }}
+                title="No threats identified"
+              ></div>
             )}
           </div>
 
@@ -308,114 +326,63 @@ export default function HomeDashboard({ user, onCreateNew }) {
           <div className="distribution-legend">
             <div className="legend-item">
               <span className="legend-dot high"></span>
-              <span className="legend-text"><strong><CountUp to={highRisk} duration={1200} /></strong> High</span>
+              <span className="legend-text">
+                <strong>
+                  <CountUp to={highRisk} duration={1200} />
+                </strong>{" "}
+                High
+              </span>
             </div>
             <div className="legend-item">
               <span className="legend-dot medium"></span>
-              <span className="legend-text"><strong><CountUp to={mediumRisk} duration={1200} /></strong> Medium</span>
+              <span className="legend-text">
+                <strong>
+                  <CountUp to={mediumRisk} duration={1200} />
+                </strong>{" "}
+                Medium
+              </span>
             </div>
             <div className="legend-item">
               <span className="legend-dot low"></span>
-              <span className="legend-text"><strong><CountUp to={lowRisk} duration={1200} /></strong> Low</span>
+              <span className="legend-text">
+                <strong>
+                  <CountUp to={lowRisk} duration={1200} />
+                </strong>{" "}
+                Low
+              </span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main 2-Column Dashboard Grid */}
+      {/* Main 2-Column Dashboard Grid */}
       <div className="dashboard-grid-layout">
-        
-        {/* LEFT COLUMN: Core Workflows */}
+        {/* LEFT COLUMN: Core Workflows & Analysis (1.85fr) */}
         <section className="grid-column-left">
-          
-          {/* Widget 1: Recent Threat Models */}
-          <div className="dashboard-widget recent-models-widget">
-            <div className="widget-header">
-              <div className="widget-header-title">
-                <h3>Recent Threat Models</h3>
-                <p className="widget-description">Quickly resume modeling, view progress, and track risk metrics.</p>
-              </div>
-              <button className="btn-link flex items-center gap-1" onClick={() => navigate("/threat-catalog")}>
-                <span>Browse Catalog</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-
-            {recentModels.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
-                <Folder size={36} className="text-indigo-400/60 mb-3" />
-                <strong className="text-sm font-semibold text-white">No threat models generated</strong>
-                <span className="text-xs text-muted-foreground max-w-xs mt-1">Upload architecture diagrams to generate automated, STRIDE-aligned threat lists.</span>
-                <button className="btn-improve-coverage text-xs mt-4 py-2 px-4" onClick={onCreateNew}>
-                  Generate First Model
-                </button>
-              </div>
-            ) : (
-              <div className="recent-models-list">
-                {recentModels.map((model) => (
-                  <div 
-                    key={model.job_id} 
-                    className="recent-model-row" 
-                    onClick={() => navigate(`/${model.job_id}`)}
-                  >
-                    <div className="model-row-left">
-                      <div className="model-icon-wrapper">
-                        <FileText size={15} />
-                      </div>
-                      <div className="model-info">
-                        <strong className="model-title-text">{model.title || "Untitled Model"}</strong>
-                        <span className="model-timestamp">
-                          <Calendar size={11} className="inline mr-1" />
-                          Updated {formatTimeAgo(model.timestamp)}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="model-row-right">
-                      {/* State / Status Badge */}
-                      <span className={`status-indicator-pill ${model.state?.toLowerCase() === "complete" ? "success" : model.state?.toLowerCase() === "failed" ? "error" : "progress"}`}>
-                        <span className="dot"></span>
-                        <span className="text">{model.state || "PROCESSING"}</span>
-                      </span>
-
-                      {/* Threat breakdown badges */}
-                      {model.stats && (
-                        <div className="model-stats-badges">
-                          <span className="stat-badge-dot high" title="High Risks">
-                            <span className="dot"></span>{model.stats.high}
-                          </span>
-                          <span className="stat-badge-dot medium" title="Medium Risks">
-                            <span className="dot"></span>{model.stats.medium}
-                          </span>
-                          <span className="stat-badge-dot low" title="Low Risks">
-                            <span className="dot"></span>{model.stats.low}
-                          </span>
-                        </div>
-                      )}
-                      
-                      <ArrowRight size={14} className="arrow-hover-icon" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Widget 2: Top Threat Vulnerabilities */}
+          {/* Widget 1: Top Threat Vulnerabilities */}
           <div className="dashboard-widget list-widget">
             <div className="widget-header">
               <div className="widget-header-title">
                 <h3>Top Threat Vulnerabilities</h3>
-                <p className="widget-description">Actionable, highest likelihood risks prioritized across your models.</p>
+                <p className="widget-description">
+                  Actionable, highest likelihood risks prioritized across your models.
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 {frameworkFilter && (
-                  <button className="btn-filter-clear flex items-center gap-1" onClick={() => setFrameworkFilter(null)}>
+                  <button
+                    className="btn-filter-clear flex items-center gap-1"
+                    onClick={() => setFrameworkFilter(null)}
+                  >
                     <span>Category: {frameworkFilter}</span>
                     <X size={12} />
                   </button>
                 )}
-                <button className="btn-link flex items-center gap-1" onClick={() => navigate("/threat-catalog")}>
+                <button
+                  className="btn-link flex items-center gap-1"
+                  onClick={() => navigate("/threat-catalog")}
+                >
                   <span>View all</span>
                   <ArrowRight size={14} />
                 </button>
@@ -426,13 +393,20 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
                 <Shield size={36} className="text-indigo-400/60 mb-3" />
                 <strong className="text-sm font-semibold text-white">
-                  {frameworkFilter ? `No ${frameworkFilter} threats found` : "No threat vulnerabilities found"}
+                  {frameworkFilter
+                    ? `No ${frameworkFilter} threats found`
+                    : "No threat vulnerabilities found"}
                 </strong>
                 <span className="text-xs text-muted-foreground mt-1">
-                  {frameworkFilter ? "Try selecting a different category profile bar." : "Generate a threat model to identify risks."}
+                  {frameworkFilter
+                    ? "Try selecting a different category profile bar."
+                    : "Generate a threat model to identify risks."}
                 </span>
                 {frameworkFilter && (
-                  <button className="btn-improve-coverage text-xs mt-3 py-1.5 px-3" onClick={() => setFrameworkFilter(null)}>
+                  <button
+                    className="btn-improve-coverage text-xs mt-3 py-1.5 px-3"
+                    onClick={() => setFrameworkFilter(null)}
+                  >
                     Clear Filter
                   </button>
                 )}
@@ -440,25 +414,34 @@ export default function HomeDashboard({ user, onCreateNew }) {
             ) : (
               <div className="threats-list">
                 {filteredTopThreats.map((threat, index) => {
-                  const LikelihoodIcon = threat.likelihood.toLowerCase() === "high" 
-                    ? AlertTriangle 
-                    : threat.likelihood.toLowerCase() === "medium" 
-                      ? Clock 
-                      : CheckCircle2;
+                  const LikelihoodIcon =
+                    threat.likelihood.toLowerCase() === "high"
+                      ? AlertTriangle
+                      : threat.likelihood.toLowerCase() === "medium"
+                        ? Clock
+                        : CheckCircle2;
 
                   return (
-                    <div 
-                      className="threat-item interactive-row" 
+                    <div
+                      className="threat-item interactive-row"
                       key={index}
                       onClick={() => threat.model_id && navigate(`/${threat.model_id}`)}
                     >
                       <div className="threat-item-left">
-                        <LikelihoodIcon size={14} className={`threat-item-icon ${threat.likelihood.toLowerCase()}`} />
+                        <LikelihoodIcon
+                          size={14}
+                          className={`threat-item-icon ${threat.likelihood.toLowerCase()}`}
+                        />
                         <div className="threat-item-details">
                           <strong className="threat-item-name">{threat.name}</strong>
                           <span className="threat-item-model">
-                            {threat.target} | <span className="model-link-text">{threat.model_title}</span>
-                            {threat[activeFrameworkField] && <span className="stride-tag-subtle">{threat[activeFrameworkField]}</span>}
+                            {threat.target} |{" "}
+                            <span className="model-link-text">{threat.model_title}</span>
+                            {threat[activeFrameworkField] && (
+                              <span className="stride-tag-subtle">
+                                {threat[activeFrameworkField]}
+                              </span>
+                            )}
                           </span>
                         </div>
                       </div>
@@ -476,14 +459,111 @@ export default function HomeDashboard({ user, onCreateNew }) {
             )}
           </div>
 
-          {/* Widget 3: Active Spaces */}
+          {/* Widget 2: Recent Threat Models */}
+          <div className="dashboard-widget recent-models-widget">
+            <div className="widget-header">
+              <div className="widget-header-title">
+                <h3>Recent Threat Models</h3>
+                <p className="widget-description">
+                  Quickly resume modeling, view progress, and track risk metrics.
+                </p>
+              </div>
+              <button
+                className="btn-link flex items-center gap-1"
+                onClick={() => navigate("/threat-catalog")}
+              >
+                <span>Browse Catalog</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
+
+            {recentModels.length === 0 ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
+                <Folder size={36} className="text-indigo-400/60 mb-3" />
+                <strong className="text-sm font-semibold text-white">
+                  No threat models generated
+                </strong>
+                <span className="text-xs text-muted-foreground max-w-xs mt-1">
+                  Upload architecture diagrams to generate automated, STRIDE-aligned threat lists.
+                </span>
+                <button
+                  className="btn-improve-coverage text-xs mt-4 py-2 px-4"
+                  onClick={onCreateNew}
+                >
+                  Generate First Model
+                </button>
+              </div>
+            ) : (
+              <div className="recent-models-list">
+                {recentModels.map((model) => (
+                  <div
+                    key={model.job_id}
+                    className="recent-model-row"
+                    onClick={() => navigate(`/${model.job_id}`)}
+                  >
+                    <div className="model-row-left">
+                      <div className="model-icon-wrapper">
+                        <FileText size={15} />
+                      </div>
+                      <div className="model-info">
+                        <strong className="model-title-text">
+                          {model.title || "Untitled Model"}
+                        </strong>
+                        <span className="model-timestamp">
+                          <Calendar size={11} className="inline mr-1" />
+                          Updated {formatTimeAgo(model.timestamp)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="model-row-right">
+                      {/* State / Status Badge */}
+                      <span
+                        className={`status-indicator-pill ${model.state?.toLowerCase() === "complete" ? "success" : model.state?.toLowerCase() === "failed" ? "error" : "progress"}`}
+                      >
+                        <span className="dot"></span>
+                        <span className="text">{model.state || "PROCESSING"}</span>
+                      </span>
+
+                      {/* Threat breakdown badges */}
+                      {model.stats && (
+                        <div className="model-stats-badges">
+                          <span className="stat-badge-dot high" title="High Risks">
+                            <span className="dot"></span>
+                            {model.stats.high}
+                          </span>
+                          <span className="stat-badge-dot medium" title="Medium Risks">
+                            <span className="dot"></span>
+                            {model.stats.medium}
+                          </span>
+                          <span className="stat-badge-dot low" title="Low Risks">
+                            <span className="dot"></span>
+                            {model.stats.low}
+                          </span>
+                        </div>
+                      )}
+
+                      <ArrowRight size={14} className="arrow-hover-icon" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Widget 3: Active Knowledge Spaces */}
           <div className="dashboard-widget list-widget">
             <div className="widget-header">
               <div className="widget-header-title">
                 <h3>Active Knowledge Spaces</h3>
-                <p className="widget-description">RAG knowledge repositories storing architecture notes and requirements.</p>
+                <p className="widget-description">
+                  RAG knowledge repositories storing architecture notes and requirements.
+                </p>
               </div>
-              <button className="btn-link flex items-center gap-1" onClick={() => navigate("/spaces")}>
+              <button
+                className="btn-link flex items-center gap-1"
+                onClick={() => navigate("/spaces")}
+              >
                 <span>Manage Spaces</span>
                 <ArrowRight size={14} />
               </button>
@@ -491,16 +571,24 @@ export default function HomeDashboard({ user, onCreateNew }) {
             {spaces.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
                 <Layers size={36} className="text-indigo-400/60 mb-3" />
-                <strong className="text-sm font-semibold text-white">No knowledge spaces yet</strong>
-                <span className="text-xs text-muted-foreground mt-1">Create a Space to organize security guidelines, checklists, and compliance requirements.</span>
-                <button className="btn-improve-coverage text-xs mt-4 py-2 px-4" onClick={() => navigate("/spaces")}>
+                <strong className="text-sm font-semibold text-white">
+                  No knowledge spaces yet
+                </strong>
+                <span className="text-xs text-muted-foreground mt-1">
+                  Create a Space to organize security guidelines, checklists, and compliance
+                  requirements.
+                </span>
+                <button
+                  className="btn-improve-coverage text-xs mt-4 py-2 px-4"
+                  onClick={() => navigate("/spaces")}
+                >
                   Create First Space
                 </button>
               </div>
             ) : (
               <div className="spaces-list flex flex-col gap-3">
                 {spaces.map((space) => (
-                  <div 
+                  <div
                     className="space-card-item p-3 rounded-lg border border-line-soft bg-slate-950/30 flex items-center justify-between hover:border-indigo-500/50 transition-colors cursor-pointer"
                     key={space.space_id}
                     onClick={() => navigate(`/spaces/${space.space_id}`)}
@@ -511,7 +599,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
                       </div>
                       <div className="flex flex-col">
                         <strong className="text-sm font-semibold text-white">{space.name}</strong>
-                        <span className="text-xs text-muted-foreground truncate max-w-[280px]">{space.description || "Security architecture workspace"}</span>
+                        <span className="text-xs text-muted-foreground truncate max-w-[280px]">
+                          {space.description || "Security architecture workspace"}
+                        </span>
                       </div>
                     </div>
                     <ArrowRight size={14} className="arrow-hover-icon text-muted-foreground" />
@@ -522,15 +612,16 @@ export default function HomeDashboard({ user, onCreateNew }) {
           </div>
         </section>
 
-        {/* RIGHT COLUMN: Metrics, AI Advisory, Documents */}
+        {/* RIGHT COLUMN: Framework Profile, AI Advisory & Guidelines (1.1fr) */}
         <section className="grid-column-right">
-          
-          {/* Threat Framework Profile Widget (STRIDE / PASTA / MITRE ATT&CK) */}
+          {/* Widget 1: Threat Framework Profile (STRIDE / PASTA / MITRE ATT&CK) */}
           <div className="dashboard-widget stride-profile-widget">
             <div className="framework-profile-header">
               <div>
                 <h3 className="widget-title">Threat Framework Profile</h3>
-                <p className="text-xs text-muted-foreground -mt-2">Click categories below to filter vulnerabilities list.</p>
+                <p className="text-xs text-muted-foreground -mt-2">
+                  Click categories below to filter vulnerabilities list.
+                </p>
               </div>
               <div className="framework-tabs" role="tablist" aria-label="Threat framework">
                 <button
@@ -570,7 +661,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
                   >
                     <div className="stride-bar-info text-sm">
                       <span className="font-semibold text-white">{item.category}</span>
-                      <span className="text-muted-foreground">{item.count} ({item.percentage}%)</span>
+                      <span className="text-muted-foreground">
+                        {item.count} ({item.percentage}%)
+                      </span>
                     </div>
                     <div className="stride-bar-track bg-slate-950/50 rounded-full h-1.5 w-full overflow-hidden border border-line-soft">
                       <div
@@ -579,7 +672,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
                           width: `${item.percentage}%`,
                           background: isFiltered
                             ? "linear-gradient(to right, #818cf8, #a78bfa)"
-                            : `linear-gradient(to right, #4f46e5, ${index === 0 ? "#8b5cf6" : "#6366f1"})`
+                            : `linear-gradient(to right, #4f46e5, ${index === 0 ? "#8b5cf6" : "#6366f1"})`,
                         }}
                       ></div>
                     </div>
@@ -589,31 +682,50 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </div>
           </div>
 
-          {/* AI Security Recommendations */}
+          {/* Widget 2: AI Security Recommendations */}
           <div className="dashboard-widget advisories-widget">
             <h3 className="widget-title">AI Security Recommendations</h3>
-            <p className="text-xs text-muted-foreground -mt-2">Realtime mitigations driven by identified risk profiles.</p>
+            <p className="text-xs text-muted-foreground -mt-2">
+              Realtime mitigations driven by identified risk profiles.
+            </p>
             <div className="advisories-list flex flex-col gap-3">
               {advisories.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center p-6 bg-slate-950/20 border border-dashed border-line-soft rounded-xl h-full min-h-[140px]">
                   <ShieldAlert size={28} className="text-indigo-400/60 mb-2" />
                   <strong className="text-sm text-white">No active advisories</strong>
-                  <span className="text-xs text-muted-foreground mt-1">Recommendations will populate based on your workspace STRIDE risk concentration.</span>
+                  <span className="text-xs text-muted-foreground mt-1">
+                    Recommendations will populate based on your workspace STRIDE risk concentration.
+                  </span>
                 </div>
               ) : (
                 advisories.map((adv, index) => {
-                  const SeverityIcon = adv.severity?.toLowerCase() === "high" ? AlertTriangle : Clock;
+                  const SeverityIcon =
+                    adv.severity?.toLowerCase() === "high" ? AlertTriangle : Clock;
                   return (
-                    <div className="advisory-card p-3 rounded-lg border border-red-500/20 bg-red-950/10 flex flex-col gap-1.5" key={index}>
+                    <div
+                      className="advisory-card p-3 rounded-lg border border-red-500/20 bg-red-950/10 flex flex-col gap-1.5"
+                      key={index}
+                    >
                       <div className="flex items-center gap-2">
-                        <SeverityIcon size={14} className={adv.severity?.toLowerCase() === "high" ? "text-red-400" : "text-amber-400"} />
+                        <SeverityIcon
+                          size={14}
+                          className={
+                            adv.severity?.toLowerCase() === "high"
+                              ? "text-red-400"
+                              : "text-amber-400"
+                          }
+                        />
                         <strong className="text-xs font-bold text-white">{adv.title}</strong>
-                        <span className={`risk-indicator-pill ${adv.severity?.toLowerCase() === "high" ? "high" : "medium"} shrink-0 scale-90 ml-auto`}>
+                        <span
+                          className={`risk-indicator-pill ${adv.severity?.toLowerCase() === "high" ? "high" : "medium"} shrink-0 scale-90 ml-auto`}
+                        >
                           <span className="dot"></span>
                           <span className="text">{adv.severity}</span>
                         </span>
                       </div>
-                      <p className="text-[11px] text-muted-foreground leading-relaxed m-0">{adv.description}</p>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed m-0">
+                        {adv.description}
+                      </p>
                     </div>
                   );
                 })
@@ -621,7 +733,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </div>
           </div>
 
-          {/* Security Guidelines & PDFs */}
+          {/* Widget 3: Security Guidelines & PDFs */}
           <div className="dashboard-widget list-widget">
             <div className="widget-header">
               <div className="widget-header-title">
@@ -633,24 +745,32 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-slate-950/20 border border-dashed border-line-soft rounded-xl min-h-[140px]">
                 <FileText size={28} className="text-indigo-400/60 mb-2" />
                 <strong className="text-sm text-white">No guidelines uploaded</strong>
-                <span className="text-xs text-muted-foreground mt-1">Compliance policies uploaded to Spaces will show up here.</span>
+                <span className="text-xs text-muted-foreground mt-1">
+                  Compliance policies uploaded to Spaces will show up here.
+                </span>
               </div>
             ) : (
               <div className="documents-list flex flex-col gap-3">
                 {recentDocuments.map((doc) => (
-                  <div 
-                    className="doc-card-item p-3 rounded-lg border border-line-soft bg-slate-950/30 flex items-center justify-between cursor-pointer hover:border-indigo-500/30 transition-colors" 
+                  <div
+                    className="doc-card-item p-3 rounded-lg border border-line-soft bg-slate-950/30 flex items-center justify-between cursor-pointer hover:border-indigo-500/30 transition-colors"
                     key={doc.document_id}
                     onClick={() => navigate(`/spaces/${doc.space_id}`)}
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
                       <FileText size={16} className="text-indigo-400 shrink-0" />
                       <div className="flex flex-col overflow-hidden">
-                        <strong className="text-xs font-semibold text-white truncate max-w-[150px]">{doc.filename}</strong>
-                        <span className="text-[10px] text-muted-foreground truncate max-w-[150px]">{doc.space_name}</span>
+                        <strong className="text-xs font-semibold text-white truncate max-w-[150px]">
+                          {doc.filename}
+                        </strong>
+                        <span className="text-[10px] text-muted-foreground truncate max-w-[150px]">
+                          {doc.space_name}
+                        </span>
                       </div>
                     </div>
-                    <span className={`status-indicator-pill ${doc.status === "READY" ? "success" : "progress"} scale-90`}>
+                    <span
+                      className={`status-indicator-pill ${doc.status === "READY" ? "success" : "progress"} scale-90`}
+                    >
                       <span className="dot"></span>
                       <span className="text">{doc.status === "READY" ? "READY" : "INGEST"}</span>
                     </span>
@@ -660,7 +780,6 @@ export default function HomeDashboard({ user, onCreateNew }) {
             )}
           </div>
         </section>
-
       </div>
     </main>
   );

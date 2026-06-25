@@ -1,15 +1,4 @@
-import {
-  LayoutGrid,
-  Folder,
-  Layers,
-  Network,
-  Shield,
-  AlertTriangle,
-  ShieldCheck,
-  FileText,
-  Link2,
-  Settings
-} from "lucide-react";
+import { LayoutGrid, Folder, Layers } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
 import { SidebarHeader } from "./SidebarHeader";
 import { NavMain } from "./NavMain";
@@ -37,41 +26,6 @@ export function AppSidebar({ user, colorMode, effectiveTheme, setThemeMode, onLo
       title: "Spaces",
       url: "/spaces",
       icon: Layers,
-    },
-    {
-      title: "Diagrams",
-      url: "#",
-      icon: Network,
-    },
-    {
-      title: "Threats",
-      url: "#",
-      icon: Shield,
-    },
-    {
-      title: "Findings",
-      url: "#",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Mitigations",
-      url: "#",
-      icon: ShieldCheck,
-    },
-    {
-      title: "Reports",
-      url: "#",
-      icon: FileText,
-    },
-    {
-      title: "Integrations",
-      url: "#",
-      icon: Link2,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
     },
   ];
 

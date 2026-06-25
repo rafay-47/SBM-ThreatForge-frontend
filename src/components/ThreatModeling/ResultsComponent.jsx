@@ -411,7 +411,16 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
         type={"threats"}
         hasColumn={true}
         columnConfig={{
-          left: ["name", "description", "likelihood", "stride_category", "pasta_stage", "mitre_attack", "impact", "target"],
+          left: [
+            "name",
+            "description",
+            "likelihood",
+            "stride_category",
+            "pasta_stage",
+            "mitre_attack",
+            "impact",
+            "target",
+          ],
           right: ["source", "vector", "prerequisites", "mitigations", "notes"],
         }}
       />

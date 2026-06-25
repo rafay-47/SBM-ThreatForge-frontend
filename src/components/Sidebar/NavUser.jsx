@@ -68,7 +68,9 @@ export function NavUser({ user, colorMode, setThemeMode, onLogout }) {
                   <span className="truncate text-xs text-muted-foreground">Enterprise Plan</span>
                 </div>
               )}
-              {state !== "collapsed" && <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />}
+              {state !== "collapsed" && (
+                <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
+              )}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

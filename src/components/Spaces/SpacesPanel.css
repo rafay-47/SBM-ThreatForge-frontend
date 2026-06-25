@@ -6,8 +6,7 @@
   flex-direction: column;
   border-right: 1px solid var(--token-border-primary);
   background:
-    linear-gradient(180deg, rgba(124, 58, 237, 0.045), transparent 160px),
-    var(--token-bg-secondary);
+    linear-gradient(180deg, rgba(124, 58, 237, 0.045), transparent 160px), var(--token-bg-secondary);
   overflow: hidden;
 }
 

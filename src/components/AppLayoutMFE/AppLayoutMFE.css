@@ -5,8 +5,7 @@
   overflow: auto;
   position: relative;
   background:
-    linear-gradient(180deg, rgba(124, 58, 237, 0.035), transparent 220px),
-    var(--token-bg-app);
+    linear-gradient(180deg, rgba(124, 58, 237, 0.035), transparent 220px), var(--token-bg-app);
 }
 
 .app-layout-container [class*="awsui_layout"] {

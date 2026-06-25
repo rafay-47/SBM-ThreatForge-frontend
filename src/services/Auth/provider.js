@@ -155,7 +155,6 @@ export const signUpWithEmail = async ({ email, password }) => {
     }));
 };
 
-
 export const completeSignInWithNewPassword = async ({ newPassword }) => {
   await ensureInitialized();
 
@@ -288,7 +287,6 @@ export const signOutCurrentUser = async () => {
   const { auth } = await loadAmplifyModules();
   return auth.signOut();
 };
-
 
 export const verifyEmailConfirmation = async ({ tokenHash, type = "signup" }) => {
   await ensureInitialized();

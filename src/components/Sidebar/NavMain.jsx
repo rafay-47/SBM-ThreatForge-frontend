@@ -94,10 +94,12 @@ export function NavMain({ items }) {
       >
         <SpaceBetween size="m">
           <Box variant="p">
-            The <strong>{featureName}</strong> dashboard and analytics module is currently under active development.
+            The <strong>{featureName}</strong> dashboard and analytics module is currently under
+            active development.
           </Box>
           <Box variant="p" color="text-muted">
-            We are building STRIDE-aligned mitigations, automated reporting tools, and direct cloud integration controls for this workspace. Check back soon for updates!
+            We are building STRIDE-aligned mitigations, automated reporting tools, and direct cloud
+            integration controls for this workspace. Check back soon for updates!
           </Box>
         </SpaceBetween>
       </Modal>

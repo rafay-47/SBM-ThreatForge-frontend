@@ -727,8 +727,7 @@ html.dark [role="menu"] .h-8.w-8 > * {
   font-size: 1rem !important;
   border-right: 1px solid var(--token-border-primary) !important;
   background:
-    linear-gradient(180deg, rgba(124, 58, 237, 0.05), transparent 180px),
-    var(--token-bg-secondary) !important;
+    linear-gradient(180deg, rgba(124, 58, 237, 0.05), transparent 180px), var(--token-bg-secondary) !important;
 }
 
 /* Larger icons in sidebar */

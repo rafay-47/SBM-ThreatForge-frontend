@@ -63,7 +63,7 @@ const StatusComponponent = ({ id }) => {
 
   useEffect(() => {
     handleRefresh();
-  }, []);
+  }, [id]);
 
   return (
     <SpaceBetween direction="horizontal" size="s">
@@ -75,7 +75,7 @@ const StatusComponponent = ({ id }) => {
   );
 };
 
-export const ThreatCatalogCardsComponent = ({ user }) => {
+export const ThreatCatalogTabContent = ({ user, filterMode, viewMode, setViewMode, isActive }) => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
@@ -84,27 +84,6 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
   const [presignedUrlsLoading, setPresignedUrlsLoading] = useState(false);
   const [batchLoadError, setBatchLoadError] = useState(null);
 
-  const [viewMode, setViewMode] = useState(() => {
-    try {
-      const savedViewMode = localStorage.getItem("threatCatalogViewMode");
-      return savedViewMode && ["card", "table"].includes(savedViewMode) ? savedViewMode : "card";
-    } catch (error) {
-      console.error("Error reading from localStorage:", error);
-      return "card";
-    }
-  });
-
-  const [filterMode, setFilterMode] = useState(() => {
-    try {
-      const saved = localStorage.getItem("threatCatalogFilterMode");
-      return saved && ["owned", "shared"].includes(saved) ? saved : "owned";
-    } catch (error) {
-      console.error("Error reading from localStorage:", error);
-      return "owned";
-    }
-  });
-
-  // Shared pagination state for both card and table views
   const [pagination, setPagination] = useState({
     hasNextPage: false,
     cursor: null,
@@ -126,63 +105,52 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    try {
-      localStorage.setItem("threatCatalogViewMode", viewMode);
-    } catch (error) {
-      console.error("Error saving to localStorage:", error);
-    }
-  }, [viewMode]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("threatCatalogFilterMode", filterMode);
-    } catch (error) {
-      console.error("Error saving to localStorage:", error);
-    }
-  }, [filterMode]);
-
   const removeItem = (idToRemove) => {
-    setResults(results.filter((item) => item.job_id !== idToRemove));
+    setResults((prevResults) => prevResults.filter((item) => item.job_id !== idToRemove));
   };
-
-  // Reset pagination when filterMode changes
-  useEffect(() => {
-    setPagination((prev) => ({
-      ...prev,
-      hasNextPage: false,
-      cursor: null,
-    }));
-    setResults([]);
-  }, [filterMode]);
 
   // Load initial page of results
   useEffect(() => {
-    setLoading(true);
-    setError(null);
+    if (!isActive) return;
+
+    let isMounted = true;
     const fetchResults = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const fetchFn = filterMode === "shared" ? getSharedThreatModels : getOwnedThreatModels;
         const response = await fetchFn(pagination.pageSize, null);
-        setResults(response?.data?.catalogs || []);
-        setPagination((prev) => ({
-          ...prev,
-          hasNextPage: response?.data?.pagination?.hasNextPage || false,
-          cursor: response?.data?.pagination?.cursor || null,
-        }));
+        if (isMounted) {
+          setResults(response?.data?.catalogs || []);
+          setPagination((prev) => ({
+            ...prev,
+            hasNextPage: response?.data?.pagination?.hasNextPage || false,
+            cursor: response?.data?.pagination?.cursor || null,
+          }));
+        }
       } catch (error) {
-        setResults([]);
-        setError("Failed to load threat models. Please try again.");
-        console.error("Error getting threat modeling results:", error);
+        if (isMounted) {
+          setResults([]);
+          setError("Failed to load threat models. Please try again.");
+          console.error("Error getting threat modeling results:", error);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
     fetchResults();
-  }, [user, pagination.pageSize, filterMode]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user, pagination.pageSize, filterMode, isActive]);
 
   // Batch load presigned URLs when results change
   useEffect(() => {
+    if (!isActive) return;
+
     const loadPresignedUrls = async () => {
       if (results.length === 0) {
         setPresignedUrlsLoading(false);
@@ -247,12 +215,12 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
     };
 
     loadPresignedUrls();
-  }, [results]);
+  }, [results, isActive]);
 
   const handleDelete = async (id) => {
     setDeletingId(id);
     try {
-      const results = await deleteTm(id);
+      await deleteTm(id);
       removeItem(id);
       await functions.clearSession(id);
     } catch (error) {
@@ -323,9 +291,7 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
                 media={{
                   content:
                     presignedUrlsLoading || !presignedData ? (
-                      <div
-                        className="catalog-card-image-loading"
-                      >
+                      <div className="catalog-card-image-loading">
                         <Spinner size="large" />
                       </div>
                     ) : (
@@ -418,89 +384,123 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
     </div>
   );
 
-  const renderContent = () => {
-    if (loading) {
-      return (
-        <SpaceBetween alignItems="center">
-          <Spinner size="large" />
-        </SpaceBetween>
-      );
-    }
-
-    if (results.length === 0) {
-      return (
-        <div className="catalog-empty workstation-surface">
-          <Box variant="h3">No threat models</Box>
-          <Box color="text-body-secondary">
-            Create a model from an architecture diagram to start building the catalog.
-          </Box>
-        </div>
-      );
-    }
-
+  if (loading) {
     return (
-      <SpaceBetween size="l">
-        <div className="catalog-toolbar">
-          <SegmentedControl
-            selectedId={viewMode}
-            onChange={({ detail }) => {
-              setViewMode(detail.selectedId);
-            }}
-            label="View mode"
-            options={[
-              { text: "Card view", id: "card", iconName: "view-full" },
-              { text: "Table view", id: "table", iconName: "menu" },
-            ]}
-          />
-        </div>
-
-        {viewMode === "card" ? (
-          <SpaceBetween size="m">
-            {error && (
-              <Alert
-                type="error"
-                dismissible
-                onDismiss={() => setError(null)}
-                action={
-                  <Button onClick={loadMore} disabled={pagination.loading}>
-                    Retry
-                  </Button>
-                }
-              >
-                {error}
-              </Alert>
-            )}
-            {batchLoadError && (
-              <Alert type="warning" dismissible onDismiss={() => setBatchLoadError(null)}>
-                {batchLoadError}
-              </Alert>
-            )}
-            {renderCardView()}
-            {pagination.hasNextPage && (
-              <Box textAlign="center" margin={{ top: "l" }}>
-                <Button
-                  onClick={loadMore}
-                  loading={pagination.loading}
-                  disabled={pagination.loading}
-                >
-                  Load More
-                </Button>
-              </Box>
-            )}
-          </SpaceBetween>
-        ) : (
-          <ThreatCatalogTable
-            results={results}
-            onItemsChange={setResults}
-            loading={loading}
-            pagination={pagination}
-            onLoadMore={loadMore}
-            error={error}
-          />
-        )}
+      <SpaceBetween alignItems="center">
+        <Spinner size="large" />
       </SpaceBetween>
     );
-  };
+  }
+
+  if (results.length === 0) {
+    return (
+      <div className="catalog-empty workstation-surface">
+        <Box variant="h3">No threat models</Box>
+        <Box color="text-body-secondary">
+          Create a model from an architecture diagram to start building the catalog.
+        </Box>
+      </div>
+    );
+  }
+
+  return (
+    <SpaceBetween size="l">
+      <div className="catalog-toolbar">
+        <SegmentedControl
+          selectedId={viewMode}
+          onChange={({ detail }) => {
+            setViewMode(detail.selectedId);
+          }}
+          label="View mode"
+          options={[
+            { text: "Card view", id: "card", iconName: "view-full" },
+            { text: "Table view", id: "table", iconName: "menu" },
+          ]}
+        />
+      </div>
+
+      {viewMode === "card" ? (
+        <SpaceBetween size="m">
+          {error && (
+            <Alert
+              type="error"
+              dismissible
+              onDismiss={() => setError(null)}
+              action={
+                <Button onClick={loadMore} disabled={pagination.loading}>
+                  Retry
+                </Button>
+              }
+            >
+              {error}
+            </Alert>
+          )}
+          {batchLoadError && (
+            <Alert type="warning" dismissible onDismiss={() => setBatchLoadError(null)}>
+              {batchLoadError}
+            </Alert>
+          )}
+          {renderCardView()}
+          {pagination.hasNextPage && (
+            <Box textAlign="center" margin={{ top: "l" }}>
+              <Button onClick={loadMore} loading={pagination.loading} disabled={pagination.loading}>
+                Load More
+              </Button>
+            </Box>
+          )}
+        </SpaceBetween>
+      ) : (
+        <ThreatCatalogTable
+          results={results}
+          onItemsChange={setResults}
+          loading={loading}
+          pagination={pagination}
+          onLoadMore={loadMore}
+          error={error}
+        />
+      )}
+    </SpaceBetween>
+  );
+};
+
+export const ThreatCatalogCardsComponent = ({ user }) => {
+  const [viewMode, setViewMode] = useState(() => {
+    try {
+      const savedViewMode = localStorage.getItem("threatCatalogViewMode");
+      return savedViewMode && ["card", "table"].includes(savedViewMode) ? savedViewMode : "card";
+    } catch (error) {
+      console.error("Error reading from localStorage:", error);
+      return "card";
+    }
+  });
+
+  const [filterMode, setFilterMode] = useState(() => {
+    try {
+      const saved = localStorage.getItem("threatCatalogFilterMode");
+      return saved && ["owned", "shared"].includes(saved) ? saved : "owned";
+    } catch (error) {
+      console.error("Error reading from localStorage:", error);
+      return "owned";
+    }
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("threatCatalogViewMode", viewMode);
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [viewMode]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("threatCatalogFilterMode", filterMode);
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [filterMode]);
 
   return (
     <div className="catalog-workspace">
@@ -520,12 +520,28 @@ export const ThreatCatalogCardsComponent = ({ user }) => {
           {
             id: "owned",
             label: "Models owned by me",
-            content: renderContent(),
+            content: (
+              <ThreatCatalogTabContent
+                user={user}
+                filterMode="owned"
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                isActive={filterMode === "owned"}
+              />
+            ),
           },
           {
             id: "shared",
             label: "Models shared with me",
-            content: renderContent(),
+            content: (
+              <ThreatCatalogTabContent
+                user={user}
+                filterMode="shared"
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                isActive={filterMode === "shared"}
+              />
+            ),
           },
         ]}
       />

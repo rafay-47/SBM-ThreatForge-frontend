@@ -74,7 +74,10 @@ export const ModalComponent = ({
       { label: "Stage 2: Define Technical Scope", value: "Stage 2: Define Technical Scope" },
       { label: "Stage 3: Application Decomposition", value: "Stage 3: Application Decomposition" },
       { label: "Stage 4: Threat Analysis", value: "Stage 4: Threat Analysis" },
-      { label: "Stage 5: Vulnerability & Weakness Analysis", value: "Stage 5: Vulnerability & Weakness Analysis" },
+      {
+        label: "Stage 5: Vulnerability & Weakness Analysis",
+        value: "Stage 5: Vulnerability & Weakness Analysis",
+      },
       { label: "Stage 6: Attack Modeling", value: "Stage 6: Attack Modeling" },
       { label: "Stage 7: Risk & Impact Analysis", value: "Stage 7: Risk & Impact Analysis" },
     ],

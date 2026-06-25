@@ -30,9 +30,9 @@ const PastaChart = ({ data = { stages: [], series: [] } }) => {
     <BarChart
       series={series}
       xDomain={stages}
-      yTitle="Number of Threats"
-      xTitle="PASTA Stage"
-      horizontalBars={false}
+      yTitle="PASTA Stage"
+      xTitle="Number of Threats"
+      horizontalBars={true}
       stackedBars={true}
       empty={
         <Box textAlign="center" color="text-status-inactive" role="status" aria-live="polite">
@@ -40,8 +40,8 @@ const PastaChart = ({ data = { stages: [], series: [] } }) => {
         </Box>
       }
       ariaLabel="Stacked bar chart showing the distribution of threats across PASTA stages by likelihood"
-      ariaDescription="Vertical stacked bar chart displaying threat counts for each of the seven PASTA stages, broken down by likelihood level: High (red), Medium (orange), and Low (yellow)"
-      height={300}
+      ariaDescription="Horizontal stacked bar chart displaying threat counts for each of the seven PASTA stages, broken down by likelihood level: High (red), Medium (orange), and Low (yellow)"
+      height={350}
       hideFilter
     />
   );
@@ -78,10 +78,7 @@ const arePropsEqual = (prevProps, nextProps) => {
       return false;
     }
     for (let j = 0; j < prevData.length; j++) {
-      if (
-        prevData[j].x !== nextData[j].x ||
-        prevData[j].y !== nextData[j].y
-      ) {
+      if (prevData[j].x !== nextData[j].x || prevData[j].y !== nextData[j].y) {
         return false;
       }
     }

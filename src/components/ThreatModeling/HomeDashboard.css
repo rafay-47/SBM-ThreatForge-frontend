@@ -24,8 +24,6 @@
   box-sizing: border-box;
 }
 
-
-
 .header-actions {
   display: flex;
   align-items: center;
@@ -272,9 +270,15 @@
   border-radius: 50%;
 }
 
-.legend-dot.high { background-color: #ef4444; }
-.legend-dot.medium { background-color: #f59e0b; }
-.legend-dot.low { background-color: #10b981; }
+.legend-dot.high {
+  background-color: #ef4444;
+}
+.legend-dot.medium {
+  background-color: #f59e0b;
+}
+.legend-dot.low {
+  background-color: #10b981;
+}
 
 .legend-text {
   font-size: 12px;
@@ -452,7 +456,9 @@
 .arrow-hover-icon {
   opacity: 0.4;
   color: var(--token-text-muted);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .recent-model-row:hover .arrow-hover-icon,
@@ -519,8 +525,15 @@
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 0.6; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 /* Model stats breakdown (minimal dots) */
@@ -546,9 +559,15 @@
   border-radius: 50%;
 }
 
-.stat-badge-dot.high .dot { background-color: #ef4444; }
-.stat-badge-dot.medium .dot { background-color: #f59e0b; }
-.stat-badge-dot.low .dot { background-color: #10b981; }
+.stat-badge-dot.high .dot {
+  background-color: #ef4444;
+}
+.stat-badge-dot.medium .dot {
+  background-color: #f59e0b;
+}
+.stat-badge-dot.low .dot {
+  background-color: #10b981;
+}
 
 /* ===== Widget 2: Top Threats list ===== */
 .threats-list {
@@ -591,9 +610,15 @@
   opacity: 0.8;
 }
 
-.threat-item-icon.high { color: #ef4444; }
-.threat-item-icon.medium { color: #f59e0b; }
-.threat-item-icon.low { color: #10b981; }
+.threat-item-icon.high {
+  color: #ef4444;
+}
+.threat-item-icon.medium {
+  color: #f59e0b;
+}
+.threat-item-icon.low {
+  color: #10b981;
+}
 
 .threat-item-details {
   display: flex;
