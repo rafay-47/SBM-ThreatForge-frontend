@@ -188,9 +188,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
   if (error) {
     return (
       <main className="home-dashboard-container flex flex-col items-center justify-center p-8">
-        <div className="max-w-md w-full p-6 rounded-xl border border-line-soft bg-slate-950/40 text-center flex flex-col gap-4">
+        <div className="max-w-md w-full p-6 rounded-xl border border-destructive/20 bg-secondary text-center flex flex-col gap-4">
           <ShieldAlert size={48} className="text-red-400 mx-auto" />
-          <h2 className="text-lg font-bold text-white">Dashboard Error</h2>
+          <h2 className="text-lg font-bold text-foreground">Dashboard Error</h2>
           <p className="text-sm text-muted-foreground">{error}</p>
           <button
             className="btn-primary-gradient mt-2 py-2 w-full justify-center"
@@ -222,20 +222,6 @@ export default function HomeDashboard({ user, onCreateNew }) {
             <button className="icon-action-btn" title="Refresh Dashboard" onClick={fetchStats}>
               <RefreshCw size={16} />
             </button>
-            <button className="icon-action-btn" title="Notifications">
-              <Bell size={16} />
-              {totalThreats > 0 && <span className="badge-dot"></span>}
-            </button>
-            <button
-              className="icon-action-btn"
-              title="Help & Guides"
-              onClick={() => navigate("/guides/quick-start")}
-            >
-              <HelpCircle size={16} />
-            </button>
-            <div className="avatar-initials" title={userName}>
-              {user?.given_name?.[0] || user?.name?.[0] || "SE"}
-            </div>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -390,9 +376,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </div>
 
             {filteredTopThreats.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
-                <Shield size={36} className="text-indigo-400/60 mb-3" />
-                <strong className="text-sm font-semibold text-white">
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 dashboard-empty-state rounded-xl">
+                <Shield size={36} className="text-indigo-500/70 mb-3" />
+                <strong className="text-sm font-semibold text-foreground">
                   {frameworkFilter
                     ? `No ${frameworkFilter} threats found`
                     : "No threat vulnerabilities found"}
@@ -478,9 +464,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </div>
 
             {recentModels.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
-                <Folder size={36} className="text-indigo-400/60 mb-3" />
-                <strong className="text-sm font-semibold text-white">
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 dashboard-empty-state rounded-xl">
+                <Folder size={36} className="text-indigo-500/70 mb-3" />
+                <strong className="text-sm font-semibold text-foreground">
                   No threat models generated
                 </strong>
                 <span className="text-xs text-muted-foreground max-w-xs mt-1">
@@ -569,9 +555,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
               </button>
             </div>
             {spaces.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-950/20 border border-dashed border-line-soft rounded-xl">
-                <Layers size={36} className="text-indigo-400/60 mb-3" />
-                <strong className="text-sm font-semibold text-white">
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 dashboard-empty-state rounded-xl">
+                <Layers size={36} className="text-indigo-500/70 mb-3" />
+                <strong className="text-sm font-semibold text-foreground">
                   No knowledge spaces yet
                 </strong>
                 <span className="text-xs text-muted-foreground mt-1">
@@ -589,7 +575,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <div className="spaces-list flex flex-col gap-3">
                 {spaces.map((space) => (
                   <div
-                    className="space-card-item p-3 rounded-lg border border-line-soft bg-slate-950/30 flex items-center justify-between hover:border-indigo-500/50 transition-colors cursor-pointer"
+                    className="space-card-item p-3 rounded-lg flex items-center justify-between transition-colors cursor-pointer"
                     key={space.space_id}
                     onClick={() => navigate(`/spaces/${space.space_id}`)}
                   >
@@ -598,7 +584,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
                         <Layers size={14} />
                       </div>
                       <div className="flex flex-col">
-                        <strong className="text-sm font-semibold text-white">{space.name}</strong>
+                        <strong className="text-sm font-semibold text-foreground">{space.name}</strong>
                         <span className="text-xs text-muted-foreground truncate max-w-[280px]">
                           {space.description || "Security architecture workspace"}
                         </span>
@@ -660,12 +646,12 @@ export default function HomeDashboard({ user, onCreateNew }) {
                     onClick={() => handleFrameworkClick(item.category)}
                   >
                     <div className="stride-bar-info text-sm">
-                      <span className="font-semibold text-white">{item.category}</span>
+                      <span className="font-semibold text-foreground">{item.category}</span>
                       <span className="text-muted-foreground">
                         {item.count} ({item.percentage}%)
                       </span>
                     </div>
-                    <div className="stride-bar-track bg-slate-950/50 rounded-full h-1.5 w-full overflow-hidden border border-line-soft">
+                    <div className="stride-bar-track overflow-hidden">
                       <div
                         className="stride-bar-fill rounded-full h-full"
                         style={{
@@ -690,9 +676,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
             </p>
             <div className="advisories-list flex flex-col gap-3">
               {advisories.length === 0 ? (
-                <div className="flex flex-col items-center justify-center text-center p-6 bg-slate-950/20 border border-dashed border-line-soft rounded-xl h-full min-h-[140px]">
-                  <ShieldAlert size={28} className="text-indigo-400/60 mb-2" />
-                  <strong className="text-sm text-white">No active advisories</strong>
+                <div className="flex flex-col items-center justify-center text-center p-6 dashboard-empty-state rounded-xl h-full min-h-[140px]">
+                  <ShieldAlert size={28} className="text-indigo-500/70 mb-2" />
+                  <strong className="text-sm text-foreground">No active advisories</strong>
                   <span className="text-xs text-muted-foreground mt-1">
                     Recommendations will populate based on your workspace STRIDE risk concentration.
                   </span>
@@ -703,7 +689,7 @@ export default function HomeDashboard({ user, onCreateNew }) {
                     adv.severity?.toLowerCase() === "high" ? AlertTriangle : Clock;
                   return (
                     <div
-                      className="advisory-card p-3 rounded-lg border border-red-500/20 bg-red-950/10 flex flex-col gap-1.5"
+                      className="advisory-card p-3 rounded-lg flex flex-col gap-1.5"
                       key={index}
                     >
                       <div className="flex items-center gap-2">
@@ -711,11 +697,11 @@ export default function HomeDashboard({ user, onCreateNew }) {
                           size={14}
                           className={
                             adv.severity?.toLowerCase() === "high"
-                              ? "text-red-400"
-                              : "text-amber-400"
+                              ? "text-red-500"
+                              : "text-amber-500"
                           }
                         />
-                        <strong className="text-xs font-bold text-white">{adv.title}</strong>
+                        <strong className="text-xs font-bold text-foreground">{adv.title}</strong>
                         <span
                           className={`risk-indicator-pill ${adv.severity?.toLowerCase() === "high" ? "high" : "medium"} shrink-0 scale-90 ml-auto`}
                         >
@@ -742,9 +728,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
               </div>
             </div>
             {recentDocuments.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-slate-950/20 border border-dashed border-line-soft rounded-xl min-h-[140px]">
-                <FileText size={28} className="text-indigo-400/60 mb-2" />
-                <strong className="text-sm text-white">No guidelines uploaded</strong>
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 dashboard-empty-state rounded-xl min-h-[140px]">
+                <FileText size={28} className="text-indigo-500/70 mb-2" />
+                <strong className="text-sm text-foreground">No guidelines uploaded</strong>
                 <span className="text-xs text-muted-foreground mt-1">
                   Compliance policies uploaded to Spaces will show up here.
                 </span>
@@ -753,14 +739,14 @@ export default function HomeDashboard({ user, onCreateNew }) {
               <div className="documents-list flex flex-col gap-3">
                 {recentDocuments.map((doc) => (
                   <div
-                    className="doc-card-item p-3 rounded-lg border border-line-soft bg-slate-950/30 flex items-center justify-between cursor-pointer hover:border-indigo-500/30 transition-colors"
+                    className="doc-card-item p-3 rounded-lg flex items-center justify-between cursor-pointer transition-colors"
                     key={doc.document_id}
                     onClick={() => navigate(`/spaces/${doc.space_id}`)}
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <FileText size={16} className="text-indigo-400 shrink-0" />
+                      <FileText size={16} className="text-indigo-500 shrink-0" />
                       <div className="flex flex-col overflow-hidden">
-                        <strong className="text-xs font-semibold text-white truncate max-w-[150px]">
+                        <strong className="text-xs font-semibold text-foreground truncate max-w-[150px]">
                           {doc.filename}
                         </strong>
                         <span className="text-[10px] text-muted-foreground truncate max-w-[150px]">

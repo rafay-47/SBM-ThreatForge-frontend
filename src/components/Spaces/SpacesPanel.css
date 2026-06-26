@@ -93,3 +93,53 @@
   font-size: 12px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .spaces-panel {
+    width: 100% !important;
+    min-width: unset !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--token-border-primary) !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+    gap: 12px !important;
+  }
+  
+  .spaces-panel-header {
+    border-bottom: none !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .spaces-panel-list {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 !important;
+    gap: 8px !important;
+    flex: 1 !important;
+    /* Hide scrollbars but allow scrolling */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .spaces-panel-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  
+  .spaces-panel-item {
+    height: 30px !important;
+    padding: 0 10px !important;
+    width: auto !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .spaces-panel-loading,
+  .spaces-panel-empty {
+    padding: 0 !important;
+    flex-direction: row !important;
+  }
+}
+

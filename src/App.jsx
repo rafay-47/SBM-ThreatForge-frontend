@@ -13,14 +13,34 @@ import { ChatSessionProvider } from "./components/Agent/ChatContext";
 import { ThemeProvider } from "./components/ThemeContext";
 import AppRefreshManager from "./AppRefreshManager";
 import { useLocation } from "react-router-dom";
-import { SidebarProvider, SidebarInset } from "./components/ui/sidebar";
+import { SidebarProvider, SidebarInset, useSidebar } from "./components/ui/sidebar";
 import { AppSidebar } from "./components/Sidebar";
 import { SpacesPanel } from "./components/Spaces/SpacesPanel";
+import { PanelLeft } from "lucide-react";
 
 function SpacesPanelSlot() {
   const location = useLocation();
   if (!location.pathname.startsWith("/spaces")) return null;
   return <SpacesPanel />;
+}
+
+function MobileTopBar() {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  if (!isMobile) return null;
+
+  return (
+    <div className="mobile-top-bar">
+      <button
+        onClick={() => setOpenMobile(true)}
+        className="mobile-sidebar-toggle-btn"
+        aria-label="Open sidebar"
+      >
+        <PanelLeft size={20} />
+      </button>
+      <span className="mobile-app-title">SBM ThreatForge</span>
+    </div>
+  );
 }
 
 const getSystemTheme = () => {
@@ -155,15 +175,19 @@ const App = () => {
                     onLogout={handleLogout}
                   />
                   <SidebarInset
-                    style={{ display: "flex", flexDirection: "row", overflow: "hidden" }}
+                    className="app-main-inset"
+                    style={{ overflow: "hidden" }}
                   >
                     <SpacesPanelSlot />
-                    <div style={{ flex: 1, overflow: "hidden" }}>
-                      <AppLayoutMFE
-                        user={authUser}
-                        colorMode={colorMode}
-                        setThemeMode={setThemeMode}
-                      />
+                    <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                      <MobileTopBar />
+                      <div style={{ flex: 1, overflow: "hidden" }}>
+                        <AppLayoutMFE
+                          user={authUser}
+                          colorMode={colorMode}
+                          setThemeMode={setThemeMode}
+                        />
+                      </div>
                     </div>
                   </SidebarInset>
                 </SidebarProvider>

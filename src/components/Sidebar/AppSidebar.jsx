@@ -2,7 +2,6 @@ import { LayoutGrid, Folder, Layers } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
 import { SidebarHeader } from "./SidebarHeader";
 import { NavMain } from "./NavMain";
-import { NavGuides } from "./NavGuides";
 import { NavUser } from "./NavUser";
 import "./Sidebar.css";
 
@@ -36,7 +35,6 @@ export function AppSidebar({ user, colorMode, effectiveTheme, setThemeMode, onLo
         <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter className="!p-2">
-        <NavGuides />
         <NavUser
           user={user}
           colorMode={colorMode}

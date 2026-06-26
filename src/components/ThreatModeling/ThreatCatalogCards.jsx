@@ -277,6 +277,7 @@ export const ThreatCatalogTabContent = ({ user, filterMode, viewMode, setViewMod
     <div className="catalog-card-grid">
       {results.map((item) => {
         const presignedData = presignedUrlMap[item?.job_id];
+        const isMobileView = typeof window !== "undefined" ? window.innerWidth < 768 : false;
         return (
           <div key={item.job_id} className="catalog-card-shell">
             {deletingId === item.job_id ? (
@@ -300,8 +301,8 @@ export const ThreatCatalogTabContent = ({ user, filterMode, viewMode, setViewMod
                         presignedUrl={presignedData?.url}
                       />
                     ),
-                  position: "side",
-                  width: "38%",
+                  position: isMobileView ? "top" : "side",
+                  width: isMobileView ? undefined : "38%",
                 }}
                 fitHeight
                 header={

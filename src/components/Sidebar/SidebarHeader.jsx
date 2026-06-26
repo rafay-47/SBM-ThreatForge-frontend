@@ -67,7 +67,7 @@ export function SidebarHeader() {
             </div>
 
             {!isCollapsed && (
-              <span className="ml-3 font-semibold text-white tracking-wide text-[14px] whitespace-nowrap transition-opacity duration-200">
+              <span className="ml-3 font-semibold text-foreground tracking-wide text-[14px] whitespace-nowrap transition-opacity duration-200">
                 SBM ThreatForge
               </span>
             )}

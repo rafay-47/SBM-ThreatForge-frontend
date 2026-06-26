@@ -381,43 +381,136 @@ html.dark [data-sidebar="menu-button"][data-active="true"] svg {
   --sidebar-width-icon: 3.5rem;
 }
 
-/* Main content needs left margin to not be covered by fixed sidebar */
+/* Default styles for mobile/small screens (sidebar is hidden/overlay sheet) */
 .group\/sidebar-wrapper > main {
-  margin-left: var(--sidebar-width);
-  width: calc(100% - var(--sidebar-width));
-  /* No transition - content shifts immediately with sidebar */
+  margin-left: 0;
+  width: 100%;
   padding: 0; /* Remove any padding that creates gap */
 }
 
-/* When sidebar is collapsed (icon mode), reduce the margin */
-.group\/sidebar-wrapper:has([data-state="collapsed"][data-collapsible="icon"]) > main {
-  margin-left: var(--sidebar-width-icon);
-  width: calc(100% - var(--sidebar-width-icon));
+@media (max-width: 768px) {
+  .group\/sidebar-wrapper > main {
+    margin-top: 56px !important;
+    height: calc(100vh - 56px) !important;
+    min-height: calc(100svh - 56px) !important;
+  }
 }
 
-/* When sidebar is fully collapsed (offcanvas), no margin needed */
-.group\/sidebar-wrapper:has([data-state="collapsed"][data-collapsible="offcanvas"]) > main {
-  margin-left: 0;
-  width: 100%;
+/* Mobile Top Bar styling */
+.mobile-top-bar {
+  display: none;
 }
 
-/* Remove gap/border between sidebar and content */
-/* When expanded (default state) - no data-state="collapsed" */
-.group\/sidebar-wrapper:not(:has([data-state="collapsed"])) > main.relative {
-  margin-left: var(--sidebar-width) !important;
-  padding-left: 0 !important;
-  border-left: none !important;
-  border: none !important;
-  box-shadow: none !important;
+@media (max-width: 768px) {
+  .mobile-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background-color: var(--token-bg-secondary) !important;
+    border-bottom: 1px solid var(--token-border-primary);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 40;
+  }
+
+  .mobile-sidebar-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    color: var(--token-text-primary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .mobile-sidebar-toggle-btn:hover {
+    background-color: var(--token-bg-hover);
+  }
+
+  .mobile-sidebar-toggle-btn:active {
+    transform: scale(0.95);
+    background-color: var(--token-bg-active);
+  }
+
+  .mobile-app-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--token-text-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
 }
 
-/* When collapsed to icon mode */
-.group\/sidebar-wrapper:has([data-state="collapsed"]) > main.relative {
-  margin-left: var(--sidebar-width-icon) !important;
-  padding-left: 0 !important;
-  border-left: none !important;
-  border: none !important;
-  box-shadow: none !important;
+/* Align footer buttons text like top menu buttons */
+[data-sidebar="sidebar"] [data-sidebar="footer"] [data-sidebar="menu-button"].footer-menu-button span {
+  margin-left: 1.5rem !important;
+}
+
+/* Position footer button icons absolutely like top menu icons */
+[data-sidebar="sidebar"] [data-sidebar="footer"] [data-sidebar="menu-button"].footer-menu-button svg {
+  position: absolute !important;
+  left: 0.6rem !important;
+}
+
+/* Explicit margin left for username text to prevent avatar overlap with larger h-6 avatar */
+[data-sidebar="sidebar"] [data-sidebar="footer"] [data-sidebar="menu-button"].footer-menu-button span.footer-user-name-text {
+  margin-left: 2rem !important;
+}
+
+/* Desktop & tablet layouts (sidebar is fixed/docked) */
+@media (min-width: 768px) {
+  /* Main content needs left margin to not be covered by fixed sidebar */
+  .group\/sidebar-wrapper > main {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+  }
+
+  /* When sidebar is collapsed (icon mode), reduce the margin */
+  .group\/sidebar-wrapper:has([data-state="collapsed"][data-collapsible="icon"]) > main {
+    margin-left: var(--sidebar-width-icon);
+    width: calc(100% - var(--sidebar-width-icon));
+  }
+
+  /* When sidebar is fully collapsed (offcanvas), no margin needed */
+  .group\/sidebar-wrapper:has([data-state="collapsed"][data-collapsible="offcanvas"]) > main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Remove gap/border between sidebar and content */
+  /* When expanded (default state) - no data-state="collapsed" */
+  .group\/sidebar-wrapper:not(:has([data-state="collapsed"])) > main.relative {
+    margin-left: var(--sidebar-width) !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* When collapsed to icon mode */
+  .group\/sidebar-wrapper:has([data-state="collapsed"]) > main.relative {
+    margin-left: var(--sidebar-width-icon) !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Specifically target the fixed sidebar wrapper when expanded */
+  .group\/sidebar-wrapper:not(:has([data-state="collapsed"])) > .group.peer > div.fixed {
+    width: 18rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }
 
 /* Remove all borders and spacing from sidebar elements */
@@ -428,13 +521,6 @@ html.dark [data-sidebar="menu-button"][data-active="true"] svg {
   border: none !important;
   margin: 0 !important;
   padding: 0 !important;
-}
-
-/* Specifically target the fixed sidebar wrapper when expanded */
-.group\/sidebar-wrapper:not(:has([data-state="collapsed"])) > .group.peer > div.fixed {
-  width: 18rem !important;
-  padding: 0 !important;
-  margin: 0 !important;
 }
 
 /* Ensure no background gap shows through */
@@ -730,3 +816,16 @@ html.dark [data-sidebar="footer"] .h-8.w-8 * {
   outline: 0 !important;
   box-shadow: none !important;
 }
+
+/* App main layout inset container */
+.app-main-inset {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+@media (max-width: 768px) {
+  .app-main-inset {
+    flex-direction: column !important;
+  }
+}
+

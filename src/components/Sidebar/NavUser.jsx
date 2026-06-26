@@ -1,39 +1,38 @@
-import { ChevronsUpDown, LogOut, MonitorCog, Moon, Sun, Check, Shield } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { MonitorCog, Moon, Sun, LogOut } from "lucide-react";
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarGroupLabel,
   useSidebar,
 } from "@/components/ui/sidebar";
 
-/**
- * NavUser component displays user profile information and provides
- * dropdown menu with theme options and sign out functionality.
- */
 export function NavUser({ user, colorMode, setThemeMode, onLogout }) {
   const { isMobile, state } = useSidebar();
 
-  // Get user display name with fallback
+  // Get user display name with robust fallbacks to get the logged in user name
   const displayName =
     user?.given_name && user?.family_name
       ? `${user.given_name} ${user.family_name}`
-      : user?.given_name || user?.family_name || "User";
+      : user?.given_name ||
+        user?.family_name ||
+        user?.name ||
+        user?.user_metadata?.name ||
+        user?.username ||
+        user?.user_metadata?.username ||
+        (user?.email ? user.email.split("@")[0] : "User");
 
-  // Get initials for avatar fallback
+  // Get initials for avatar fallback using fallbacks
   const getInitials = () => {
-    const first = user?.given_name?.[0] || "";
+    const first =
+      user?.given_name?.[0] ||
+      user?.name?.[0] ||
+      user?.user_metadata?.name?.[0] ||
+      user?.username?.[0] ||
+      user?.email?.[0] ||
+      "U";
     const last = user?.family_name?.[0] || "";
-    return (first + last).toUpperCase() || "U";
+    return (first + last).toUpperCase();
   };
 
   const themeOptions = [
@@ -50,82 +49,118 @@ export function NavUser({ user, colorMode, setThemeMode, onLogout }) {
     onLogout();
   };
 
-  return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border border-line-soft rounded-lg p-2 flex items-center gap-3 bg-transparent hover:bg-surface-hover transition-colors"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface-selected text-primary border border-line-soft">
-                <Shield className="size-4 text-violet-400" />
-              </div>
-              {state !== "collapsed" && (
-                <div className="grid flex-1 text-left text-[13px] leading-tight">
-                  <span className="truncate font-semibold text-white">Security Team</span>
-                  <span className="truncate text-xs text-muted-foreground">Enterprise Plan</span>
-                </div>
-              )}
-              {state !== "collapsed" && (
-                <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
-              )}
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={state === "collapsed" ? 14 : 14}
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar
-                  className="h-8 w-8 rounded-lg !border-0"
-                  style={{ border: "none", borderWidth: 0, outline: "none" }}
-                >
-                  <AvatarFallback
-                    className="rounded-lg !border-0 !bg-sidebar-primary"
-                    style={{ border: "none", borderWidth: 0, outline: "none" }}
-                  >
-                    {getInitials()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{displayName}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="text-xs text-muted-foreground">Theme</DropdownMenuLabel>
-              {themeOptions.map((option) => {
-                const Icon = option.icon;
-                const isActive = colorMode === option.id;
+  // Cycle theme in collapsed view
+  const cycleTheme = () => {
+    const modes = ["system", "light", "dark"];
+    const currentIndex = modes.indexOf(colorMode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    handleThemeChange(modes[nextIndex]);
+  };
 
-                return (
-                  <DropdownMenuItem
-                    key={option.id}
-                    onClick={() => handleThemeChange(option.id)}
-                    className="cursor-pointer"
-                  >
-                    <Icon className="mr-2 size-4" />
-                    <span>{option.label}</span>
-                    {isActive && <Check className="ml-auto size-4" />}
-                  </DropdownMenuItem>
-                );
-              })}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-              <LogOut className="mr-2 size-4" />
-              <span>Sign out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+  // Get active theme icon for collapsed cycle button
+  const getThemeIcon = () => {
+    switch (colorMode) {
+      case "light":
+        return Sun;
+      case "dark":
+        return Moon;
+      default:
+        return MonitorCog;
+    }
+  };
+
+  const CurrentThemeIcon = getThemeIcon();
+
+  if (state === "collapsed" && !isMobile) {
+    return (
+      <div className="flex flex-col gap-4 py-2 items-center w-full">
+        {/* User Avatar */}
+        <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar-primary text-white select-none">
+          <div className="h-8 w-8 rounded-full bg-sidebar-primary text-white font-semibold text-xs flex items-center justify-center">
+            {getInitials()}
+          </div>
+        </div>
+
+        {/* Theme Cycle Button */}
+        <button
+          title={`Theme: ${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)} (Click to cycle)`}
+          onClick={cycleTheme}
+          className="flex items-center justify-center w-8 h-8 rounded-md bg-transparent hover:bg-sidebar-accent text-muted-foreground transition-colors cursor-pointer"
+        >
+          <CurrentThemeIcon className="size-5" />
+        </button>
+
+        {/* Sign Out */}
+        <button
+          title="Sign out"
+          onClick={handleSignOut}
+          className="flex items-center justify-center w-8 h-8 rounded-md bg-transparent text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors cursor-pointer"
+        >
+          <LogOut className="size-5" />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2 w-full border-t border-sidebar-border pt-3 mt-1">
+      {/* Title Header */}
+      <SidebarGroupLabel className="px-3">Settings</SidebarGroupLabel>
+
+      {/* User Info Row */}
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton className="cursor-default hover:bg-transparent active:bg-transparent footer-menu-button">
+            <div className="absolute left-[0.6rem] top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-sidebar-primary text-white font-semibold text-[10px] flex items-center justify-center select-none">
+              {getInitials()}
+            </div>
+            <span className="font-semibold text-foreground footer-user-name-text">{displayName}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+
+      {/* Theme Selector Section */}
+      <div className="px-3 py-1">
+        <div className="text-[11px] text-muted-foreground mb-1.5 font-medium uppercase tracking-wider">
+          Theme
+        </div>
+        <div className="grid grid-cols-3 gap-1 bg-background p-1 rounded-md border border-sidebar-border">
+          {themeOptions.map((option) => {
+            const Icon = option.icon;
+            const isActive = colorMode === option.id;
+
+            return (
+              <button
+                key={option.id}
+                onClick={() => handleThemeChange(option.id)}
+                className={`flex flex-col items-center justify-center gap-1 py-1 px-1.5 rounded-md transition-all text-[11px] font-medium cursor-pointer ${
+                  isActive
+                    ? "bg-sidebar-primary text-white shadow-sm"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                }`}
+                title={option.label}
+              >
+                <Icon className="size-4" />
+                <span>{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Sign Out Button */}
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            onClick={handleSignOut}
+            className="text-red-400 hover:text-red-300 hover:bg-red-500/10 active:bg-red-500/20 footer-menu-button"
+          >
+            <LogOut />
+            <span>Sign out</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </div>
   );
 }
 
