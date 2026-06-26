@@ -292,16 +292,16 @@ export default function SpacesCatalog() {
 
   if (spaceError || !space) {
     return (
-      <Box padding="l">
+      <div className="spaces-page-container">
         <Alert type="error">{spaceError ?? "Space not found."}</Alert>
-      </Box>
+      </div>
     );
   }
 
   // ── Space detail ────────────────────────────────────────────────────────────
 
   return (
-    <Box padding="l">
+    <div className="spaces-page-container">
       <Container
         header={
           <Header
@@ -387,15 +387,33 @@ export default function SpacesCatalog() {
                             {
                               id: "actions",
                               header: "Action",
-                              cell: (item) => (
-                                <Button
-                                  variant="link"
-                                  loading={deletingDocIds.has(item.document_id)}
-                                  onClick={() => handleDeleteDocument(item.document_id)}
-                                >
-                                  Remove
-                                </Button>
-                              ),
+                              minWidth: 100,
+                              cell: (item) => {
+                                const isDeleting = deletingDocIds.has(item.document_id);
+                                return (
+                                  <button
+                                    className="hover:underline"
+                                    style={{
+                                      background: "transparent",
+                                      border: "none",
+                                      padding: 0,
+                                      margin: 0,
+                                      color: "var(--token-accent-primary, #6366f1)",
+                                      cursor: isDeleting ? "not-allowed" : "pointer",
+                                      fontFamily: "inherit",
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textAlign: "left",
+                                      whiteSpace: "nowrap",
+                                      opacity: isDeleting ? 0.6 : 1,
+                                    }}
+                                    disabled={isDeleting}
+                                    onClick={() => handleDeleteDocument(item.document_id)}
+                                  >
+                                    {isDeleting ? "Removing..." : "Remove"}
+                                  </button>
+                                );
+                              },
                             },
                           ]
                         : []),
@@ -446,13 +464,27 @@ export default function SpacesCatalog() {
                       {
                         id: "actions",
                         header: "Action",
+                        minWidth: 100,
                         cell: (item) => (
-                          <Button
-                            variant="link"
+                          <button
+                            className="hover:underline"
+                            style={{
+                              background: "transparent",
+                              border: "none",
+                              padding: 0,
+                              margin: 0,
+                              color: "var(--token-accent-primary, #6366f1)",
+                              cursor: "pointer",
+                              fontFamily: "inherit",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textAlign: "left",
+                              whiteSpace: "nowrap",
+                            }}
                             onClick={() => handleRemoveCollaborator(item.user_id)}
                           >
                             Remove
-                          </Button>
+                          </button>
                         ),
                       },
                     ]}
@@ -530,6 +562,6 @@ export default function SpacesCatalog() {
           />
         </FormField>
       </Modal>
-    </Box>
+    </div>
   );
 }

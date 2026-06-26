@@ -208,35 +208,36 @@ export default function HomeDashboard({ user, onCreateNew }) {
     <main className="home-dashboard-container">
       {/* Page Header (in place of breadcrumb) */}
       <div className="catalog-page-header">
-        <div>
-          <p className="workstation-kicker">Workspace Dashboard</p>
-          <h1>
-            {greeting()}, {userName}
-          </h1>
-          <p>
-            Review generated threat models, track risk concentration, and manage knowledge spaces.
-          </p>
+        <div className="flex justify-between items-start w-full gap-4">
+          <div className="min-w-0">
+            <p className="workstation-kicker">Workspace Dashboard</p>
+            <h1 className="truncate">
+              {greeting()}, {userName}
+            </h1>
+            <p className="header-desc">
+              Review generated threat models, track risk concentration, and manage knowledge spaces.
+            </p>
+          </div>
+          <button className="icon-action-btn mobile-reload-btn shrink-0" title="Refresh Dashboard" onClick={fetchStats}>
+            <RefreshCw size={16} />
+          </button>
         </div>
-        <div className="flex items-center gap-4 shrink-0">
-          <div className="header-actions">
-            <button className="icon-action-btn" title="Refresh Dashboard" onClick={fetchStats}>
-              <RefreshCw size={16} />
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              className="btn-secondary flex items-center gap-2"
-              onClick={() => navigate("/threat-catalog")}
-            >
-              <Folder size={16} />
-              <span>Catalog</span>
-            </button>
-            <button className="btn-primary-gradient flex items-center gap-2" onClick={onCreateNew}>
-              <Plus size={18} />
-              <span>New Model</span>
-              <ChevronDown size={14} />
-            </button>
-          </div>
+        <div className="flex items-center gap-2 shrink-0 desktop-actions">
+          <button className="icon-action-btn desktop-reload-btn" title="Refresh Dashboard" onClick={fetchStats}>
+            <RefreshCw size={16} />
+          </button>
+          <button
+            className="btn-secondary flex items-center gap-2"
+            onClick={() => navigate("/threat-catalog")}
+          >
+            <Folder size={16} />
+            <span>Catalog</span>
+          </button>
+          <button className="btn-primary-gradient flex items-center gap-2" onClick={onCreateNew}>
+            <Plus size={18} />
+            <span>New Model</span>
+            <ChevronDown size={14} />
+          </button>
         </div>
       </div>
 
@@ -496,8 +497,24 @@ export default function HomeDashboard({ user, onCreateNew }) {
                           {model.title || "Untitled Model"}
                         </strong>
                         <span className="model-timestamp">
-                          <Calendar size={11} className="inline mr-1" />
-                          Updated {formatTimeAgo(model.timestamp)}
+                          <Calendar size={11} className="inline mr-1 shrink-0" />
+                          <span>Updated {formatTimeAgo(model.timestamp)}</span>
+                          {model.stats && (
+                            <span className="model-stats-badges-mobile">
+                              <span className="stat-badge-dot high" title="High Risks">
+                                <span className="dot"></span>
+                                {model.stats.high}
+                              </span>
+                              <span className="stat-badge-dot medium" title="Medium Risks">
+                                <span className="dot"></span>
+                                {model.stats.medium}
+                              </span>
+                              <span className="stat-badge-dot low" title="Low Risks">
+                                <span className="dot"></span>
+                                {model.stats.low}
+                              </span>
+                            </span>
+                          )}
                         </span>
                       </div>
                     </div>
@@ -583,9 +600,9 @@ export default function HomeDashboard({ user, onCreateNew }) {
                       <div className="flex size-9 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                         <Layers size={14} />
                       </div>
-                      <div className="flex flex-col">
-                        <strong className="text-sm font-semibold text-foreground">{space.name}</strong>
-                        <span className="text-xs text-muted-foreground truncate max-w-[280px]">
+                      <div className="flex flex-col min-w-0">
+                        <strong className="text-sm font-semibold text-foreground truncate">{space.name}</strong>
+                        <span className="text-xs text-muted-foreground truncate">
                           {space.description || "Security architecture workspace"}
                         </span>
                       </div>
@@ -745,11 +762,11 @@ export default function HomeDashboard({ user, onCreateNew }) {
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
                       <FileText size={16} className="text-indigo-500 shrink-0" />
-                      <div className="flex flex-col overflow-hidden">
-                        <strong className="text-xs font-semibold text-foreground truncate max-w-[150px]">
+                      <div className="flex flex-col min-w-0">
+                        <strong className="text-xs font-semibold text-foreground truncate">
                           {doc.filename}
                         </strong>
-                        <span className="text-[10px] text-muted-foreground truncate max-w-[150px]">
+                        <span className="text-[10px] text-muted-foreground truncate">
                           {doc.space_name}
                         </span>
                       </div>

@@ -73,3 +73,16 @@
 .app-layout-container [class*="awsui_header"] {
   color: var(--token-text-primary);
 }
+
+/* Custom page container for spaces catalog to allow responsive padding control */
+.spaces-page-container {
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .spaces-page-container {
+    padding: 6px !important;
+  }
+}

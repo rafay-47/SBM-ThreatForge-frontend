@@ -186,7 +186,7 @@ function AppLayoutMFE({ user }) {
     <div className="app-layout-container">
       {user && (
         <AppLayout
-          disableContentPaddings={false}
+          disableContentPaddings={true}
           splitPanelOpen={splitPanelOpen}
           splitPanelPreferences={{ position: "side" }}
           splitPanelSize={splitPanelWidth}
