@@ -1,7 +1,6 @@
-/* Sidebar integration - ensure content fills remaining width */
 .app-layout-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: auto;
   position: relative;
   background:
@@ -86,3 +85,14 @@
     padding: 6px !important;
   }
 }
+
+/* Hide Cloudscape drawer triggers and containers on mobile */
+@media (max-width: 768px) {
+  .app-layout-container [class*="awsui_drawer-trigger"],
+  .app-layout-container [class*="awsui_drawers-trigger-list"],
+  .app-layout-container [class*="awsui_drawers-container"],
+  .app-layout-container [class*="awsui_drawers-trigger"] {
+    display: none !important;
+  }
+}
+

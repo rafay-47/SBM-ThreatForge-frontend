@@ -265,8 +265,8 @@ const SharingModal = ({ visible, setVisible, threatModelId, isOwner }) => {
           label="Add collaborator"
           description="Users will be added with Read-Only access by default"
         >
-          <SpaceBetween direction="horizontal" size="s">
-            <div style={{ flexGrow: 1, minWidth: "400px" }}>
+          <div className="add-collaborator-form-row">
+            <div className="add-collaborator-select-wrapper">
               <Select
                 selectedOption={selectedUser}
                 onChange={({ detail }) => setSelectedUser(detail.selectedOption)}
@@ -282,16 +282,18 @@ const SharingModal = ({ visible, setVisible, threatModelId, isOwner }) => {
                 empty="No users found"
               />
             </div>
-            <Button
-              variant="primary"
-              onClick={handleAddCollaborator}
-              loading={loading}
-              disabled={!selectedUser}
-              ariaLabel="Add selected user as collaborator"
-            >
-              Add
-            </Button>
-          </SpaceBetween>
+            <div className="add-collaborator-button-wrapper">
+              <Button
+                variant="primary"
+                onClick={handleAddCollaborator}
+                loading={loading}
+                disabled={!selectedUser}
+                ariaLabel="Add selected user as collaborator"
+              >
+                Add
+              </Button>
+            </div>
+          </div>
         </FormField>
 
         <Table

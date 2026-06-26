@@ -30,6 +30,16 @@ function AppLayoutMFE({ user }) {
   const location = useLocation();
   const trimmedPath = location.pathname.substring(1);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const functions = useContext(ChatSessionFunctionsContext);
   const sentryEnabled = isSentryEnabled();
   const { effectiveTheme } = useTheme();
@@ -188,10 +198,10 @@ function AppLayoutMFE({ user }) {
         <AppLayout
           disableContentPaddings={true}
           splitPanelOpen={splitPanelOpen}
-          splitPanelPreferences={{ position: "side" }}
+          splitPanelPreferences={{ position: isMobile ? "bottom" : "side" }}
           splitPanelSize={splitPanelWidth}
           onSplitPanelToggle={(event) => setSplitPanelOpen(event.detail.open)}
-          drawers={!splitPanelOpen && functions.visible && sentryEnabled ? items : []}
+          drawers={!isMobile && !splitPanelOpen && functions.visible && sentryEnabled ? items : []}
           splitPanel={
             <SplitPanel
               hidePreferencesButton={true}

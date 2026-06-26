@@ -827,5 +827,200 @@ html.dark [data-sidebar="footer"] .h-8.w-8 * {
   .app-main-inset {
     flex-direction: column !important;
   }
+
+  /* Force sheet content and dialog overlays to be on top of Cloudscape split panel (z-index 1000+) on mobile */
+  div[role="dialog"],
+  [data-sidebar="sidebar"][data-mobile="true"],
+  .fixed.inset-0.z-50 {
+    z-index: 5000 !important;
+  }
+
+  /* Mobile Sentry chatbot toggle button in the header */
+  .mobile-sentry-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    color: var(--token-accent-primary) !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-left: auto;
+  }
+
+  .mobile-sentry-toggle-btn:hover {
+    background-color: var(--token-bg-hover);
+  }
+
+  .mobile-sentry-toggle-btn:active {
+    transform: scale(0.95);
+    background-color: var(--token-bg-active);
+  }
 }
+
+/* Mobile Agent Sheet Overlay and Drawer */
+.mobile-agent-sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 6000;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeInOverlay 0.2s ease-out;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobile-agent-sheet {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  background-color: var(--token-bg-primary);
+  border-left: 1px solid var(--token-border-primary);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.mobile-agent-header {
+  height: 56px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--token-border-primary);
+  background-color: var(--token-bg-secondary);
+}
+
+.mobile-agent-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-agent-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--token-accent-primary);
+}
+
+.mobile-agent-logo-wrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-agent-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--token-text-primary);
+}
+
+.mobile-agent-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-agent-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--token-text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-agent-close-btn:hover {
+  background-color: var(--token-bg-hover);
+  color: var(--token-text-primary);
+}
+
+.mobile-agent-new-chat-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--token-border-primary);
+  background-color: var(--token-bg-primary);
+  color: var(--token-accent-primary) !important;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mobile-agent-new-chat-btn:hover {
+  background-color: var(--token-accent-bg);
+}
+
+.mobile-agent-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-agent-body > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Manage Collaborators Dialog search field responsive fix */
+.add-collaborator-form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.add-collaborator-select-wrapper {
+  flex-grow: 1;
+  min-width: 300px;
+}
+
+@media (max-width: 600px) {
+  .add-collaborator-form-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .add-collaborator-select-wrapper {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .add-collaborator-button-wrapper button,
+  .add-collaborator-button-wrapper div {
+    width: 100% !important;
+  }
+}
+
+
 

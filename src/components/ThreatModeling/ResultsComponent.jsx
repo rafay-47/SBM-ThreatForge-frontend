@@ -261,8 +261,8 @@ const ThreatModelingOutput = memo(function ThreatModelingOutput({
                   src={`data:${architectureDiagramBase64?.type};base64,${architectureDiagramBase64?.value}`}
                   alt="Architecture Diagram"
                   style={{
-                    maxWidth: "800px",
-                    maxHeight: "800px",
+                    maxWidth: "100%",
+                    maxHeight: "min(70vh, 800px)",
                     objectFit: "contain",
                     objectPosition: "center",
                   }}

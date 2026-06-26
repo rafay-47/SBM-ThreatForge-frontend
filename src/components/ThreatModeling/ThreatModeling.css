@@ -35,12 +35,21 @@
 .architecture-preview-surface {
   display: inline-flex;
   max-width: 100%;
+  box-sizing: border-box;
   padding: 18px;
   border: 1px solid var(--token-border-primary);
   border-radius: var(--radius-lg);
   background:
     linear-gradient(135deg, rgba(124, 58, 237, 0.05), transparent 42%), var(--token-bg-primary);
   box-shadow: var(--token-shadow-sm);
+}
+
+@media (max-width: 768px) {
+  .architecture-preview-surface {
+    padding: 8px !important;
+    width: 100% !important;
+    justify-content: center;
+  }
 }
 
 .architecture-preview-surface img {
